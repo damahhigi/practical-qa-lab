@@ -58,12 +58,12 @@ The current version runs entirely in the browser and does not require a backend.
 
 
 
+
 ## Current Version
 
-**v0.3 — Senior QA Interview Release**
+**v0.4 — Books & Free QA Resources**
 
-Current practice areas:
-
+### Interactive Practice
 - Manual QA Practice
 - API Testing Practice
 - SQL Testing Practice
@@ -71,14 +71,25 @@ Current practice areas:
 - Mid-Level QA Mock Interview
 - Senior QA Mock Interview
 
-### Improvements in v0.3
+### Books — Practical QA Press
+- The Manual QA Interview Workbook
+- API Testing Practice Workbook for QA Engineers
+- SQL Practice Workbook for Software Testers
 
-- Added five Senior QA interview scenarios
-- Added Senior QA-specific scoring and feedback
-- Improved handling of negated answers
-- Improved shared answer evaluation
-- Added an API Testing icon
-- Completed positive and negative scoring tests
+Each book includes a direct Amazon listing link.
+
+### Free QA Resources
+- Bug Report Template (PDF and editable Word)
+- Test Case Template (Excel)
+- QA Interview Preparation Checklist (PDF and editable Word)
+
+### Improvements in v0.4
+- Added a Books section featuring three published workbooks
+- Added original book cover images
+- Added direct Amazon purchase links
+- Added three free downloadable QA resources
+- Added responsive layouts for books and resources
+- Verified download links and mobile display
 
 
 ## Planned Features
