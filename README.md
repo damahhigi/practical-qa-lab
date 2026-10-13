@@ -27,12 +27,16 @@ It is designed to help QA professionals and aspiring testers strengthen practica
 - JOIN scenarios
 - Transaction and persistence testing
 
+
 ### QA Mock Interview
+- Junior QA interview questions
 - Mid-Level QA interview questions
 - Weighted answer scoring
 - Strong-point feedback
 - Improvement recommendations
+- Level-specific interview feedback
 - Final interview scorecard
+
 
 ## Scoring
 
@@ -52,22 +56,24 @@ Practical QA Lab supports desktop and mobile layouts, including smaller mobile s
 
 The current version runs entirely in the browser and does not require a backend.
 
+
 ## Current Version
 
-**v0.1 — Stable MVP**
+**v0.2 — Junior QA Interview Release**
 
 Current practice areas:
 
 - Manual QA
 - API Testing
 - SQL Testing
+- Junior QA Mock Interview
 - Mid-Level QA Mock Interview
+
 
 ## Planned Features
 
 Future versions may include:
 
-- Junior QA interview practice
 - Senior QA interview practice
 - Larger question banks
 - User accounts
