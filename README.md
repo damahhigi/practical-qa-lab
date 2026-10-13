@@ -57,24 +57,34 @@ Practical QA Lab supports desktop and mobile layouts, including smaller mobile s
 The current version runs entirely in the browser and does not require a backend.
 
 
+
 ## Current Version
 
-**v0.2 — Junior QA Interview Release**
+**v0.3 — Senior QA Interview Release**
 
 Current practice areas:
 
-- Manual QA
-- API Testing
-- SQL Testing
+- Manual QA Practice
+- API Testing Practice
+- SQL Testing Practice
 - Junior QA Mock Interview
 - Mid-Level QA Mock Interview
+- Senior QA Mock Interview
+
+### Improvements in v0.3
+
+- Added five Senior QA interview scenarios
+- Added Senior QA-specific scoring and feedback
+- Improved handling of negated answers
+- Improved shared answer evaluation
+- Added an API Testing icon
+- Completed positive and negative scoring tests
 
 
 ## Planned Features
 
 Future versions may include:
 
-- Senior QA interview practice
 - Larger question banks
 - User accounts
 - Progress tracking

@@ -272,6 +272,61 @@ const interviewBanks = {
       },
     ]
   },
+  senior: {
+    name: "SENIOR QA",
+    questions: [
+      {
+        question: "Your team is preparing a major release, but a high-impact defect is discovered shortly before deployment. The business wants to proceed. How would you assess the release and make a recommendation?",
+        criteria: [
+          { words: ["customer impact", "business impact", "security risk", "data loss", "severity", "likelihood"], label: "Assess customer impact, likelihood and the severity of the unresolved risk", weight: 3 },
+          { words: ["reproduce", "evidence", "logs", "targeted tests", "scope of impact", "affected flows"], label: "Gather evidence and identify the scope of affected functionality", weight: 2 },
+          { words: ["rollback", "feature flag", "disable feature", "workaround", "mitigation", "phased rollout"], label: "Evaluate mitigations and a safe rollback or containment plan", weight: 2 },
+          { words: ["go no go", "go/no-go", "recommend delay", "postpone release", "block release", "release recommendation", "stakeholders"], label: "Communicate a clear, risk-based release recommendation to stakeholders", weight: 2 },
+          { words: ["document decision", "risk acceptance", "sign off", "accountability", "follow up"], label: "Record the decision, accepted risk and follow-up actions", weight: 1 },
+        ]
+      },
+      {
+        question: "A new customer onboarding feature connects several microservices. Requirements are incomplete and there is limited time before launch. How would you design and prioritise a test strategy?",
+        criteria: [
+          { words: ["clarify requirements", "acceptance criteria", "stakeholder", "assumptions", "expected behavior", "business rules"], label: "Clarify expected behaviour, acceptance criteria and assumptions", weight: 2 },
+          { words: ["dependencies", "service boundaries", "architecture", "data flow", "integration points", "system diagram"], label: "Map service dependencies, interfaces and critical data flows", weight: 2 },
+          { words: ["risk based", "risk-based", "prioritize critical", "customer impact", "high risk", "critical journeys"], label: "Prioritise coverage around high-risk customer journeys", weight: 2 },
+          { words: ["contract tests", "api contracts", "integration tests", "end to end", "end-to-end", "negative scenarios", "failure scenarios"], label: "Cover API contracts, integration, end-to-end and failure scenarios", weight: 3 },
+          { words: ["test data", "environment", "observability", "monitoring", "traceability", "testability"], label: "Address test data, environments and observability", weight: 1 },
+        ]
+      },
+      {
+        question: "Your automated regression suite fails intermittently in CI and has started blocking reliable releases. How would you diagnose the problem and improve the pipeline?",
+        criteria: [
+          { words: ["flaky", "flakiness", "reproduce failures", "logs", "trace", "screenshots", "failure patterns"], label: "Distinguish flaky tests from real defects using repeatable evidence", weight: 3 },
+          { words: ["test data", "environment", "parallel", "shared state", "network", "external dependency"], label: "Investigate environmental, data and parallel-execution causes", weight: 2 },
+          { words: ["deterministic", "explicit waits", "stable locator", "test isolation", "mock services", "cleanup", "fixtures"], label: "Make tests deterministic with reliable waits, isolation and setup", weight: 2 },
+          { words: ["quarantine", "quality gate", "ci gate", "pipeline policy", "retry policy", "blocking criteria"], label: "Use a measured quarantine or CI-gating policy without hiding failures", weight: 2 },
+          { words: ["flake rate", "failure rate", "trends", "track reliability", "measure stability", "monitor stability"], label: "Track reliability trends to verify improvement", weight: 1 },
+        ]
+      },
+      {
+        question: "After a deployment, some customers are charged twice while their order records show only one purchase. The issue crosses payment, order and notification services. How would you lead the QA investigation and help prevent recurrence?",
+        criteria: [
+          { words: ["containment", "disable payments", "stop retries", "incident response", "escalate", "customer impact", "refund"], label: "Prioritise incident containment and customer or financial impact", weight: 2 },
+          { words: ["correlation id", "request id", "distributed tracing", "logs", "transaction id", "timestamps"], label: "Trace requests and transactions across services", weight: 2 },
+          { words: ["idempotency", "duplicate request", "retry", "race condition", "concurrency", "timeout"], label: "Investigate idempotency, retries and concurrency failure modes", weight: 3 },
+          { words: ["reconciliation", "reconcile", "payment records", "order records", "database", "consistency", "audit trail"], label: "Reconcile payment and order data and identify inconsistencies", weight: 2 },
+          { words: ["regression tests", "integration tests", "prevent recurrence", "postmortem", "monitoring alerts", "automated coverage"], label: "Add prevention checks and follow-up testing", weight: 1 },
+        ]
+      },
+      {
+        question: "Production defects are increasing even though the team regularly completes its regression suite. As a Senior QA, how would you investigate the trend and improve quality over the next few releases?",
+        criteria: [
+          { words: ["root cause", "defect analysis", "escape analysis", "patterns", "incident review", "trend analysis"], label: "Investigate escape patterns and underlying causes", weight: 3 },
+          { words: ["escaped defects", "defect leakage", "defect escape rate", "production defect rate", "baseline", "quality metrics"], label: "Use meaningful metrics and a baseline rather than test counts alone", weight: 2 },
+          { words: ["risk based", "risk-based", "coverage gaps", "test strategy", "exploratory", "integration testing", "critical journeys"], label: "Strengthen high-risk test coverage and the overall strategy", weight: 2 },
+          { words: ["shift left", "requirements review", "developer collaboration", "code review", "acceptance criteria", "cross functional"], label: "Improve early feedback and collaboration across the delivery team", weight: 2 },
+          { words: ["measure outcomes", "review progress", "monitor trends", "track improvement", "continuous improvement", "next releases"], label: "Measure whether the changes reduce escaped defects over time", weight: 1 },
+        ]
+      },
+    ]
+  },
 };
 
 let currentArea = "";
@@ -409,6 +464,66 @@ function matchesConcept(answer, terms) {
     return answerWords.some(answerWord => wordMatches(answerWord, normalizedTerm));
   });
 }
+/*
+ * Shared rule-based safeguard for all QA practice and interview modules.
+ * Only affirmative evidence may satisfy an answer criterion.
+ * This handles clear refusals, not every possible form of English negation.
+ * In particular, it DOES NOT interpret the overall correctness of an answer.
+ */
+function supportedAnswerClauses(answer) {
+  // Normalize contractions before checking explicit rejection of QA actions.
+  const expanded = answer
+    .replace(/\b(?:won't|wouldn't|shouldn't|couldn't|can't|cannot|don't|doesn't|didn't)\b/gi, "would not")
+    .replace(/\b(?:isn't|aren't|wasn't|weren't)\b/gi, "is not");
+
+  // Separate independent decisions so that a negative statement does not
+  // erase a later positive action (e.g. "skip regression, but review logs").
+  const clauses = expanded.split(
+    /[.!?;\n]+|\b(?:but|however|instead|yet)\b|,\s*(?=(?:(?:and|then)\s+)?(?:i|we)\s+(?:would|will|should|must|can|plan|intend)\b)|\s+and\s+(?=(?:not|never|ignore|skip|avoid|refuse)\b)/gi
+  );
+
+  const activity = "(?:include|add|focus|look|conduct|execute|inspect|do|apply|coordinate|clarify|confirm|review|document|record|report|assess|analyse|analyze|investigate|check|test|retest|verify|validate|reproduce|replicate|trace|track|measure|monitor|gather|collect|identify|prioriti[sz]e|improve|strengthen|prepare|map|cover|evaluate|communicate|inform|collaborate|reconcile|establish|introduce|use|perform|run|maintain|implement|create|write|fix|address|escalate|prevent|consider|follow|compare|distinguish|make|provide|support|ensure|work|build)";
+  const refusedAction = new RegExp(
+    "\\b(?:not|never)\\s+(?:(?:even|really|simply|just|necessarily|always)\\s+)?(?:(?:want|need|plan|intend|bother|have)\\s+to\\s+)?" + activity + "\\b", "i"
+  );
+  // "I would avoid investigating", "ignore quality metrics", "skip testing".
+  const rejectAction = /\b(?:ignore|skip|avoid|dismiss|disregard|neglect|refuse|omit|bypass)\b/i;
+
+  return clauses.map(clause => {
+    let text = clause.trim();
+    if (!text) return "";
+
+    // A refusal to IGNORE or SKIP good QA practice is an affirmative intent.
+    // E.g. "I would not ignore customer impact" remains eligible for credit.
+    text = text.replace(
+      /\b(?:not|never)\s+(?:ignore|skip|avoid|dismiss|disregard|neglect)\b/gi,
+      "consider"
+    );
+
+    // A decision NOT to ship a risky release is not a rejection of QA work.
+    // Preserve it for the Senior release-decision rubric.
+    if (/\b(?:not|never)\s+(?:release|deploy|ship|launch|approve|sign\s+off|go\s+live)\b/i.test(text)) {
+      return text;
+    }
+
+    // "not only review", "not just test" usually introduce more actions.
+    // Do not treat those phrases as explicit refusals.
+    if (/\bnot\s+(?:only|just|merely|simply)\b/i.test(text)) {
+      text = text.replace(/\bnot\s+(?:only|just|merely|simply)\b/gi, "also");
+    }
+
+    if (refusedAction.test(text) || rejectAction.test(text)) return "";
+    return text;
+  }).filter(Boolean);
+}
+
+function matchesSupportedConcept(answer, terms) {
+  // Preserve the site's existing keyword matching behaviour for ordinary
+  // answers, but remove explicitly rejected actions before scoring.
+  const supportedAnswer = supportedAnswerClauses(answer).join(". ");
+  return matchesConcept(supportedAnswer, terms);
+}
+
 function scoreAnswer() {
   const rawAnswer = document
     .getElementById("answer")
@@ -433,7 +548,7 @@ function scoreAnswer() {
   const strengths = [];
   const missing = [];
   criteria.forEach(item => {
-    const found = matchesConcept(rawAnswer, item.words);
+    const found = matchesSupportedConcept(rawAnswer, item.words);
     if (found) {
       weightedScore +=
         item.weight ?? 2;
@@ -665,6 +780,100 @@ function loadInterviewQuestion() {
     .getElementById("interviewError")
     .classList.add("hidden");
 }
+/*
+ * Senior QA Q1: lightweight, transparent partial-credit rubric.
+ * This does not understand free-form language like an AI evaluator.
+ * It deliberately rewards a general impact check only minimally and
+ * reserves full marks for multiple relevant actions and details.
+ */
+/*
+ * Exclude statements that explicitly reject essential QA actions.
+ * This is a limited safeguard, not a general natural-language evaluator.
+ * Positive release safeguards (for example, "do not release") remain valid.
+ */
+function seniorReleaseAffirmativeText(answer) {
+  const statements = answer
+    .replace(/\b(?:wouldn't|shouldn't|won't|don't|didn't|can't)\b/gi, "would not")
+    .split(/[.!?;\n]+|,\s*(?=(?:and\s+)?(?:i|we)\s+(?:would|will|should|must)\b)|\b(?:however|instead)\b/gi);
+
+  return statements.filter(statement => {
+    const text = normalizeText(statement);
+    // "Do not ignore the risk" is a positive intent. Keep evaluating
+    // the rest of the statement in case it also rejects another action.
+    const checked = text.replace(
+      /\b(?:not|never)\s+(?:ignore|skip|avoid|dismiss|disregard|neglect)\b/g,
+      "consider"
+    );
+    // Reject explicit statements such as "I would not gather evidence".
+    const refusedAction = /\b(?:not|never|without)\s+(?:(?:need|have|want|plan|bother)\s+to\s+)?(?:gather|collect|review|assess|check|evaluate|verify|reproduce|replicate|investigate|identify|consider|analyse|analyze|mitigate|plan|prepare|communicate|inform|document|record|report|escalate|make\s+(?:a\s+)?(?:release\s+)?recommendation)\b/;
+    if (refusedAction.test(checked)) return false;
+    // Also reject "ignore the impact", "avoid mitigation", etc.
+    const rejectResponsibilities = /\b(?:ignore|skip|avoid|disregard|dismiss|neglect)\s+(?:(?:the|any|all|our|a|an)\s+)?(?:customer|business|financial|release|risk|impact|severity|likelihood|evidence|logs|affected|scope|mitigation|rollback|fallback|workaround|contingency|documentation|stakeholders|communication|follow\s+up|recommendation)\b/;
+    return !rejectResponsibilities.test(checked);
+  }).join(". ");
+}
+
+function scoreSeniorReleaseDecision(answer) {
+  const text = normalizeText(seniorReleaseAffirmativeText(answer));
+  const has = (...phrases) => phrases.some(phrase => {
+    const term = normalizeText(phrase);
+    return (" " + text + " ").includes(" " + term + " ");
+  });
+
+  const strengths = [];
+  const missing = [];
+  let score = 0;
+
+  function add(points, fullPoints, partialFeedback, fullFeedback) {
+    score += points;
+    if (points === fullPoints) {
+      strengths.push(fullFeedback);
+    } else {
+      if (points > 0) strengths.push(partialFeedback);
+      missing.push(fullFeedback);
+    }
+  }
+
+  // 1. Risk assessment (3 points maximum)
+  const examines = has("assess", "check", "evaluate", "review", "analyse", "analyze", "consider", "investigate", "identify", "determine", "estimate");
+  const impact = has("impact", "risk", "severity", "likelihood", "probability", "consequences");
+  const releaseContext = has("release", "deployment", "deploy", "rollout", "defect", "bug", "issue", "change", "changes", "production");
+  const specificRisk = has("customer impact", "business impact", "financial impact", "security risk", "data loss", "severity", "likelihood", "probability", "revenue", "privacy", "payment impact");
+  const riskPoints = examines && specificRisk && releaseContext ? 3
+    : (specificRisk && (examines || releaseContext)) ? 2
+    : (examines && impact && releaseContext) || specificRisk ? 1 : 0;
+  add(riskPoints, 3,
+    "You considered release impact; specify customer/business risk, severity and likelihood.",
+    "Assess customer/business impact, severity and likelihood of the unresolved defect.");
+
+  // 2. Technical evidence and affected scope (2 points maximum)
+  const evidence = has("reproduce", "replicate", "retest", "logs", "traces", "trace", "test results", "evidence", "verify", "investigate", "test the fix");
+  const scope = has("affected users", "affected flows", "affected services", "affected functionality", "scope", "which users", "reproduction steps", "steps to reproduce", "impacted functionality");
+  add(evidence && scope ? 2 : evidence || scope ? 1 : 0, 2,
+    "You mentioned investigation or scope; explain the evidence and affected functionality.",
+    "Gather reproduction evidence and identify affected users or functionality.");
+
+  // 3. Mitigation and safe fallback (2 points maximum)
+  const fallback = has("rollback", "roll back", "revert", "feature flag", "disable feature", "disable the feature", "stop rollout", "turn off the feature");
+  const mitigation = has("workaround", "mitigation", "mitigate", "phased rollout", "canary release", "contingency plan", "reduce exposure", "fix before release");
+  add(fallback && mitigation ? 2 : fallback || mitigation ? 1 : 0, 2,
+    "You mentioned a fallback or mitigation; pair it with a safe release plan.",
+    "Evaluate mitigations alongside a safe rollback or containment plan.");
+
+  // 4. Decision and communication (2 points maximum)
+  const decision = has("recommend", "postpone", "delay release", "delay the release", "hold release", "hold the release", "block release", "stop deployment", "do not release", "not release", "not deploy", "no go", "proceed only", "release decision");
+  const communication = has("stakeholders", "stakeholder", "product owner", "release manager", "management", "business team", "engineering lead", "decision makers", "communicate", "inform the team", "escalate to");
+  add(decision && communication ? 2 : decision || communication ? 1 : 0, 2,
+    "You mentioned a release decision or communication; connect both with a clear recommendation.",
+    "Give a clear release recommendation and communicate it to decision-makers.");
+
+  // 5. Documented decision and accountability (1 point maximum)
+  const documented = has("document the decision", "record the decision", "document risk", "record risk", "risk acceptance", "accepted risk", "sign off", "signoff", "follow up actions", "follow up plan", "action items");
+  add(documented ? 1 : 0, 1, "", "Document the decision, accepted risk and follow-up actions.");
+
+  return { score, strengths, missing };
+}
+
 function submitInterviewAnswer() {
   const rawAnswer = document
     .getElementById("interviewAnswer")
@@ -681,19 +890,27 @@ function submitInterviewAnswer() {
     .classList.add("hidden");
   const criteria = currentInterviewQuestions[currentInterviewQuestion].criteria;
   let weightedScore = 0;
-  const strengths = [];
-  const missing = [];
-  criteria.forEach(item => {
-    const found = matchesConcept(rawAnswer, item.words);
-    if (found) {
-      weightedScore +=
-        item.weight ?? 2;
-      strengths.push(item.label);
-    }
-    else {
-      missing.push(item.label);
-    }
-  });
+  let strengths = [];
+  let missing = [];
+
+  // Senior Q1 keeps its dedicated partial-credit rubric.
+  // Every other interview criterion uses shared negation-aware matching.
+  if (currentInterviewLevel === "senior" && currentInterviewQuestion === 0) {
+    const result = scoreSeniorReleaseDecision(rawAnswer);
+    weightedScore = result.score;
+    strengths = result.strengths;
+    missing = result.missing;
+  } else {
+    criteria.forEach(item => {
+      const found = matchesSupportedConcept(rawAnswer, item.words);
+      if (found) {
+        weightedScore += item.weight ?? 2;
+        strengths.push(item.label);
+      } else {
+        missing.push(item.label);
+      }
+    });
+  }
   const score = weightedScore;
   interviewTotalScore +=
     score;
@@ -858,6 +1075,24 @@ function showInterviewSummary() {
     else {
       title = "Keep building your QA foundations";
       message = "Focus on verification and validation, login testing, bug reporting, severity versus priority and regression testing. Practise explaining each concept using simple examples.";
+    }
+  }
+  else if (currentInterviewLevel === "senior") {
+    if (percentage >= 80) {
+      title = "Strong senior-level QA reasoning";
+      message = "Your answers cover release risk, cross-system investigation and strategic quality decisions. Continue strengthening your examples with measurable outcomes and trade-offs.";
+    }
+    else if (percentage >= 60) {
+      title = "Good senior QA foundation";
+      message = "You demonstrate several senior-level approaches. Strengthen your decision-making by explaining evidence, alternatives, stakeholder communication and measurable impact.";
+    }
+    else if (percentage >= 40) {
+      title = "Developing senior QA judgement";
+      message = "Build more depth in risk-based release recommendations, integration strategy, incident analysis, reliable automation and quality improvement metrics.";
+    }
+    else {
+      title = "More senior QA practice recommended";
+      message = "Focus on assessing business and customer risk, making evidence-based release decisions, troubleshooting cross-service incidents and measuring quality improvements.";
     }
   }
   document

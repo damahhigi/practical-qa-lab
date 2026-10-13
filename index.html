@@ -1,41 +1,56 @@
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
+
   <meta charset="UTF-8">
 
   <meta
+
     name="viewport"
+
     content="width=device-width, initial-scale=1.0"
+
   >
 
   <meta
+
     name="description"
+
     content="Interactive QA practice for Manual QA, API testing, SQL testing and mock interviews."
+
   >
 
   <title>Practical QA Lab</title>
 
   <link rel="stylesheet" href="style.css">
-</head>
 
+</head>
 
 <body>
 
   <header>
+
     <p class="brand">
+
       PRACTICAL QA PRESS
+
     </p>
 
     <h1>
+
       Practical QA Lab
+
     </h1>
 
     <p class="subtitle">
-      Practice like a real QA engineer.
-    </p>
-  </header>
 
+      Practice like a real QA engineer.
+
+    </p>
+
+  </header>
 
   <main>
 
@@ -46,145 +61,212 @@
       <div class="home-intro">
 
         <p class="eyebrow">
+
           BUILD PRACTICAL QA SKILLS
+
         </p>
 
         <h2>
+
           What would you like to practice?
+
         </h2>
 
         <p>
+
           Work through realistic testing scenarios,
+
           receive instant feedback, and build confidence
+
           for real QA work and interviews.
+
         </p>
 
       </div>
-
 
       <div class="practice-grid">
 
         <!-- MANUAL QA -->
 
         <button
+
           type="button"
+
           class="practice-card"
+
           onclick="startPractice('manual')"
+
         >
 
           <span class="card-icon">
+
             ✓
+
           </span>
 
           <span class="card-content">
 
             <strong>
+
               Manual QA
+
             </strong>
 
             <small>
+
               Practice investigation, test design,
+
               regression and real-world QA scenarios.
+
             </small>
 
             <span class="card-meta">
+
               5 scenarios
+
             </span>
 
           </span>
 
         </button>
-
 
         <!-- API TESTING -->
 
         <button
-          type="button"
-          class="practice-card"
-          onclick="startPractice('api')"
-        >
 
-          <span class="card-icon">
-            &lt;/&gt;
+          type="button"
+
+          class="practice-card"
+
+          onclick="startPractice('api')"
+
+        >
+          <span class="card-icon" aria-hidden="true">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="26"
+              height="26"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="m16 18 6-6-6-6" />
+              <path d="m8 6-6 6 6 6" />
+              <path d="m14.5 4-5 16" />
+            </svg>
           </span>
 
           <span class="card-content">
 
             <strong>
+
               API Testing
+
             </strong>
 
             <small>
+
               Practice REST APIs, authentication,
+
               persistence and error investigation.
+
             </small>
 
             <span class="card-meta">
+
               5 scenarios
+
             </span>
 
           </span>
 
         </button>
-
 
         <!-- SQL TESTING -->
 
         <button
+
           type="button"
+
           class="practice-card"
+
           onclick="startPractice('sql')"
+
         >
 
           <span class="card-icon">
+
             DB
+
           </span>
 
           <span class="card-content">
 
             <strong>
+
               SQL Testing
+
             </strong>
 
             <small>
+
               Practice queries, joins, data validation
+
               and database defect investigation.
+
             </small>
 
             <span class="card-meta">
+
               5 scenarios
+
             </span>
 
           </span>
 
         </button>
 
-
         <!-- MOCK INTERVIEW -->
 
         <button
+
           type="button"
+
           class="practice-card interview-card"
+
           onclick="showInterviewSetup()"
+
         >
 
           <span class="card-icon">
-            Q&amp;A
+
+            Q&A
+
           </span>
 
           <span class="card-content">
 
             <strong>
+
               Mock Interview
+
             </strong>
 
             <small>
+
               Answer realistic QA interview questions
+
               and receive a complete scorecard.
+
             </small>
 
             <span class="card-meta">
-              Mid-Level available
+
+              Junior, Mid-Level & Senior available
+
             </span>
 
           </span>
@@ -195,145 +277,187 @@
 
     </section>
 
-
     <!-- INTERVIEW LEVEL SELECTION -->
 
     <section
+
       id="interviewSetup"
+
       class="hidden interview-setup-panel"
+
     >
 
       <div class="interview-setup-header">
 
         <p class="interview-eyebrow">
+
           QA MOCK INTERVIEW
+
         </p>
 
         <h2>
+
           Choose your interview level
+
         </h2>
 
         <p>
+
           Practice realistic QA interview questions,
+
           explain your reasoning and receive feedback
+
           after every answer.
+
         </p>
 
       </div>
-
 
       <div class="interview-level-grid">
 
         <!-- JUNIOR -->
 
-        
-<!-- JUNIOR -->
-
-<button
-  type="button"
-  class="level-card active-level"
-  onclick="selectInterviewLevel('junior')"
->
-  <span class="level-badge">
-    JUNIOR
-  </span>
-
-  <strong>
-    Junior QA
-  </strong>
-
-  <small>
-    Build confidence with foundational testing,
-    bug reporting and QA process questions.
-  </small>
-
-  <span class="available-now">
-    5 interview questions
-  </span>
-</button>
-
-
-        <!-- MID LEVEL -->
-
         <button
+
           type="button"
+
           class="level-card active-level"
-          onclick="selectInterviewLevel('mid')"
+
+          onclick="selectInterviewLevel('junior')"
+
         >
 
           <span class="level-badge">
-            MID-LEVEL
+
+            JUNIOR
+
           </span>
 
           <strong>
-            Mid-Level QA
+
+            Junior QA
+
           </strong>
 
           <small>
-            Practice risk-based testing, investigation,
-            releases and collaboration scenarios.
+
+            Build confidence with foundational testing,
+
+            bug reporting and QA process questions.
+
           </small>
 
           <span class="available-now">
+
             5 interview questions
+
           </span>
 
         </button>
 
+        <!-- MID LEVEL -->
+
+        <button
+
+          type="button"
+
+          class="level-card active-level"
+
+          onclick="selectInterviewLevel('mid')"
+
+        >
+
+          <span class="level-badge">
+
+            MID-LEVEL
+
+          </span>
+
+          <strong>
+
+            Mid-Level QA
+
+          </strong>
+
+          <small>
+
+            Practice risk-based testing, investigation,
+
+            releases and collaboration scenarios.
+
+          </small>
+
+          <span class="available-now">
+
+            5 interview questions
+
+          </span>
+
+        </button>
 
         <!-- SENIOR -->
 
         <button
+
           type="button"
-          class="level-card unavailable-level"
-          disabled
+
+          class="level-card active-level"
+
+          onclick="selectInterviewLevel('senior')"
+
         >
 
-          <span class="level-badge">
-            SENIOR
-          </span>
+          <span class="level-badge">SENIOR</span>
 
-          <strong>
-            Senior QA
-          </strong>
+          <strong>Senior QA</strong>
 
           <small>
+
             Practice strategy, leadership, quality risk
+
             and complex decision-making scenarios.
+
           </small>
 
-          <span class="coming-soon">
-            Coming Soon
-          </span>
+          <span class="available-now">5 interview questions</span>
 
         </button>
 
       </div>
 
-
       <button
+
         type="button"
+
         class="secondary-button interview-back-button"
+
         onclick="goHome()"
+
       >
+
         Back to Practice Areas
+
       </button>
 
     </section>
 
-
     <!-- MOCK INTERVIEW QUESTION -->
 
     <section
+
       id="interview"
+
       class="hidden interview-panel"
+
     >
 
       <p
-        class="category"
-        id="interviewLevelLabel"
-      ></p>
 
+        class="category"
+
+        id="interviewLevelLabel"
+
+      ></p>
 
       <div class="progress-info">
 
@@ -342,67 +466,88 @@
         <div class="progress-track">
 
           <div
+
             id="interviewProgressBar"
+
             class="progress-bar"
+
           ></div>
 
         </div>
 
       </div>
 
-
       <h2 id="interviewQuestion"></h2>
 
-
       <textarea
+
         id="interviewAnswer"
+
         aria-label="Interview answer"
+
         placeholder="Answer as if you were speaking to the interviewer..."
+
       ></textarea>
 
-
       <p
+
         id="interviewError"
+
         class="error-message hidden"
+
       >
+
         Please enter an answer before submitting.
+
       </p>
 
-
       <button
+
         type="button"
+
         onclick="submitInterviewAnswer()"
+
       >
+
         Submit Interview Answer
+
       </button>
 
     </section>
 
-
     <!-- MOCK INTERVIEW FEEDBACK -->
 
     <section
+
       id="interviewFeedback"
+
       class="hidden interview-feedback-panel"
+
       aria-live="polite"
+
     >
 
       <div class="interview-feedback-header">
 
         <p class="interview-eyebrow">
+
           INTERVIEW FEEDBACK
+
         </p>
 
         <h2>
+
           Your Answer Score
+
         </h2>
 
         <div class="score-box interview-result-score">
+
           <span id="interviewScore">0</span>/10
+
         </div>
 
       </div>
-
 
       <div class="feedback-grid">
 
@@ -411,11 +556,15 @@
           <div class="feedback-heading">
 
             <span class="feedback-icon">
+
               ✓
+
             </span>
 
             <h3>
+
               Strong points
+
             </h3>
 
           </div>
@@ -424,17 +573,20 @@
 
         </div>
 
-
         <div class="feedback-card improvement-card">
 
           <div class="feedback-heading">
 
             <span class="feedback-icon">
+
               !
+
             </span>
 
             <h3>
+
               What could be stronger
+
             </h3>
 
           </div>
@@ -445,68 +597,96 @@
 
       </div>
 
-
       <button
+
         type="button"
+
         id="interviewNextButton"
+
         onclick="nextInterviewQuestion()"
+
       >
+
         Next Interview Question
+
       </button>
 
     </section>
 
-
     <!-- MOCK INTERVIEW SUMMARY -->
 
     <section
+
       id="interviewSummary"
+
       class="hidden summary-panel"
+
       aria-live="polite"
+
     >
 
       <div class="summary-header">
 
         <p
+
           class="summary-eyebrow"
+
           id="interviewSummaryCategory"
+
         >
+
           MID-LEVEL QA MOCK INTERVIEW COMPLETE
+
         </p>
 
         <h2>
+
           Interview Complete
+
         </h2>
 
         <p class="summary-subtitle">
+
           Here is how you performed across all five
+
           interview questions.
+
         </p>
 
       </div>
 
-
       <div
+
         id="interviewSummaryScoreCard"
+
         class="summary-score-card"
+
       >
 
         <p class="summary-score-label">
+
           YOUR INTERVIEW SCORE
+
         </p>
 
         <div class="summary-score">
 
           <span id="interviewFinalScore">
+
             0
+
           </span>
 
           <span class="summary-divider">
+
             /
+
           </span>
 
           <span id="interviewMaxScore">
+
             50
+
           </span>
 
         </div>
@@ -517,56 +697,73 @@
 
       </div>
 
-
       <div class="summary-breakdown">
 
         <h3>
+
           Interview breakdown
+
         </h3>
 
         <p>
+
           See how you scored on each interview question.
+
         </p>
 
         <ul id="interviewScoreBreakdown"></ul>
 
       </div>
 
-
       <div class="summary-actions">
 
         <button
+
           type="button"
+
           onclick="restartInterview()"
+
         >
+
           Try Interview Again
+
         </button>
 
         <button
+
           type="button"
+
           class="secondary-button"
+
           onclick="goHome()"
+
         >
+
           Back to Practice Areas
+
         </button>
 
       </div>
 
     </section>
 
-
     <!-- PRACTICE QUESTION -->
 
     <section
+
       id="practice"
+
       class="hidden practice-panel"
+
     >
 
       <p
-        class="category"
-        id="category"
-      ></p>
 
+        class="category"
+
+        id="category"
+
+      ></p>
 
       <div class="progress-info">
 
@@ -575,67 +772,88 @@
         <div class="progress-track">
 
           <div
+
             id="progressBar"
+
             class="progress-bar"
+
           ></div>
 
         </div>
 
       </div>
 
-
       <h2 id="question"></h2>
 
-
       <textarea
+
         id="answer"
+
         aria-label="Practice answer"
+
         placeholder="Explain your testing approach here..."
+
       ></textarea>
 
-
       <p
+
         id="answerError"
+
         class="error-message hidden"
+
       >
+
         Please enter an answer before submitting.
+
       </p>
 
-
       <button
+
         type="button"
+
         onclick="scoreAnswer()"
+
       >
+
         Submit Answer
+
       </button>
 
     </section>
 
-
     <!-- PRACTICE FEEDBACK -->
 
     <section
+
       id="result"
+
       class="hidden result-panel"
+
       aria-live="polite"
+
     >
 
       <div class="result-header">
 
         <p class="result-eyebrow">
+
           ANSWER FEEDBACK
+
         </p>
 
         <h2>
+
           Your Result
+
         </h2>
 
         <div class="score-box result-score">
+
           <span id="score">0</span>/10
+
         </div>
 
       </div>
-
 
       <div class="feedback-grid">
 
@@ -644,11 +862,15 @@
           <div class="feedback-heading">
 
             <span class="feedback-icon">
+
               ✓
+
             </span>
 
             <h3>
+
               What you considered
+
             </h3>
 
           </div>
@@ -657,17 +879,20 @@
 
         </div>
 
-
         <div class="feedback-card improvement-card">
 
           <div class="feedback-heading">
 
             <span class="feedback-icon">
+
               !
+
             </span>
 
             <h3>
+
               Areas you may have missed
+
             </h3>
 
           </div>
@@ -678,67 +903,94 @@
 
       </div>
 
-
       <button
+
         type="button"
+
         id="nextQuestionButton"
+
         onclick="nextQuestion()"
+
       >
+
         Next Question
+
       </button>
 
     </section>
 
-
     <!-- PRACTICE SUMMARY -->
 
     <section
+
       id="summary"
+
       class="hidden summary-panel"
+
       aria-live="polite"
+
     >
 
       <div class="summary-header">
 
         <p
+
           class="summary-eyebrow"
+
           id="summaryCategory"
+
         >
+
           PRACTICE COMPLETE
+
         </p>
 
         <h2>
+
           Session Complete
+
         </h2>
 
         <p class="summary-subtitle">
+
           Here is how you performed across all five scenarios.
+
         </p>
 
       </div>
 
-
       <div
+
         id="summaryScoreCard"
+
         class="summary-score-card"
+
       >
 
         <p class="summary-score-label">
+
           YOUR TOTAL SCORE
+
         </p>
 
         <div class="summary-score">
 
           <span id="finalScore">
+
             0
+
           </span>
 
           <span class="summary-divider">
+
             /
+
           </span>
 
           <span id="maxScore">
+
             50
+
           </span>
 
         </div>
@@ -749,37 +1001,50 @@
 
       </div>
 
-
       <div class="summary-breakdown">
 
         <h3>
+
           Question breakdown
+
         </h3>
 
         <p>
+
           See how you scored on each scenario.
+
         </p>
 
         <ul id="scoreBreakdown"></ul>
 
       </div>
 
-
       <div class="summary-actions">
 
         <button
+
           type="button"
+
           onclick="restartPractice()"
+
         >
+
           Practice Again
+
         </button>
 
         <button
+
           type="button"
+
           class="secondary-button"
+
           onclick="goHome()"
+
         >
+
           Back to Practice Areas
+
         </button>
 
       </div>
@@ -787,7 +1052,6 @@
     </section>
 
   </main>
-
 
   <script src="script.js"></script>
 
