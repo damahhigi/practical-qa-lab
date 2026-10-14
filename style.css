@@ -2320,6 +2320,96 @@ li {
 .progress-history-title { font-size: 15px; font-weight: 700; color: #0b2239; }
 .progress-history-date { display: block; color: #64717d; font-size: 13px; margin-top: 5px; }
 .progress-history-score { font-size: 16px; font-weight: 700; color: #167a5a; white-space: nowrap; font-variant-numeric: tabular-nums; }
+/* v0.6 step 1 — downloadable progress backup */
+.progress-backup-card {
+  border: 1px solid #c9eadf;
+  background: #f2faf7;
+  border-radius: 16px;
+  padding: 24px 26px;
+  margin: 20px 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px 22px;
+  align-items: center;
+}
+.progress-backup-copy h3 { margin: 0 0 7px; font-size: 21px; color: #0b2239; }
+.progress-backup-copy p { margin: 0; color: #496171; line-height: 1.55; }
+.progress-export-button { background: #0b7056; color: #fff; white-space: nowrap; }
+.progress-export-button:hover:not(:disabled) { background: #075640; }
+.progress-export-button:disabled { opacity: .48; cursor: not-allowed; }
+.progress-export-status { grid-column: 1 / -1; margin: 0; color: #235a47; font-size: 14px; line-height: 1.5; }
+.progress-export-status:empty { display: none; }
+/* v0.6 — Restore a backup with explicit merge/replace selection. */
+.progress-import-card {
+  border: 1px solid #d8e3e8;
+  background: #fff;
+  border-radius: 16px;
+  padding: 24px 26px;
+  margin: 20px 0;
+}
+.progress-import-card h3 { margin: 0 0 8px; font-size: 21px; color: #0b2239; }
+.progress-import-description { margin: 0 0 18px; color: #496171; line-height: 1.55; }
+.progress-file-label { display: block; font-weight: 700; color: #0b2239; margin-bottom: 8px; }
+.progress-import-file {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  border: 1px solid #cbd8dc;
+  border-radius: 9px;
+  padding: 11px;
+  background: #f9fbfb;
+  color: #0b2239;
+  font: inherit;
+}
+.progress-import-file::file-selector-button {
+  border: 0;
+  border-radius: 7px;
+  padding: 9px 13px;
+  margin-right: 12px;
+  color: #0b2239;
+  background: #e9f3ef;
+  font-weight: 700;
+  cursor: pointer;
+}
+.progress-import-options {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  border: 0;
+  padding: 0;
+  margin: 18px 0;
+  min-width: 0;
+}
+.progress-import-options legend { font-weight: 700; color: #0b2239; margin-bottom: 10px; }
+.progress-import-option {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  border: 1px solid #d8e3e8;
+  border-radius: 10px;
+  padding: 13px;
+  cursor: pointer;
+}
+.progress-import-option input { margin: 4px 0 0; flex: 0 0 auto; accent-color: #13866a; }
+.progress-import-option span { min-width: 0; }
+.progress-import-option strong { display: block; color: #0b2239; }
+.progress-import-option small { display: block; color: #5f6b76; line-height: 1.45; margin-top: 4px; }
+.progress-import-preview { margin: 0 0 14px; color: #235a47; background: #eff9f5; padding: 12px 14px; border-radius: 8px; line-height: 1.5; }
+.progress-import-preview[data-state="error"] { color: #9b2525; background: #fff2f2; }
+.progress-import-button { background: #0b7056; color: white; }
+.progress-import-button:hover:not(:disabled) { background: #075640; }
+.progress-import-button:disabled { opacity: .48; cursor: not-allowed; }
+.progress-import-status { color: #235a47; margin: 12px 0 0; line-height: 1.5; }
+.progress-import-status:empty { display: none; }
+@media (max-width: 700px) {
+  .progress-import-card { padding: 20px; }
+  .progress-import-options { grid-template-columns: 1fr; }
+  .progress-import-button { width: 100%; }
+}
+@media (max-width: 700px) {
+  .progress-backup-card { grid-template-columns: 1fr; padding: 20px; }
+  .progress-export-button { width: 100%; white-space: normal; }
+}
 .progress-controls { display: flex; gap: 12px; flex-wrap: wrap; justify-content: space-between; margin-top: 20px; }
 .progress-clear-button { background: #fff; border: 1px solid #cbd3d7; color: #46515a; }
 .progress-clear-button:hover { background: #f5f7f8; }

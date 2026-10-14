@@ -61,44 +61,43 @@ The current version runs entirely in the browser and does not require a backend.
 
 ## Current Version
 
+### v0.6 — Export & Import Progress
 
-### v0.5 — Learner Progress Tracking
-
-Practical QA Lab now allows learners to track their
+Learners can now back up and restore their learning
 progress without creating an account.
 
 #### New Features
-- Personal learning progress dashboard
-- Automatic saving of completed practice sessions
-- Progress tracking across six QA practice areas
-- Average score and best score calculations
-- Progress bars for each practice area
-- Recent completed session history
-- Suggested areas for improvement
-- Clear saved history with confirmation
-- Responsive dashboard for desktop and mobile
+- Export completed learning sessions to JSON
+- Import saved progress from a JSON backup
+- Preview backup contents before importing
+- Merge imported sessions with existing history
+- Detect and skip duplicate session IDs
+- Replace current progress with a saved backup
+- Confirmation required before replacing history
+- Reject invalid or unsupported backup files
+- Preserve saved progress after refreshing
+- Responsive export and import sections
 
-#### How Progress Tracking Works
-Completed session results are stored using the
-browser's localStorage.
+#### How It Works
+Progress is stored locally in the browser using
+localStorage.
 
-Progress is saved on the current browser and device.
-It remains available after refreshing the page.
+Export creates a downloadable JSON file containing
+completed sessions, scores, and completion dates.
 
-No login or database is currently required.
+Import supports two options:
+- Merge: Keep existing progress and add new sessions.
+- Replace: Remove existing history and restore the
+  selected backup.
 
-Note: Progress does not synchronize across devices
-and may be lost if browser data is cleared.
+No login, database, or paid hosting is required.
 
-#### Testing
-- Initial dashboard state verified
-- Completed practice sessions recorded
-- Repeated attempts recorded correctly
-- Mock interview scores recorded
-- Average and best score calculations verified
-- Progress persistence after refresh verified
-- History reset verified
-- Mobile layout checked
+#### Limitations
+- Progress does not automatically sync between devices.
+- Learners must export and import files manually.
+- Clearing browser data can remove locally saved progress.
+- Backup files should be stored somewhere safe.
+
 
 ## Planned Features
 

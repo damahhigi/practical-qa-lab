@@ -5193,6 +5193,8 @@ function renderProgressDashboard() {
     "hidden", browserStorageAvailable()
   );
   document.getElementById("clearProgressButton").disabled = sessions.length === 0;
+  document.getElementById("exportProgressButton").disabled =
+    sessions.length === 0 || !browserStorageAvailable();
 
   const areaList = document.getElementById("progressAreasList");
   areaList.replaceChildren();
@@ -5261,6 +5263,235 @@ function renderProgressDashboard() {
     li.append(details, score);
     historyList.appendChild(li);
   });
+}
+
+/* v0.6 — Versioned export/import format. */
+const PROGRESS_BACKUP_FORMAT = "practical-qa-lab-progress";
+const PROGRESS_BACKUP_VERSION = 1;
+
+function exportLearningProgress() {
+  const status = document.getElementById("progressExportStatus");
+  const sessions = readSavedSessions();
+  if (!browserStorageAvailable() || sessions.length === 0) {
+    status.textContent = "No saved sessions are available to export yet.";
+    return;
+  }
+
+  const backup = {
+    format: PROGRESS_BACKUP_FORMAT,
+    version: PROGRESS_BACKUP_VERSION,
+    exportedAt: new Date().toISOString(),
+    sessions: sessions.map(item => ({
+      id: item.id,
+      type: item.type,
+      area: item.area,
+      score: item.score,
+      maxScore: item.maxScore,
+      completedAt: item.completedAt,
+      questionScores: Array.isArray(item.questionScores) ? item.questionScores : []
+    }))
+  };
+
+  let url;
+  try {
+    const blob = new Blob([JSON.stringify(backup, null, 2)], { type: "application/json" });
+    url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `practical-qa-lab-progress-${new Date().toISOString().slice(0, 10)}.json`;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    status.textContent = `Backup prepared: ${sessions.length} ${sessions.length === 1 ? "session" : "sessions"}. Save this file somewhere safe.`;
+  } catch (error) {
+    status.textContent = "Could not prepare the backup. Please try again.";
+  } finally {
+    // Allow the browser time to begin saving the file before releasing its URL.
+    if (url) window.setTimeout(() => URL.revokeObjectURL(url), 1000);
+  }
+}
+
+/* v0.6 — Import: inspect every record and preview changes before touching storage. */
+const PROGRESS_IMPORT_MAX_FILE_BYTES = 1024 * 1024;
+let pendingProgressImport = null;
+let progressImportSelectionId = 0;
+
+function progressBackupSessionIsValid(item) {
+  if (!item || typeof item !== "object" || Array.isArray(item)) return false;
+  if (typeof item.id !== "string" || !/^[A-Za-z0-9_-]{5,100}$/.test(item.id)) return false;
+  if (!PROGRESS_AREAS.some(area => area.type === item.type && area.key === item.area)) return false;
+  if (!Number.isInteger(item.score) || !Number.isInteger(item.maxScore) ||
+      item.maxScore < 1 || item.maxScore > 1000 ||
+      item.score < 0 || item.score > item.maxScore) return false;
+  if (typeof item.completedAt !== "string") return false;
+  const when = new Date(item.completedAt);
+  if (!Number.isFinite(when.getTime()) || when.toISOString() !== item.completedAt) return false;
+  if (item.questionScores !== undefined &&
+      (!Array.isArray(item.questionScores) || item.questionScores.length > 100 ||
+      !item.questionScores.every(value => Number.isFinite(value) && value >= 0 && value <= item.maxScore))) {
+    return false;
+  }
+  return true;
+}
+
+function parseLearningProgressBackup(content) {
+  let backup;
+  try {
+    backup = JSON.parse(content);
+  } catch (error) {
+    throw new Error("This file isn't valid JSON. Please choose an exported progress backup.");
+  }
+  if (!backup || typeof backup !== "object" || Array.isArray(backup) ||
+      backup.format !== PROGRESS_BACKUP_FORMAT || backup.version !== PROGRESS_BACKUP_VERSION ||
+      !Array.isArray(backup.sessions)) {
+    throw new Error("This isn't a supported Practical QA Lab progress backup (format version 1 required).");
+  }
+  if (backup.sessions.length === 0 || backup.sessions.length > PROGRESS_MAX_HISTORY) {
+    throw new Error(`Backups must contain between 1 and ${PROGRESS_MAX_HISTORY} saved sessions.`);
+  }
+  if (backup.exportedAt !== undefined &&
+      (typeof backup.exportedAt !== "string" || !Number.isFinite(Date.parse(backup.exportedAt)))) {
+    throw new Error("The backup timestamp is invalid.");
+  }
+  const seenIds = new Set();
+  const sessions = backup.sessions.map((item, index) => {
+    if (!progressBackupSessionIsValid(item)) {
+      throw new Error(`Session ${index + 1} contains invalid data. No progress was changed.`);
+    }
+    if (seenIds.has(item.id)) {
+      throw new Error("The backup contains duplicate session IDs. No progress was changed.");
+    }
+    seenIds.add(item.id);
+    // Do not carry unrecognized properties into localStorage.
+    return {
+      id: item.id, type: item.type, area: item.area,
+      score: item.score, maxScore: item.maxScore,
+      completedAt: item.completedAt,
+      questionScores: Array.isArray(item.questionScores) ? [...item.questionScores] : []
+    };
+  });
+  return sessions;
+}
+
+async function prepareLearningProgressImport(event) {
+  const status = document.getElementById("progressImportStatus");
+  const preview = document.getElementById("progressImportPreview");
+  const button = document.getElementById("importProgressButton");
+  const selectedFile = event.target.files?.[0];
+  const selectionId = ++progressImportSelectionId;
+  pendingProgressImport = null;
+  button.disabled = true;
+  status.textContent = "";
+  preview.dataset.state = "";
+  preview.textContent = selectedFile ? "Checking backup file…" : "Choose a JSON backup file to see a preview before importing.";
+  if (!selectedFile) return;
+
+  try {
+    if (!selectedFile.name.toLowerCase().endsWith(".json")) {
+      throw new Error("Choose a .json backup file exported from Practical QA Lab.");
+    }
+    if (selectedFile.size > PROGRESS_IMPORT_MAX_FILE_BYTES) {
+      throw new Error("This backup is too large. The maximum supported file size is 1 MB.");
+    }
+    const content = await selectedFile.text();
+    if (selectionId !== progressImportSelectionId) return;
+    pendingProgressImport = parseLearningProgressBackup(content);
+    updateLearningProgressImportPreview();
+  } catch (error) {
+    if (selectionId !== progressImportSelectionId) return;
+    pendingProgressImport = null;
+    button.disabled = true;
+    preview.dataset.state = "error";
+    preview.textContent = error.message || "Could not read this backup file.";
+  }
+}
+
+function buildLearningProgressImportPlan(mode) {
+  const existing = readSavedSessions();
+  const incoming = pendingProgressImport || [];
+  if (mode === "replace") {
+    const restored = [...incoming].sort((a, b) => b.completedAt.localeCompare(a.completedAt));
+    return { existingCount: existing.length, incomingCount: incoming.length,
+      duplicateCount: 0, addedCount: incoming.length, trimmedCount: 0,
+      sessions: restored.slice(0, PROGRESS_MAX_HISTORY) };
+  }
+
+  const existingIds = new Set(existing.map(s => s.id));
+  const additions = incoming.filter(s => !existingIds.has(s.id));
+  const combined = [...existing, ...additions]
+    .sort((a, b) => b.completedAt.localeCompare(a.completedAt));
+  const trimmedCount = Math.max(0, combined.length - PROGRESS_MAX_HISTORY);
+  return {
+    existingCount: existing.length, incomingCount: incoming.length,
+    duplicateCount: incoming.length - additions.length,
+    addedCount: additions.length, trimmedCount,
+    sessions: combined.slice(0, PROGRESS_MAX_HISTORY)
+  };
+}
+
+function updateLearningProgressImportPreview() {
+  const preview = document.getElementById("progressImportPreview");
+  const button = document.getElementById("importProgressButton");
+  if (!pendingProgressImport) {
+    button.disabled = true;
+    return;
+  }
+  if (!browserStorageAvailable()) {
+    button.disabled = true;
+    preview.dataset.state = "error";
+    preview.textContent = "Browser storage is unavailable. Import cannot be completed.";
+    return;
+  }
+  const mode = document.querySelector('input[name="progressImportMode"]:checked')?.value || "merge";
+  const plan = buildLearningProgressImportPlan(mode);
+  preview.dataset.state = "";
+  if (mode === "replace") {
+    preview.textContent = `Ready to replace ${plan.existingCount} existing ${plan.existingCount === 1 ? "session" : "sessions"} with ${plan.incomingCount} from this backup. Confirmation required.`;
+    button.disabled = false;
+  } else {
+    const warning = plan.trimmedCount ? ` The newest ${PROGRESS_MAX_HISTORY} sessions will be kept; ${plan.trimmedCount} older sessions would be removed.` : "";
+    preview.textContent = `Backup verified: ${plan.incomingCount} sessions. Merge would add ${plan.addedCount} new, skip ${plan.duplicateCount} already saved, and retain ${plan.existingCount} existing.${warning}`;
+    button.disabled = plan.addedCount === 0;
+  }
+}
+
+function importLearningProgress() {
+  const status = document.getElementById("progressImportStatus");
+  if (!pendingProgressImport || !browserStorageAvailable()) {
+    status.textContent = "Choose a valid progress backup before importing.";
+    return;
+  }
+  const mode = document.querySelector('input[name="progressImportMode"]:checked')?.value || "merge";
+  const plan = buildLearningProgressImportPlan(mode);
+  if (mode === "merge" && plan.addedCount === 0) {
+    status.textContent = "All sessions in this backup are already saved. No changes made.";
+    return;
+  }
+  if (mode === "replace" && plan.existingCount > 0 &&
+      !window.confirm(`Replace all ${plan.existingCount} currently saved sessions with ${plan.incomingCount} from this backup? This cannot be undone unless you have another backup.`)) {
+    status.textContent = "Import cancelled. Your existing progress was not changed.";
+    return;
+  }
+  if (mode === "merge" && plan.trimmedCount > 0 &&
+      !window.confirm(`This would exceed the ${PROGRESS_MAX_HISTORY}-session limit. The ${plan.trimmedCount} oldest sessions would be discarded. Continue?`)) {
+    status.textContent = "Import cancelled. Your existing progress was not changed.";
+    return;
+  }
+  try {
+    localStorage.setItem(PROGRESS_STORAGE_KEY, JSON.stringify(plan.sessions));
+    renderProgressDashboard();
+    status.textContent = mode === "replace"
+      ? `Progress restored: ${plan.sessions.length} sessions. Previous browser history was replaced.`
+      : `Progress merged: ${plan.addedCount} new sessions added; ${plan.duplicateCount} duplicates skipped.`;
+    pendingProgressImport = null;
+    document.getElementById("progressImportFile").value = "";
+    document.getElementById("importProgressButton").disabled = true;
+    const preview = document.getElementById("progressImportPreview");
+    preview.dataset.state = "";
+    preview.textContent = "Choose another JSON backup file to import more progress.";
+  } catch (error) {
+    status.textContent = "Import failed because browser storage couldn't save the file. Your existing progress should be unchanged.";
+  }
 }
 
 function clearLearningProgress() {

@@ -561,6 +561,43 @@
         <ul id="progressHistory" class="progress-history" aria-label="Recent session results"></ul>
       </div>
 
+      <!-- v0.6, step 1: learner-owned progress backup -->
+      <div class="progress-backup-card" aria-labelledby="progressBackupTitle">
+        <div class="progress-backup-copy">
+          <h3 id="progressBackupTitle">Back up your progress</h3>
+          <p>Download a JSON backup of your completed sessions. Keep it somewhere safe;
+            use Import Progress below to restore it here or in another browser.</p>
+        </div>
+        <button type="button" id="exportProgressButton" class="progress-export-button"
+          onclick="exportLearningProgress()" disabled>Export progress (.json) ↓</button>
+        <p id="progressExportStatus" class="progress-export-status" role="status" aria-live="polite"></p>
+      </div>
+
+      <!-- v0.6: Import versioned backups; preview and choose Merge or Replace before saving. -->
+      <div class="progress-import-card" aria-labelledby="progressImportTitle">
+        <h3 id="progressImportTitle">Import saved progress</h3>
+        <p class="progress-import-description">Restore a Practical QA Lab <strong>.json</strong> backup. Choose whether to keep your current sessions or replace them. Your data stays in this browser.</p>
+        <label for="progressImportFile" class="progress-file-label">Choose a backup file (.json)</label>
+        <input id="progressImportFile" class="progress-import-file" type="file"
+          accept=".json,application/json" onchange="prepareLearningProgressImport(event)">
+
+        <fieldset class="progress-import-options">
+          <legend>How should your progress be imported?</legend>
+          <label class="progress-import-option">
+            <input type="radio" name="progressImportMode" value="merge" checked onchange="updateLearningProgressImportPreview()">
+            <span><strong>Merge</strong><small>Keep existing sessions and add new ones. Duplicate session IDs are skipped.</small></span>
+          </label>
+          <label class="progress-import-option">
+            <input type="radio" name="progressImportMode" value="replace" onchange="updateLearningProgressImportPreview()">
+            <span><strong>Replace</strong><small>Remove current session history and restore only sessions from this backup.</small></span>
+          </label>
+        </fieldset>
+        <p id="progressImportPreview" class="progress-import-preview" aria-live="polite">Choose a JSON backup file to see a preview before importing.</p>
+        <button type="button" id="importProgressButton" class="progress-import-button"
+          onclick="importLearningProgress()" disabled>Import selected backup</button>
+        <p id="progressImportStatus" class="progress-import-status" role="status" aria-live="polite"></p>
+      </div>
+
       <div class="progress-controls">
         <button type="button" onclick="goHome()">Back to practice areas</button>
         <button type="button" id="clearProgressButton" class="progress-clear-button" onclick="clearLearningProgress()">Clear saved history</button>
