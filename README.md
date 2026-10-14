@@ -61,36 +61,44 @@ The current version runs entirely in the browser and does not require a backend.
 
 ## Current Version
 
-**v0.4 — Books & Free QA Resources**
 
-### Interactive Practice
-- Manual QA Practice
-- API Testing Practice
-- SQL Testing Practice
-- Junior QA Mock Interview
-- Mid-Level QA Mock Interview
-- Senior QA Mock Interview
+### v0.5 — Learner Progress Tracking
 
-### Books — Practical QA Press
-- The Manual QA Interview Workbook
-- API Testing Practice Workbook for QA Engineers
-- SQL Practice Workbook for Software Testers
+Practical QA Lab now allows learners to track their
+progress without creating an account.
 
-Each book includes a direct Amazon listing link.
+#### New Features
+- Personal learning progress dashboard
+- Automatic saving of completed practice sessions
+- Progress tracking across six QA practice areas
+- Average score and best score calculations
+- Progress bars for each practice area
+- Recent completed session history
+- Suggested areas for improvement
+- Clear saved history with confirmation
+- Responsive dashboard for desktop and mobile
 
-### Free QA Resources
-- Bug Report Template (PDF and editable Word)
-- Test Case Template (Excel)
-- QA Interview Preparation Checklist (PDF and editable Word)
+#### How Progress Tracking Works
+Completed session results are stored using the
+browser's localStorage.
 
-### Improvements in v0.4
-- Added a Books section featuring three published workbooks
-- Added original book cover images
-- Added direct Amazon purchase links
-- Added three free downloadable QA resources
-- Added responsive layouts for books and resources
-- Verified download links and mobile display
+Progress is saved on the current browser and device.
+It remains available after refreshing the page.
 
+No login or database is currently required.
+
+Note: Progress does not synchronize across devices
+and may be lost if browser data is cleared.
+
+#### Testing
+- Initial dashboard state verified
+- Completed practice sessions recorded
+- Repeated attempts recorded correctly
+- Mock interview scores recorded
+- Average and best score calculations verified
+- Progress persistence after refresh verified
+- History reset verified
+- Mobile layout checked
 
 ## Planned Features
 
@@ -98,7 +106,6 @@ Future versions may include:
 
 - Larger question banks
 - User accounts
-- Progress tracking
 - AI-assisted answer evaluation
 - Interview history
 - Additional QA practice areas

@@ -284,6 +284,18 @@
       </div>
 
 
+      <!-- v0.5: Learner progress shortcut -->
+      <div class="progress-teaser">
+        <div>
+          <p class="eyebrow">YOUR LEARNING JOURNEY</p>
+          <h2>Track your QA practice</h2>
+          <p>See your completed sessions, scores and areas to revisit.</p>
+        </div>
+        <button type="button" class="progress-open-button" onclick="showProgressDashboard()">
+          View my progress <span aria-hidden="true">→</span>
+        </button>
+      </div>
+
       <!-- BOOKS: PRACTICAL QA PRESS -->
       <section id="books" class="books-section" aria-labelledby="books-heading">
         <div class="books-section-heading">
@@ -508,6 +520,51 @@
         </p>
       </section>
 
+    </section>
+
+    <!-- v0.5: Learner Progress Dashboard (browser-local; no login) -->
+    <section id="progressDashboard" class="hidden progress-dashboard" aria-labelledby="progressDashboardTitle">
+      <div class="progress-dashboard-header">
+        <p class="eyebrow">PRACTICAL QA LAB · MY PROGRESS</p>
+        <h2 id="progressDashboardTitle">Your learning progress</h2>
+        <p>Track completed practice sessions and mock interviews in this browser.</p>
+      </div>
+
+      <p class="progress-privacy">
+        <strong>No account needed.</strong> Your scores are saved on this browser and device only.
+        They will not sync elsewhere and may be lost if you clear browser data.
+      </p>
+      <p id="progressStorageWarning" class="progress-storage-warning hidden" role="alert">
+        Browser storage is currently unavailable. Your results cannot be saved between visits.
+      </p>
+
+      <div class="progress-stat-grid" aria-label="Progress overview">
+        <div class="progress-stat"><span class="progress-stat-value" id="progressSessions">0</span><span class="progress-stat-label">Sessions completed</span></div>
+        <div class="progress-stat"><span class="progress-stat-value" id="progressAreas">0/6</span><span class="progress-stat-label">Areas practiced</span></div>
+        <div class="progress-stat"><span class="progress-stat-value" id="progressAverage">—</span><span class="progress-stat-label">Average score</span></div>
+        <div class="progress-stat"><span class="progress-stat-value" id="progressBest">—</span><span class="progress-stat-label">Best score</span></div>
+      </div>
+
+      <div class="progress-section-card">
+        <h3>Progress by practice area</h3>
+        <p class="progress-section-help">Each bar shows your average score for completed attempts in that area.</p>
+        <div id="progressAreasList" class="progress-areas-list"></div>
+        <p id="progressSuggestion" class="progress-suggestion" aria-live="polite"></p>
+      </div>
+
+      <div class="progress-section-card">
+        <h3>Recent completed sessions</h3>
+        <p class="progress-section-help">Scores are saved only after you finish all questions in a session.</p>
+        <div id="progressEmpty" class="progress-empty">
+          No completed sessions yet. Try any practice area or mock interview to get started.
+        </div>
+        <ul id="progressHistory" class="progress-history" aria-label="Recent session results"></ul>
+      </div>
+
+      <div class="progress-controls">
+        <button type="button" onclick="goHome()">Back to practice areas</button>
+        <button type="button" id="clearProgressButton" class="progress-clear-button" onclick="clearLearningProgress()">Clear saved history</button>
+      </div>
     </section>
 
     <!-- INTERVIEW LEVEL SELECTION -->
@@ -948,6 +1005,8 @@
 
       </div>
 
+      <p class="progress-save-status" id="interviewSaveStatus" role="status" aria-live="polite"></p>
+
       <div class="summary-actions">
 
         <button
@@ -975,6 +1034,9 @@
           Back to Practice Areas
 
         </button>
+
+      
+        <button type="button" class="secondary-button" onclick="showProgressDashboard()">View my progress</button>
 
       </div>
 
@@ -1252,6 +1314,8 @@
 
       </div>
 
+      <p class="progress-save-status" id="practiceSaveStatus" role="status" aria-live="polite"></p>
+
       <div class="summary-actions">
 
         <button
@@ -1279,6 +1343,9 @@
           Back to Practice Areas
 
         </button>
+
+      
+        <button type="button" class="secondary-button" onclick="showProgressDashboard()">View my progress</button>
 
       </div>
 
