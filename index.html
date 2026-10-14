@@ -284,6 +284,16 @@
       </div>
 
 
+      <!-- v0.7: Hands-on practice challenge (separate, deliberately buggy sandbox) -->
+      <section class="bug-hunt-teaser" aria-labelledby="bug-hunt-teaser-title">
+        <div>
+          <p class="eyebrow">HANDS-ON QA CHALLENGE</p>
+          <h2 id="bug-hunt-teaser-title">Checkout Bug Hunt</h2>
+          <p>Test a simulated shop, document defects, and get indicative feedback. Finish to save a challenge result in My Progress.</p>
+        </div>
+        <a class="bug-hunt-open-link" href="checkout-bug-hunt/index.html">Start Bug Hunt <span aria-hidden="true">→</span></a>
+      </section>
+
       <!-- v0.5: Learner progress shortcut -->
       <div class="progress-teaser">
         <div>
@@ -527,7 +537,7 @@
       <div class="progress-dashboard-header">
         <p class="eyebrow">PRACTICAL QA LAB · MY PROGRESS</p>
         <h2 id="progressDashboardTitle">Your learning progress</h2>
-        <p>Track completed practice sessions and mock interviews in this browser.</p>
+        <p>Track practice sessions, mock interviews and completed Bug Hunt challenges in this browser.</p>
       </div>
 
       <p class="progress-privacy">
@@ -540,7 +550,7 @@
 
       <div class="progress-stat-grid" aria-label="Progress overview">
         <div class="progress-stat"><span class="progress-stat-value" id="progressSessions">0</span><span class="progress-stat-label">Sessions completed</span></div>
-        <div class="progress-stat"><span class="progress-stat-value" id="progressAreas">0/6</span><span class="progress-stat-label">Areas practiced</span></div>
+        <div class="progress-stat"><span class="progress-stat-value" id="progressAreas">0/7</span><span class="progress-stat-label">Areas practiced</span></div>
         <div class="progress-stat"><span class="progress-stat-value" id="progressAverage">—</span><span class="progress-stat-label">Average score</span></div>
         <div class="progress-stat"><span class="progress-stat-value" id="progressBest">—</span><span class="progress-stat-label">Best score</span></div>
       </div>
@@ -554,7 +564,7 @@
 
       <div class="progress-section-card">
         <h3>Recent completed sessions</h3>
-        <p class="progress-section-help">Scores are saved only after you finish all questions in a session.</p>
+        <p class="progress-section-help">Scores are saved after completing a five-question session or finishing a Bug Hunt challenge.</p>
         <div id="progressEmpty" class="progress-empty">
           No completed sessions yet. Try any practice area or mock interview to get started.
         </div>
@@ -565,7 +575,7 @@
       <div class="progress-backup-card" aria-labelledby="progressBackupTitle">
         <div class="progress-backup-copy">
           <h3 id="progressBackupTitle">Back up your progress</h3>
-          <p>Download a JSON backup of your completed sessions. Keep it somewhere safe;
+          <p>Download a JSON backup of completed sessions and challenge scores (not the full bug reports). Keep it somewhere safe;
             use Import Progress below to restore it here or in another browser.</p>
         </div>
         <button type="button" id="exportProgressButton" class="progress-export-button"

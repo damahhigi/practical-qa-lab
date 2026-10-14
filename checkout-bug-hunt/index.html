@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Practical QA Lab Checkout Bug Hunt: a hands-on, simulated e-commerce testing challenge.">
+  <title>Checkout Bug Hunt | Practical QA Lab</title>
+  <link rel="stylesheet" href="./style.css">
+  <script src="./script.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <header class="site-header">
+    <div class="container header-content">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true">✓</span>
+        <div>
+          <strong>Practical QA Lab</strong>
+          <span>Hands-on testing challenges</span>
+        </div>
+      </div>
+      <div class="challenge-header-actions">
+        <a class="back-to-main" href="../index.html">← Main Practical QA Lab</a>
+        <span class="training-badge">TEST ENVIRONMENT · NO REAL PURCHASES</span>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="intro-section container" aria-labelledby="page-title">
+      <div class="intro-content">
+        <div class="eyebrow">LEVEL 1 · E-COMMERCE FUNCTIONAL TESTING</div>
+        <h1 id="page-title">Checkout Bug Hunt</h1>
+        <p class="intro-lede">You're the QA engineer checking a new shopping cart and checkout release. Read the requirements, explore the test shop and document any differences between expected and actual behaviour.</p>
+        <div class="mission-points" aria-label="Your mission">
+          <span>1. Read requirements</span>
+          <span>2. Test the checkout</span>
+          <span>3. Record findings</span>
+        </div>
+      </div>
+      <div class="mission-card">
+        <span class="mission-icon" aria-hidden="true">🔎</span>
+        <strong>Your QA mission</strong>
+        <p>Test combinations, repeat steps to reproduce unexpected results and check calculations at boundary values.</p>
+        <p class="mission-footnote">This is a deliberately imperfect training application. Record your observations below. Once you finish the challenge, you can review rule-based feedback and the answer guide.</p>
+      </div>
+    </section>
+
+    <section class="container requirements-section" aria-labelledby="requirements-title">
+      <details class="requirements-panel" open>
+        <summary id="requirements-title">
+          <span><span class="section-kicker">TEST BRIEF</span><strong>Checkout business requirements</strong></span>
+          <span class="details-prompt">Show / hide</span>
+        </summary>
+        <div class="requirements-body">
+          <p>Use these acceptance requirements to decide whether the simulated store is behaving correctly.</p>
+          <div class="requirement-list">
+            <div><strong>REQ-01</strong><span>Customers can add and remove products from their cart.</span></div>
+            <div><strong>REQ-02</strong><span>Product quantities can be changed from 1 to 5, and totals must update correctly.</span></div>
+            <div><strong>REQ-03</strong><span>Subtotal equals the sum of each product price multiplied by its quantity.</span></div>
+            <div><strong>REQ-04</strong><span>Code <code>SAVE10</code> gives 10% off the product subtotal.</span></div>
+            <div><strong>REQ-05</strong><span>Shipping costs KES 250 below KES 3,000; it is free at KES 3,000 or above, calculated before discounts.</span></div>
+            <div><strong>REQ-06</strong><span>Final total = Subtotal − Discount + Shipping.</span></div>
+            <div><strong>REQ-07</strong><span>Simulated order confirmation displays the correct final total.</span></div>
+          </div>
+        </div>
+      </details>
+    </section>
+
+    <section class="container store-section" aria-labelledby="store-title">
+      <div class="store-heading">
+        <div>
+          <div class="section-kicker">INTERACTIVE SANDBOX</div>
+          <h2 id="store-title">Northstar Shop</h2>
+          <p>A fictional store created for QA practice. All prices are in Kenyan shillings.</p>
+        </div>
+        <button id="resetShop" class="button button-outline" type="button">↺ Reset shop</button>
+      </div>
+
+      <div class="store-layout">
+        <div class="catalog-column">
+          <section aria-labelledby="products-title">
+            <div class="subsection-heading">
+              <h3 id="products-title">Choose products</h3>
+              <span class="subtle-text">Maximum 5 per product</span>
+            </div>
+            <div class="product-grid" id="productGrid">
+              <article class="product-card">
+                <div class="product-image product-image-notebook" aria-hidden="true">📓</div>
+                <div class="product-details">
+                  <h4>Notebook</h4>
+                  <p>Everyday ruled notebook</p>
+                  <strong>KES 1,000</strong>
+                  <button class="button button-primary add-button" type="button" data-add="notebook">Add to cart</button>
+                </div>
+              </article>
+              <article class="product-card">
+                <div class="product-image product-image-mouse" aria-hidden="true">🖱️</div>
+                <div class="product-details">
+                  <h4>Wireless Mouse</h4>
+                  <p>Compact wireless mouse</p>
+                  <strong>KES 1,500</strong>
+                  <button class="button button-primary add-button" type="button" data-add="mouse">Add to cart</button>
+                </div>
+              </article>
+              <article class="product-card">
+                <div class="product-image product-image-headphones" aria-hidden="true">🎧</div>
+                <div class="product-details">
+                  <h4>Headphones</h4>
+                  <p>Over-ear stereo headphones</p>
+                  <strong>KES 2,500</strong>
+                  <button class="button button-primary add-button" type="button" data-add="headphones">Add to cart</button>
+                </div>
+              </article>
+            </div>
+          </section>
+
+          <section class="cart-panel" aria-labelledby="cart-title">
+            <div class="subsection-heading">
+              <h3 id="cart-title">Your test cart <span id="cartCount" class="count-pill">0 items</span></h3>
+              <span class="subtle-text">Adjust quantities or remove items</span>
+            </div>
+            <div id="cartItems" class="cart-items">
+              <div class="empty-cart"><span aria-hidden="true">🛒</span><strong>Your cart is empty</strong><p>Add a product to begin testing.</p></div>
+            </div>
+          </section>
+        </div>
+
+        <aside class="checkout-column" aria-label="Checkout summary">
+          <section class="checkout-panel" aria-labelledby="checkout-title">
+            <div class="checkout-header">
+              <span class="section-kicker">SIMULATED CHECKOUT</span>
+              <h3 id="checkout-title">Order summary</h3>
+            </div>
+            <form id="discountForm" class="discount-form">
+              <label for="discountCode">Promotional code</label>
+              <div class="discount-input-row">
+                <input id="discountCode" name="discountCode" type="text" maxlength="20" autocomplete="off" placeholder="Enter code" aria-describedby="discountMessage">
+                <button id="applyDiscount" class="button button-dark" type="submit">Apply</button>
+              </div>
+              <p id="discountMessage" class="discount-message" role="status" aria-live="polite">Try any relevant code from the requirements.</p>
+            </form>
+            <div class="totals" aria-label="Cart totals">
+              <div><span>Subtotal</span><strong id="subtotal">KES 0</strong></div>
+              <div><span>Discount</span><strong id="discount">KES 0</strong></div>
+              <div><span>Shipping</span><strong id="shipping">KES 0</strong></div>
+              <div class="grand-total"><span>Final total</span><strong id="grandTotal">KES 0</strong></div>
+            </div>
+            <p class="checkout-note">No payment details required. This is a test order only.</p>
+            <button id="placeOrder" class="button button-primary order-button" type="button" disabled>Place test order</button>
+            <div id="orderConfirmation" class="order-confirmation" role="status" aria-live="polite" hidden></div>
+          </section>
+          <div class="test-reminder">
+            <strong>QA tip</strong>
+            <p>Compare what you observe with the requirement. A good defect report includes precise steps, test data, expected results and actual results.</p>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- Stage 4: learner reports remain editable; feedback and guide are only shown after Finish challenge. -->
+    <section class="container reporting-section" aria-labelledby="reporting-title">
+      <div class="reporting-heading">
+        <span class="section-kicker">YOUR QA FINDINGS</span>
+        <h2 id="reporting-title">Write a bug report</h2>
+        <p>Use what you observed in Northstar Shop to create a clear, reproducible defect report. Record one issue per report. You can add more than one and edit your findings as you test.</p>
+      </div>
+      <div class="reporting-layout">
+        <section class="report-form-panel" aria-labelledby="form-title">
+          <h3 id="form-title">New defect report</h3>
+          <p class="report-help">Describe what happened, not what you think caused it. All fields are required.</p>
+          <form id="bugReportForm">
+            <div class="field">
+              <label for="reportTitle">Defect title</label>
+              <input id="reportTitle" name="title" type="text" required minlength="10" maxlength="140" placeholder="Summarise the issue and when it occurs" autocomplete="off">
+            </div>
+            <div class="report-field-grid">
+              <div class="field">
+                <label for="reportRequirement">Related requirement</label>
+                <select id="reportRequirement" name="requirement" required>
+                  <option value="">Choose a requirement</option>
+                  <option value="REQ-01">REQ-01 · Add and remove products</option>
+                  <option value="REQ-02">REQ-02 · Quantity updates</option>
+                  <option value="REQ-03">REQ-03 · Subtotal calculation</option>
+                  <option value="REQ-04">REQ-04 · Discount code</option>
+                  <option value="REQ-05">REQ-05 · Shipping rules</option>
+                  <option value="REQ-06">REQ-06 · Final total</option>
+                  <option value="REQ-07">REQ-07 · Order confirmation</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="reportSeverity">Suggested severity</label>
+                <select id="reportSeverity" name="severity" required>
+                  <option value="">Choose severity</option>
+                  <option value="Critical">Critical</option>
+                  <option value="Major">Major</option>
+                  <option value="Minor">Minor</option>
+                </select>
+              </div>
+            </div>
+            <div class="field">
+              <label for="reportSteps">Steps to reproduce</label>
+              <textarea id="reportSteps" name="steps" rows="5" required minlength="15" maxlength="2000" placeholder="1. Start with an empty cart&#10;2. Add...&#10;3. Observe..."></textarea>
+              <small>Include product names, quantities and any codes you used.</small>
+            </div>
+            <div class="field">
+              <label for="reportExpected">Expected result</label>
+              <textarea id="reportExpected" name="expected" rows="3" required minlength="10" maxlength="1000" placeholder="What should happen according to the requirement?"></textarea>
+            </div>
+            <div class="field">
+              <label for="reportActual">Actual result</label>
+              <textarea id="reportActual" name="actual" rows="3" required minlength="10" maxlength="1000" placeholder="What did the simulated store actually display or do?"></textarea>
+            </div>
+            <div class="report-actions">
+              <button id="saveReport" class="button button-primary" type="submit">Save bug report</button>
+              <button id="cancelReportEdit" class="button button-outline" type="button" hidden>Cancel editing</button>
+            </div>
+            <p id="reportFormMessage" class="form-message" role="status" aria-live="polite">Reports are saved in this browser. Finish the challenge when you are ready for feedback.</p>
+          </form>
+        </section>
+
+        <section class="saved-reports-panel" aria-labelledby="saved-reports-title">
+          <div class="saved-reports-heading">
+            <h3 id="saved-reports-title">Your saved findings <span id="reportCount" class="count-pill">0 reports</span></h3>
+            <p>Review your reports, refine the steps or remove a report if needed.</p>
+          </div>
+          <div id="savedReports" class="saved-reports-list" aria-live="polite">
+            <div class="empty-reports"><strong>No reports yet</strong><p>Explore the store, then save your first finding using the form.</p></div>
+          </div>
+          <p class="report-storage-note">Saved bug reports stay in this browser and are not included in progress JSON backups. Only your finished challenge scores are included. Reset Shop does not delete reports.</p>
+        </section>
+      </div>
+    </section>
+
+    <section class="container assessment-section" aria-labelledby="assessment-title">
+      <div class="assessment-header">
+        <div>
+          <div class="section-kicker">CHECK YOUR FINDINGS</div>
+          <h2 id="assessment-title">Finish the Bug Hunt</h2>
+          <p>When you've documented the issues you found, finish the challenge to review your findings against the three deliberately introduced defects.</p>
+        </div>
+        <button id="finishChallenge" class="button button-primary" type="button" disabled>Finish challenge &amp; get feedback</button>
+      </div>
+      <div class="assessment-intro">
+        <strong>How this feedback works</strong>
+        <p>This is a rule-based practice review, not AI grading. It looks for evidence of known defects and checks whether your reports contain useful reproduction details. A report that isn't recognized isn't necessarily wrong. The suggested score is an approximate practice indicator.</p>
+        <p>After finishing, the score is saved in your main Practical QA Lab progress dashboard. Identical unchanged reports will not create duplicate attempts.</p>
+        <p id="assessmentHint" role="status" aria-live="polite">Save at least one bug report to enable feedback.</p>
+      </div>
+      <div id="assessmentResults" class="assessment-results" hidden aria-live="polite"></div>
+      <section id="answerGuide" class="answer-guide" aria-labelledby="answer-guide-title" hidden>
+        <div class="section-kicker">REVEALED AFTER FINISHING</div>
+        <h3 id="answer-guide-title">Known defects and reproduction examples</h3>
+        <p>These are the three seeded defects for this level. Your other observations may still be useful, even if they aren't among the known examples.</p>
+        <div class="answer-guide-grid">
+          <article class="answer-card">
+            <div class="answer-tag">DEFECT A · REQ-02 / REQ-03</div>
+            <h4>Cart subtotal can become stale after quantity changes</h4>
+            <p><strong>Try:</strong> Reset the shop, add a Notebook, then use the + button to increase quantity from 1 to 2.</p>
+            <p><strong>Expected:</strong> Subtotal changes from KES 1,000 to KES 2,000.</p>
+            <p><strong>Actual:</strong> The subtotal stays at KES 1,000 even though the cart shows 2 Notebooks.</p>
+          </article>
+          <article class="answer-card">
+            <div class="answer-tag">DEFECT B · REQ-04 / REQ-06</div>
+            <h4>Applied discount is not deducted from final total</h4>
+            <p><strong>Try:</strong> Add one Wireless Mouse and one Headphones (subtotal KES 4,000), then apply <code>SAVE10</code>.</p>
+            <p><strong>Expected:</strong> Discount KES 400 and final total KES 3,600 with free shipping.</p>
+            <p><strong>Actual:</strong> The discount appears and the code is accepted, but the final total remains KES 4,000.</p>
+          </article>
+          <article class="answer-card">
+            <div class="answer-tag">DEFECT C · REQ-05</div>
+            <h4>Shipping threshold excludes exactly KES 3,000</h4>
+            <p><strong>Try:</strong> Reset the shop and add two Wireless Mice (subtotal KES 3,000) without any discount.</p>
+            <p><strong>Expected:</strong> Free shipping and final total KES 3,000.</p>
+            <p><strong>Actual:</strong> Shipping is KES 250 and the final total is KES 3,250.</p>
+          </article>
+        </div>
+        <p class="answer-note">For classroom learning only: the scoring rules and sample answers are included in this client-side prototype, so they are not suitable for secure exams.</p>
+      </section>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-content"><span>Practical QA Lab · Checkout Bug Hunt · Progress-integrated prototype</span><span>Training simulation only · No real orders</span></div>
+  </footer>
+  <div id="announcement" class="sr-only" role="status" aria-live="polite"></div>
+</body>
+</html>

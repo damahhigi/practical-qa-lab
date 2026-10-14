@@ -5095,7 +5095,8 @@ const PROGRESS_AREAS = [
   { type: "practice", key: "sql", title: "SQL Testing" },
   { type: "interview", key: "junior", title: "Junior QA Interview" },
   { type: "interview", key: "mid", title: "Mid-Level QA Interview" },
-  { type: "interview", key: "senior", title: "Senior QA Interview" }
+  { type: "interview", key: "senior", title: "Senior QA Interview" },
+  { type: "challenge", key: "checkout", title: "Checkout Bug Hunt" }
 ];
 
 function readSavedSessions() {
@@ -5183,7 +5184,7 @@ function renderProgressDashboard() {
   const visited = new Set(sessions.map(item => `${item.type}:${item.area}`));
 
   document.getElementById("progressSessions").textContent = sessions.length;
-  document.getElementById("progressAreas").textContent = `${visited.size}/6`;
+  document.getElementById("progressAreas").textContent = `${visited.size}/${PROGRESS_AREAS.length}`;
   document.getElementById("progressAverage").textContent = sessions.length
     ? `${Math.round(sums / sessions.length)}%` : "—";
   document.getElementById("progressBest").textContent = best !== null

@@ -61,42 +61,55 @@ The current version runs entirely in the browser and does not require a backend.
 
 ## Current Version
 
-### v0.6 — Export & Import Progress
+### v0.7 — Checkout Bug Hunt
 
-Learners can now back up and restore their learning
-progress without creating an account.
+Practical QA Lab now includes its first hands-on
+QA testing simulation.
 
 #### New Features
-- Export completed learning sessions to JSON
-- Import saved progress from a JSON backup
-- Preview backup contents before importing
-- Merge imported sessions with existing history
-- Detect and skip duplicate session IDs
-- Replace current progress with a saved backup
-- Confirmation required before replacing history
-- Reject invalid or unsupported backup files
-- Preserve saved progress after refreshing
-- Responsive export and import sections
+- Interactive e-commerce testing environment
+- Seven checkout business requirements
+- Shopping cart with quantity controls
+- Promotional discount and shipping calculations
+- Simulated order placement
+- Three intentionally introduced defects
+- Structured bug report submission
+- Save, edit and delete bug reports
+- Rule-based bug identification and feedback
+- Duplicate defect detection
+- Bug report documentation feedback
+- Practice score out of 100
+- Answer guide revealed after finishing
+- Checkout Bug Hunt progress tracking
+- Export and import support for challenge scores
+- Responsive desktop and mobile layouts
 
-#### How It Works
-Progress is stored locally in the browser using
-localStorage.
+#### How Checkout Bug Hunt Works
+Learners review the checkout requirements and
+explore a simulated online shop.
 
-Export creates a downloadable JSON file containing
-completed sessions, scores, and completion dates.
+They investigate unexpected behaviour, document
+their findings and finish the challenge to receive
+feedback.
 
-Import supports two options:
-- Merge: Keep existing progress and add new sessions.
-- Replace: Remove existing history and restore the
-  selected backup.
+The assessment uses predefined rules, not AI.
+Scores are indicative and may not recognize every
+valid bug report.
 
-No login, database, or paid hosting is required.
+#### Progress Tracking
+Checkout Bug Hunt is the seventh learning area.
 
-#### Limitations
-- Progress does not automatically sync between devices.
-- Learners must export and import files manually.
-- Clearing browser data can remove locally saved progress.
-- Backup files should be stored somewhere safe.
+Completed challenge scores are saved in the
+browser and included in progress backups.
+
+Detailed bug reports are stored separately and
+are not included in JSON progress backups.
+
+#### Important Notes
+- The shop is fictional.
+- No real purchases or payments occur.
+- Intentional defects are included for learning.
+- The platform is not designed for secure exams.
 
 
 ## Planned Features
