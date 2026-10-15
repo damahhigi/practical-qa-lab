@@ -1,5 +1,8 @@
 # Practical QA Lab
 
+[![Playwright Regression Tests](https://github.com/damahhigi/practical-qa-lab/actions/workflows/playwright.yml/badge.svg)](https://github.com/damahhigi/practical-qa-lab/actions/workflows/playwright.yml)
+
+
 Practical QA Lab is an interactive learning platform for practising real-world software quality assurance scenarios.
 
 It is designed to help QA professionals and aspiring testers strengthen practical testing skills through scenario-based exercises, instant feedback and mock interview practice.
