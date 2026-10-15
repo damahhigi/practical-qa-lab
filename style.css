@@ -2524,3 +2524,62 @@ li {
 #practice-areas {
   scroll-margin-top: 20px;
 }
+
+/* Homepage quick navigation */
+
+.home-quick-nav {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+.home-quick-nav a,
+.home-quick-nav button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 46px;
+  min-width: 0;
+  padding: 10px 12px;
+
+  background: #FFFFFF;
+  color: #0B2239;
+  border: 1px solid #C7D8E1;
+  border-radius: 10px;
+
+  font: 700 14px/1.3 Arial, sans-serif;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.home-quick-nav a:hover,
+.home-quick-nav button:hover {
+  background: #EAF7F2;
+  border-color: #1FA37A;
+}
+
+.home-quick-nav a:focus-visible,
+.home-quick-nav button:focus-visible {
+  outline: 3px solid #1FA37A;
+  outline-offset: 3px;
+}
+
+
+/* Keep mobile quick navigation balanced */
+@media (max-width: 600px) {
+  .home-quick-nav {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .home-quick-nav > button {
+    grid-column: 1 / -1;
+  }
+}
+
+
+/* Show Start Practicing only on the homepage */
+body:has(#home.hidden) .hero-practice-link {
+  display: none;
+}
