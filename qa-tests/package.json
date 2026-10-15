@@ -1,0 +1,15 @@
+{
+  "name": "practical-qa-lab-regression-tests",
+  "private": true,
+  "version": "0.9.0",
+  "description": "Playwright browser tests for Practical QA Lab",
+  "scripts": {
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "test:ui": "playwright test --ui",
+    "test:report": "playwright show-report"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.56.0"
+  }
+}

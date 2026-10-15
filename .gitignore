@@ -1,2 +1,14 @@
 
+# Playwright dependencies
+qa-tests/node_modules/
+
+# Playwright test results
+qa-tests/test-results/
+qa-tests/playwright-report/
+
+# Playwright temporary files
+qa-tests/.cache/
+
+# macOS system files
 .DS_Store
+
