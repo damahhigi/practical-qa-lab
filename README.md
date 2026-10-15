@@ -61,55 +61,62 @@ The current version runs entirely in the browser and does not require a backend.
 
 ## Current Version
 
-### v0.7 — Checkout Bug Hunt
 
-Practical QA Lab now includes its first hands-on
-QA testing simulation.
+### v0.8 — Test Case Writing Lab
+
+Practical QA Lab now includes a second hands-on
+QA learning challenge focused on test case design.
 
 #### New Features
-- Interactive e-commerce testing environment
-- Seven checkout business requirements
-- Shopping cart with quantity controls
-- Promotional discount and shipping calculations
-- Simulated order placement
-- Three intentionally introduced defects
-- Structured bug report submission
-- Save, edit and delete bug reports
-- Rule-based bug identification and feedback
-- Duplicate defect detection
-- Bug report documentation feedback
-- Practice score out of 100
-- Answer guide revealed after finishing
-- Checkout Bug Hunt progress tracking
-- Export and import support for challenge scores
+- User registration testing scenario
+- Eight business requirements
+- Structured test case writing workspace
+- Automatic test case IDs
+- Positive, Negative and Boundary test types
+- Save, edit and delete test cases
+- Local browser draft storage
+- Rule-based coverage assessment
+- Requirement coverage analysis
+- Test type diversity feedback
+- Documentation quality checks
+- Duplicate test case detection
+- Sample test scenario recommendations
+- Indicative coverage score out of 100
+- Integration with the learning progress dashboard
+- JSON export and import for written test cases
+- Merge and Replace backup options
+- Invalid backup protection
 - Responsive desktop and mobile layouts
 
-#### How Checkout Bug Hunt Works
-Learners review the checkout requirements and
-explore a simulated online shop.
+#### Learning Progress
 
-They investigate unexpected behaviour, document
-their findings and finish the challenge to receive
-feedback.
+Test Case Writing Lab is the eighth learning area.
 
-The assessment uses predefined rules, not AI.
-Scores are indicative and may not recognize every
-valid bug report.
+Completed design reviews are saved in the main
+progress dashboard and included in progress
+JSON backups.
 
-#### Progress Tracking
-Checkout Bug Hunt is the seventh learning area.
+#### Test Case Backups
 
-Completed challenge scores are saved in the
-browser and included in progress backups.
+Written test cases are stored separately from
+learning progress.
 
-Detailed bug reports are stored separately and
-are not included in JSON progress backups.
+Learners can export their test case drafts as JSON
+and restore them using Merge or Replace.
 
-#### Important Notes
-- The shop is fictional.
-- No real purchases or payments occur.
-- Intentional defects are included for learning.
-- The platform is not designed for secure exams.
+Export Progress saves scores and session history.
+Export Test Cases saves the actual written cases.
+
+#### Assessment Limitations
+
+The assessment uses predefined rules rather than AI.
+Scores indicate coverage evidence and documentation
+completeness, not verified test case correctness.
+
+The registration requirements are a test design
+exercise, not a functioning registration backend.
+
+No account or real personal information is required.
 
 
 ## Planned Features

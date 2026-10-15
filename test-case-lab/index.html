@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Practical QA Lab Test Case Writing Lab: design and save test cases for fictional user registration requirements.">
+  <title>Test Case Writing Lab | Practical QA Lab</title>
+  <link rel="stylesheet" href="./style.css?v=0.8-draft-backup">
+  <script src="./script.js?v=0.8-draft-backup" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="brand"><span class="brand-icon" aria-hidden="true">✓</span><div><strong>Practical QA Lab</strong><span>Hands-on testing challenges</span></div></div>
+      <div class="header-links"><a class="main-link" href="../index.html">← Main Practical QA Lab</a><span class="lab-badge">LEVEL 1 · TEST DESIGN</span></div>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="container hero" aria-labelledby="page-title">
+      <div class="hero-copy">
+        <span class="eyebrow">PRACTICAL QA LAB · v0.8 · STAGE 4</span>
+        <h1 id="page-title">Test Case <span>Writing Lab</span></h1>
+        <p class="hero-description">You've joined the QA team for a fictional e-commerce platform. A new user registration feature is about to be developed. Turn the requirements into clear, executable test cases.</p>
+        <div class="hero-steps" aria-label="Your workflow"><span><b>01</b> Read requirements</span><span><b>02</b> Design test cases</span><span><b>03</b> Get design feedback</span></div>
+      </div>
+      <aside class="mission-card" aria-label="Your assignment">
+        <div class="mission-icon" aria-hidden="true">✍</div>
+        <span class="mission-label">YOUR QA MISSION</span>
+        <h2>Think before you test.</h2>
+        <p>Cover successful registration, invalid input, boundary values and essential business rules. Make each expected result measurable.</p>
+        <div class="mission-note"><strong>Stage 4:</strong> Save your test cases, then request a coverage review. Feedback is rule-based and is not a substitute for a senior tester's review.</div>
+      </aside>
+    </section>
+
+    <section class="container requirements-wrap" aria-labelledby="requirements-heading">
+      <details class="requirements-panel" open>
+        <summary><span><span class="section-kicker">THE FEATURE SPECIFICATION</span><strong id="requirements-heading">User registration requirements</strong></span><span class="show-hide">Show / hide <span aria-hidden="true">⌄</span></span></summary>
+        <div class="requirements-content">
+          <p>Use these eight requirements as your source of truth. Your test cases should describe what the system <em>should</em> do, not claim results from a test you haven't executed.</p>
+          <div class="requirements-list">
+            <div class="requirement"><span class="req-id">REQ-01</span><span>The registration form requires an email address, password, confirm password and acceptance of terms.</span></div>
+            <div class="requirement"><span class="req-id">REQ-02</span><span>The email address must follow a valid email format.</span></div>
+            <div class="requirement"><span class="req-id">REQ-03</span><span>Passwords must contain 8–20 characters, including at least one uppercase letter, one lowercase letter and one digit.</span></div>
+            <div class="requirement"><span class="req-id">REQ-04</span><span>The confirmation password must match the original password exactly.</span></div>
+            <div class="requirement"><span class="req-id">REQ-05</span><span>An email address already registered cannot be used again. Duplicate checks are case-insensitive.</span></div>
+            <div class="requirement"><span class="req-id">REQ-06</span><span>Users must accept the terms and conditions before registering.</span></div>
+            <div class="requirement"><span class="req-id">REQ-07</span><span>Valid registration creates a simulated account and displays a success message.</span></div>
+            <div class="requirement"><span class="req-id">REQ-08</span><span>Invalid submissions display a relevant validation message without creating an account.</span></div>
+          </div>
+        </div>
+      </details>
+    </section>
+
+    <section class="container workspace-section" id="workspace" aria-labelledby="workspace-heading">
+      <div class="section-head">
+        <div><span class="section-kicker">YOUR TEST DESIGN WORKSPACE</span><h2 id="workspace-heading">Write your test cases</h2><p>Design one distinct scenario per test case. Save as many as you need, then revise them as you improve your coverage.</p></div>
+        <span class="draft-badge"><span aria-hidden="true">●</span> DRAFT WORK · GUIDED REVIEW</span>
+      </div>
+
+      <div class="summary-stats" aria-label="Draft test case statistics">
+        <div class="stat"><span class="stat-icon" aria-hidden="true">▤</span><div><strong id="totalCases">0</strong><span>Test cases saved</span></div></div>
+        <div class="stat"><span class="stat-icon" aria-hidden="true">◎</span><div><strong id="reqCoverage">0/8</strong><span>Requirements referenced</span></div></div>
+        <div class="stat"><span class="stat-icon" aria-hidden="true">◇</span><div><strong id="typeCoverage">0/3</strong><span>Test types included</span></div></div>
+      </div>
+      <p class="stats-note">These are draft counts, not a coverage score. Referencing a requirement does not necessarily mean it has been tested sufficiently.</p>
+
+      <div class="workspace-grid">
+        <section class="panel form-panel" aria-labelledby="form-heading">
+          <div class="panel-heading"><div><span class="section-kicker">TEST CASE EDITOR</span><h3 id="form-heading">Create a test case</h3></div><span class="form-id" id="formCaseId">TC-001</span></div>
+          <p class="panel-description">Give enough detail that another tester could follow your steps without guessing. Fields marked * are required.</p>
+          <form id="testCaseForm">
+            <div class="field-grid">
+              <div class="field"><label for="requirement">Related requirement *</label><select id="requirement" name="requirement" required><option value="">Choose a requirement</option><option value="REQ-01">REQ-01 — Required fields</option><option value="REQ-02">REQ-02 — Email format</option><option value="REQ-03">REQ-03 — Password rules</option><option value="REQ-04">REQ-04 — Password match</option><option value="REQ-05">REQ-05 — Duplicate emails</option><option value="REQ-06">REQ-06 — Terms acceptance</option><option value="REQ-07">REQ-07 — Successful registration</option><option value="REQ-08">REQ-08 — Validation failures</option></select></div>
+              <div class="field"><label for="testType">Test type *</label><select id="testType" name="testType" required><option value="">Choose a type</option><option>Positive</option><option>Negative</option><option>Boundary</option></select></div>
+            </div>
+            <div class="field"><label for="scenario">Test scenario *</label><input id="scenario" name="scenario" type="text" maxlength="180" required placeholder="What behaviour or condition are you testing?"></div>
+            <div class="field"><label for="preconditions">Preconditions</label><textarea id="preconditions" name="preconditions" rows="2" maxlength="600" placeholder="What must be true before executing this test? (Use N/A if not applicable.)"></textarea></div>
+            <div class="field"><label for="steps">Test steps *</label><textarea id="steps" name="steps" rows="5" maxlength="2400" required placeholder="1. Open the registration page&#10;2. Enter the test data&#10;3. Submit the form"></textarea><small>Write numbered, reproducible actions.</small></div>
+            <div class="field"><label for="testData">Test data *</label><textarea id="testData" name="testData" rows="3" maxlength="1000" required placeholder="Specify exact email, password and other inputs used. Use fictional data only."></textarea></div>
+            <div class="field"><label for="expectedResult">Expected result *</label><textarea id="expectedResult" name="expectedResult" rows="4" maxlength="1300" required placeholder="What should the application display or do? Be specific."></textarea></div>
+            <div class="field"><label for="priority">Priority *</label><select id="priority" name="priority" required><option value="">Choose priority</option><option>High</option><option>Medium</option><option>Low</option></select></div>
+            <div class="form-actions"><button class="button button-primary" id="saveCase" type="submit">Save test case</button><button class="button button-outline" id="cancelEdit" type="button" hidden>Cancel editing</button></div>
+            <p id="formMessage" class="form-message" role="status" aria-live="polite"></p>
+          </form>
+        </section>
+
+        <aside class="saved-column">
+          <section class="panel saved-panel" aria-labelledby="saved-heading">
+            <div class="panel-heading"><div><span class="section-kicker">YOUR SAVED DRAFTS</span><h3 id="saved-heading">Saved test cases <span class="count-pill" id="savedCount">0</span></h3></div></div>
+            <p class="panel-description">Your drafts are saved in this browser. Choose Edit to improve one or Delete to remove it.</p>
+            <div id="caseList" class="case-list" aria-live="polite"><div class="empty-state"><span aria-hidden="true">▤</span><strong>No test cases yet</strong><p>Create and save your first test case using the form.</p></div></div>
+          </section>
+          <div class="qa-tip"><span class="tip-icon" aria-hidden="true">✦</span><div><strong>QA design tip</strong><p>For password length 8–20, consider values below, at and above <em>both</em> limits. Include the exact inputs in the test data field.</p></div></div>
+          <div class="storage-note"><strong>About your drafts</strong><p>Saved locally in this browser, separately from the main QA progress score backup. Use <strong>Back up your test cases</strong> below to download the actual drafts. Use only fictional test data.</p></div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="container backup-section" id="draft-backups" aria-labelledby="backup-heading">
+      <div class="section-head">
+        <div>
+          <span class="section-kicker">PROTECT YOUR WRITTEN WORK</span>
+          <h2 id="backup-heading">Back up your test cases</h2>
+          <p>Download your written drafts, and restore them later in this or another browser. This backup is separate from the main progress-score backup.</p>
+        </div>
+      </div>
+      <div class="backup-grid">
+        <section class="backup-card" aria-labelledby="export-heading">
+          <span class="section-kicker">STEP 1 · EXPORT</span>
+          <h3 id="export-heading">Save a copy of your drafts</h3>
+          <p>Export all saved test case fields, IDs and dates to a JSON file. Keep it in a safe place; browser storage alone is not a permanent backup.</p>
+          <button class="button button-primary" type="button" id="exportDrafts" disabled>Download test cases (.json) ↓</button>
+          <p class="backup-note" id="exportDraftMessage" role="status" aria-live="polite">Save a test case to enable the download.</p>
+        </section>
+        <section class="backup-card" aria-labelledby="import-heading">
+          <span class="section-kicker">STEP 2 · IMPORT</span>
+          <h3 id="import-heading">Restore saved drafts</h3>
+          <p>Choose a Test Case Lab backup. Preview what would change before restoring anything.</p>
+          <label class="backup-label" for="draftBackupFile">Choose backup file (.json)</label>
+          <input id="draftBackupFile" class="backup-file" type="file" accept=".json,application/json">
+          <fieldset class="backup-mode">
+            <legend>How should drafts be imported?</legend>
+            <label><input type="radio" name="draftImportMode" value="merge" checked><span><strong>Merge</strong><small>Keep existing drafts. Skip identical cases; give conflicting IDs new numbers.</small></span></label>
+            <label><input type="radio" name="draftImportMode" value="replace"><span><strong>Replace</strong><small>Replace all current drafts with those from the selected backup. Requires confirmation.</small></span></label>
+          </fieldset>
+          <p id="draftImportPreview" class="backup-preview" role="status" aria-live="polite">Select a JSON backup to preview it. Nothing will be changed until you confirm.</p>
+          <button class="button button-primary" type="button" id="importDrafts" disabled>Import selected test cases</button>
+        </section>
+      </div>
+      <p class="backup-privacy">Your files stay on your device. The backup contains the test data you wrote, so use fictional data only. <strong>Progress-score exports do not include written test cases</strong>; use this separate download to protect your drafts.</p>
+    </section>
+
+    <section class="container assessment-section" id="design-review" aria-labelledby="review-heading">
+      <div class="review-intro">
+        <div>
+          <span class="section-kicker">STAGE 4 · COVERAGE & PROGRESS</span>
+          <h2 id="review-heading">Review your test design</h2>
+          <p>When you're ready, check which requirements you've referenced, the test techniques you've used and whether each case has actionable details.</p>
+        </div>
+        <button class="button button-primary" type="button" id="reviewCases" disabled>Review test cases &amp; save progress</button>
+      </div>
+      <p class="review-saving-note">Completing a review saves the <strong>indicative coverage score</strong> to My Progress. Reviewing unchanged drafts again does not create another entry. Drafts stay separate and are <strong>not</strong> included in progress backups.</p>
+      <p class="review-disclaimer">This is a <strong>rule-based coverage indicator</strong>, not proof that a scenario is correct or sufficiently tested. The reviewer checks primary requirement labels, basic wording and exact duplicate content; it cannot fully interpret a tester's intent.</p>
+      <p id="reviewMessage" class="review-message" role="status" aria-live="polite">Save at least one test case to unlock feedback.</p>
+      <section id="reviewResults" class="review-results" aria-labelledby="results-heading" hidden>
+        <div class="review-result-head">
+          <div><span class="section-kicker">YOUR PRACTICE REVIEW</span><h3 id="results-heading">Test design feedback</h3></div>
+          <div class="score-tile"><strong id="reviewScore">0/100</strong><span>coverage indicator</span></div>
+        </div>
+        <p id="designProgressSaveStatus" class="design-progress-save" role="status" aria-live="polite"></p>
+        <p class="review-explain">Breakdown: 40 points for requirements referenced, 15 for test types represented, 30 for basic documentation checks, and 15 for avoiding identical duplicate cases. These points reward coverage evidence, <strong>not verified correctness</strong>.</p>
+        <div id="reviewBreakdown" class="review-breakdown" aria-label="Assessment breakdown"></div>
+        <div class="feedback-columns">
+          <div class="review-card"><h4>Requirements referenced</h4><p class="review-help">A requirement is marked referenced when it's selected as a case's primary requirement. This does not establish full requirement coverage.</p><div id="reviewRequirements" class="coverage-list"></div></div>
+          <div class="review-card"><h4>Coverage opportunities</h4><ul id="reviewSuggestions" class="advice-list"></ul></div>
+        </div>
+        <div class="review-card"><h4>Test case documentation feedback</h4><div id="reviewCaseFeedback" class="case-feedback-list"></div></div>
+      </section>
+      <section id="designGuide" class="design-guide" aria-labelledby="guide-heading" hidden>
+        <span class="section-kicker">REFERENCE EXAMPLES · SHOWN AFTER REVIEW</span>
+        <h3 id="guide-heading">Sample scenarios to consider</h3>
+        <p>Use these as a starting point to expand your thinking, not as a complete test suite or proof that existing cases are correct.</p>
+        <div class="guide-grid">
+          <article><strong>REQ-01 / REQ-08 · Required inputs</strong><p>Try submitting with each field missing in turn and verify a relevant message and no account creation.</p></article>
+          <article><strong>REQ-02 · Email format</strong><p>Try valid and invalid formats, including missing @, missing domain, spaces and appropriately formatted addresses.</p></article>
+          <article><strong>REQ-03 · Password boundaries</strong><p>Design separate tests at 7, 8, 9, 19, 20 and 21 characters. Keep uppercase, lowercase and digit rules satisfied when isolating length.</p></article>
+          <article><strong>REQ-03 · Password composition</strong><p>Test passwords missing an uppercase letter, missing a lowercase letter and missing a digit independently.</p></article>
+          <article><strong>REQ-04 · Confirmation</strong><p>Test exactly matching and different confirmation passwords, including case differences.</p></article>
+          <article><strong>REQ-05 · Existing accounts</strong><p>Test a previously registered email and the same address with changed letter casing.</p></article>
+          <article><strong>REQ-06 · Terms</strong><p>Keep all other fields valid, leave terms unchecked and confirm registration is prevented.</p></article>
+          <article><strong>REQ-07 / REQ-08 · Outcomes</strong><p>Test a valid first-time registration, success message and account creation; contrast with invalid submissions creating no account.</p></article>
+        </div>
+        <p class="guide-note">Reminder: The registration feature is a written specification for test design, not a functioning registration backend in this stage.</p>
+      </section>
+    </section>
+  </main>
+
+  <footer class="site-footer"><div class="container footer-inner"><span>Practical QA Lab · Test Case Writing Lab · Stage 4 prototype</span><span>Training-only scenario · No real user accounts</span></div></footer>
+</body>
+</html>

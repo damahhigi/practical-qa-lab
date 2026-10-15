@@ -24,7 +24,7 @@
 
   <title>Practical QA Lab</title>
 
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=0.8-stage4">
 
 </head>
 
@@ -294,6 +294,16 @@
         <a class="bug-hunt-open-link" href="checkout-bug-hunt/index.html">Start Bug Hunt <span aria-hidden="true">→</span></a>
       </section>
 
+      <!-- v0.8: Hands-on test design challenge (drafts remain browser-local) -->
+      <section class="test-case-lab-teaser" aria-labelledby="test-case-lab-title">
+        <div>
+          <p class="eyebrow">HANDS-ON QA CHALLENGE</p>
+          <h2 id="test-case-lab-title">Test Case Writing Lab</h2>
+          <p>Design test cases from user registration requirements, check coverage, and save your indicative review score to My Progress. Your written drafts remain in this browser.</p>
+        </div>
+        <a class="test-case-lab-open-link" href="test-case-lab/index.html">Start Test Case Lab <span aria-hidden="true">→</span></a>
+      </section>
+
       <!-- v0.5: Learner progress shortcut -->
       <div class="progress-teaser">
         <div>
@@ -550,7 +560,7 @@
 
       <div class="progress-stat-grid" aria-label="Progress overview">
         <div class="progress-stat"><span class="progress-stat-value" id="progressSessions">0</span><span class="progress-stat-label">Sessions completed</span></div>
-        <div class="progress-stat"><span class="progress-stat-value" id="progressAreas">0/7</span><span class="progress-stat-label">Areas practiced</span></div>
+        <div class="progress-stat"><span class="progress-stat-value" id="progressAreas">0/8</span><span class="progress-stat-label">Areas practiced</span></div>
         <div class="progress-stat"><span class="progress-stat-value" id="progressAverage">—</span><span class="progress-stat-label">Average score</span></div>
         <div class="progress-stat"><span class="progress-stat-value" id="progressBest">—</span><span class="progress-stat-label">Best score</span></div>
       </div>
@@ -564,7 +574,7 @@
 
       <div class="progress-section-card">
         <h3>Recent completed sessions</h3>
-        <p class="progress-section-help">Scores are saved after completing a five-question session or finishing a Bug Hunt challenge.</p>
+        <p class="progress-section-help">Scores are saved after a five-question session, a Bug Hunt finish, or a Test Case Lab design review.</p>
         <div id="progressEmpty" class="progress-empty">
           No completed sessions yet. Try any practice area or mock interview to get started.
         </div>
@@ -1400,7 +1410,7 @@
 
   </main>
 
-  <script src="script.js"></script>
+  <script src="script.js?v=0.8-stage4"></script>
 
 </body>
 

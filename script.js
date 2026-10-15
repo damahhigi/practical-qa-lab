@@ -5096,7 +5096,8 @@ const PROGRESS_AREAS = [
   { type: "interview", key: "junior", title: "Junior QA Interview" },
   { type: "interview", key: "mid", title: "Mid-Level QA Interview" },
   { type: "interview", key: "senior", title: "Senior QA Interview" },
-  { type: "challenge", key: "checkout", title: "Checkout Bug Hunt" }
+  { type: "challenge", key: "checkout", title: "Checkout Bug Hunt" },
+  { type: "challenge", key: "testcase", title: "Test Case Writing Lab" }
 ];
 
 function readSavedSessions() {

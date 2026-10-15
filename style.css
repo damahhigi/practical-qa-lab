@@ -2460,3 +2460,36 @@ li {
   .bug-hunt-teaser { flex-direction: column; align-items: stretch; padding: 21px; }
   .bug-hunt-open-link { width: 100%; }
 }
+
+
+/* v0.8 — Test Case Writing Lab homepage entry point */
+.test-case-lab-teaser {
+  margin: 18px 0 0;
+  padding: 25px 28px;
+  border: 1px solid #bce2d5;
+  border-radius: 16px;
+  background: #edf8f3;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 22px;
+}
+.test-case-lab-teaser h2 { font-size: 23px; margin: 5px 0 7px; }
+.test-case-lab-teaser p { margin: 0; line-height: 1.55; color: #496171; }
+.test-case-lab-teaser .eyebrow { margin-bottom: 7px; }
+.test-case-lab-open-link {
+  flex-shrink: 0;
+  text-decoration: none;
+  color: #fff;
+  background: #0b2239;
+  font-weight: 700;
+  border-radius: 10px;
+  padding: 15px 20px;
+  text-align: center;
+}
+.test-case-lab-open-link:hover { background: #143e5f; }
+.test-case-lab-open-link:focus-visible { outline: 3px solid #1fa37a; outline-offset: 3px; }
+@media (max-width: 700px) {
+  .test-case-lab-teaser { flex-direction: column; align-items: stretch; padding: 21px; }
+  .test-case-lab-open-link { width: 100%; }
+}
