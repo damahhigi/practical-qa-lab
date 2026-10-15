@@ -2493,3 +2493,34 @@ li {
   .test-case-lab-teaser { flex-direction: column; align-items: stretch; padding: 21px; }
   .test-case-lab-open-link { width: 100%; }
 }
+
+/* Mobile UX improvement: primary practice CTA */
+
+.hero-practice-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 14px;
+  padding: 14px 22px;
+
+  background: #39D6A3;
+  color: #0B2239;
+
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.hero-practice-link:hover {
+  background: #A5F1DA;
+}
+
+.hero-practice-link:focus-visible {
+  outline: 3px solid #FFFFFF;
+  outline-offset: 4px;
+}
+
+#practice-areas {
+  scroll-margin-top: 20px;
+}
