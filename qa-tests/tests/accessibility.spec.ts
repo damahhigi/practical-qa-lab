@@ -176,3 +176,62 @@ test('Incomplete Test Case Lab form remains accessible', async ({ page }) => {
     JSON.stringify(findings, null, 2)
   ).toEqual([]);
 });
+
+test('Completed Bug Hunt feedback remains accessible', async ({ page }) => {
+  await page.goto('/checkout-bug-hunt/');
+
+  // Create a sample bug report
+  await page.locator('#reportTitle').fill(
+    'Cart subtotal does not update after increasing Notebook quantity'
+  );
+
+  await page.locator('#reportRequirement').selectOption('REQ-03');
+  await page.locator('#reportSeverity').selectOption('Major');
+
+  await page.locator('#reportSteps').fill(
+    '1. Add one Notebook to the cart.\n' +
+    '2. Increase the quantity from 1 to 2.\n' +
+    '3. Check the displayed subtotal.'
+  );
+
+  await page.locator('#reportExpected').fill(
+    'The subtotal should update to KES 2,000.'
+  );
+
+  await page.locator('#reportActual').fill(
+    'The subtotal remains at KES 1,000 instead of updating.'
+  );
+
+  // Save the report
+  await page.locator('#saveReport').click();
+
+  await expect(page.locator('#reportCount')).toContainText('1 report');
+
+  // Finish the challenge
+  const finishButton = page.locator('#finishChallenge');
+  await expect(finishButton).toBeEnabled();
+  await finishButton.click();
+
+  // Check that feedback and the answer guide appear
+  await expect(page.locator('#assessmentResults')).toBeVisible();
+  await expect(page.locator('#answerGuide')).toBeVisible();
+
+  await expect(page.locator('#assessmentResults'))
+    .toContainText('Challenge feedback');
+
+  // Scan the completed challenge state
+  const results = await new AxeBuilder({ page })
+    .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])
+    .analyze();
+
+  const findings = results.violations.map(violation => ({
+    rule: violation.id,
+    impact: violation.impact,
+    affectedElements: violation.nodes.map(node => node.target)
+  }));
+
+  expect(
+    results.violations,
+    JSON.stringify(findings, null, 2)
+  ).toEqual([]);
+});

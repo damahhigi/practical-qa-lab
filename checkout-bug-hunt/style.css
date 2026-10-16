@@ -271,3 +271,15 @@ h1 { font-size: clamp(2.35rem, 4.2vw, 3.9rem); letter-spacing: -.04em; line-heig
 #saveReport {
   color: #0B2239;
 }
+
+/* Accessibility: Finish Challenge button contrast */
+
+#finishChallenge {
+  background-color: #147F61;
+  color: #FFFFFF;
+}
+
+#finishChallenge:hover {
+  background-color: #08795B;
+  color: #FFFFFF;
+}
