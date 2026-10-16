@@ -2602,3 +2602,15 @@ body:has(#home.hidden) .hero-practice-link {
 .resource-download-primary {
   background-color: #147F61;
 }
+
+/* Accessibility: My Progress dashboard contrast */
+
+/* Improve contrast of the dashboard heading label */
+.progress-dashboard-header > .eyebrow {
+  color: #086B50 !important;
+}
+
+/* Improve contrast of the return button */
+.progress-controls > button[onclick="goHome()"] {
+  color: #0B2239;
+}

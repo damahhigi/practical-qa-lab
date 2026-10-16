@@ -79,3 +79,43 @@ test('Checkout Bug Hunt passes automated WCAG accessibility checks', async ({ pa
     JSON.stringify(findings, null, 2)
   ).toEqual([]);
 });
+
+test('My Progress dashboard passes automated WCAG accessibility checks', async ({ page }) => {
+  // Open the homepage
+  await page.goto('/');
+
+  // Open My Progress through the quick navigation
+  await page.locator('.home-quick-nav')
+    .getByRole('button', { name: 'My Progress' })
+    .click();
+
+  // Confirm the dashboard is displayed
+  await expect(
+    page.getByRole('heading', {
+      name: 'Your learning progress'
+    })
+  ).toBeVisible();
+
+  // Scan the displayed dashboard
+  const results = await new AxeBuilder({ page })
+    .withTags([
+      'wcag2a',
+      'wcag2aa',
+      'wcag21a',
+      'wcag21aa'
+    ])
+    .analyze();
+
+  // Report any violations
+  const findings = results.violations.map(violation => ({
+    rule: violation.id,
+    impact: violation.impact,
+    description: violation.help,
+    affectedElements: violation.nodes.map(node => node.target)
+  }));
+
+  expect(
+    results.violations,
+    JSON.stringify(findings, null, 2)
+  ).toEqual([]);
+});
