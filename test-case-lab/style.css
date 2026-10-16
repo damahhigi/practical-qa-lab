@@ -107,3 +107,15 @@
   background-color: #08795B;
   color: #FFFFFF;
 }
+
+/* Accessibility: JSON export button contrast */
+
+#exportDrafts {
+  background-color: #147F61;
+  color: #FFFFFF;
+}
+
+#exportDrafts:hover {
+  background-color: #08795B;
+  color: #FFFFFF;
+}

@@ -235,3 +235,74 @@ test('Completed Bug Hunt feedback remains accessible', async ({ page }) => {
     JSON.stringify(findings, null, 2)
   ).toEqual([]);
 });
+
+test('Completed Test Case Lab review remains accessible', async ({ page }) => {
+  await page.goto('/test-case-lab/');
+
+  // Create a valid test case
+  await page.locator('#requirement').selectOption('REQ-03');
+  await page.locator('#testType').selectOption('Boundary');
+
+  await page.locator('#scenario').fill(
+    'Verify registration rejects a password shorter than 8 characters'
+  );
+
+  await page.locator('#preconditions').fill(
+    'Registration page is available'
+  );
+
+  await page.locator('#steps').fill(
+    '1. Open the registration page.\n' +
+    '2. Enter a seven-character password.\n' +
+    '3. Submit the registration form.'
+  );
+
+  await page.locator('#testData').fill(
+    'Email: learner@example.com; Password: Abcde12; ' +
+    'Confirm: Abcde12; Terms: Accepted'
+  );
+
+  await page.locator('#expectedResult').fill(
+    'Registration is rejected with a password-length validation error, ' +
+    'and no account is created.'
+  );
+
+  await page.locator('#priority').selectOption('High');
+
+  // Save the test case
+  await page.locator('#saveCase').click();
+
+  await expect(
+    page.locator('#savedCount')
+  ).toHaveText('1');
+
+  // Request the coverage review
+  await page.locator('#reviewCases').click();
+
+  // Confirm review progress was recorded
+  await expect(
+    page.locator('#designProgressSaveStatus')
+  ).toContainText('Review score saved to My Progress');
+
+  // Scan the page with review feedback displayed
+  const results = await new AxeBuilder({ page })
+    .withTags([
+      'wcag2a',
+      'wcag2aa',
+      'wcag21a',
+      'wcag21aa'
+    ])
+    .analyze();
+
+  const findings = results.violations.map(violation => ({
+    rule: violation.id,
+    impact: violation.impact,
+    description: violation.help,
+    affectedElements: violation.nodes.map(node => node.target)
+  }));
+
+  expect(
+    results.violations,
+    JSON.stringify(findings, null, 2)
+  ).toEqual([]);
+});
