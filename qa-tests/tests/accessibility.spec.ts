@@ -50,3 +50,32 @@ test('Homepage passes automated WCAG accessibility checks', async ({ page }) => 
   expect(results.violations, JSON.stringify(findings, null, 2))
     .toEqual([]);
 });
+
+test('Checkout Bug Hunt passes automated WCAG accessibility checks', async ({ page }) => {
+  // Open Checkout Bug Hunt
+  await page.goto('/checkout-bug-hunt/');
+
+  // Run the automated accessibility scan
+  const results = await new AxeBuilder({ page })
+    .withTags([
+      'wcag2a',
+      'wcag2aa',
+      'wcag21a',
+      'wcag21aa'
+    ])
+    .analyze();
+
+  // Format any violations for easier debugging
+  const findings = results.violations.map(violation => ({
+    rule: violation.id,
+    impact: violation.impact,
+    description: violation.help,
+    affectedElements: violation.nodes.map(node => node.target)
+  }));
+
+  // Fail if any accessibility violations are detected
+  expect(
+    results.violations,
+    JSON.stringify(findings, null, 2)
+  ).toEqual([]);
+});
