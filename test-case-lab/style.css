@@ -95,3 +95,8 @@
 .backup-privacy{font-size:.84rem;line-height:1.55;color:#536A7A;margin:14px 0}
 @media(max-width:780px){.backup-grid{grid-template-columns:1fr}.backup-card{padding:19px}}
 @media(max-width:480px){.backup-card .button{width:100%}}
+
+/* Accessibility: WCAG AA contrast for Save test case */
+#saveCase {
+  color: #0B2239;
+}
