@@ -100,3 +100,10 @@
 #saveCase {
   color: #0B2239;
 }
+
+/* Accessibility: Save button hover contrast */
+
+#saveCase:hover {
+  background-color: #08795B;
+  color: #FFFFFF;
+}

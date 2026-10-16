@@ -119,3 +119,60 @@ test('My Progress dashboard passes automated WCAG accessibility checks', async (
     JSON.stringify(findings, null, 2)
   ).toEqual([]);
 });
+
+test('Incomplete Test Case Lab form remains accessible', async ({ page }) => {
+  // Open the Test Case Writing Lab
+  await page.goto('/test-case-lab/');
+
+  // Fill only some required fields
+  await page.locator('#requirement').selectOption('REQ-03');
+
+  await page.locator('#scenario').fill(
+    'Verify registration rejects an invalid password'
+  );
+
+  // Attempt to save an incomplete test case
+  await page.getByRole('button', {
+    name: 'Save test case'
+  }).click();
+
+  const testType = page.locator('#testType');
+
+  // The browser should focus the missing required field
+  await expect(testType).toBeFocused();
+
+  // The field must have an accessible label
+  await expect(testType).toHaveAccessibleName(/Test type/);
+
+  // Verify the browser recognizes the missing selection
+  const valueMissing = await testType.evaluate(
+    element => (element as HTMLSelectElement).validity.valueMissing
+  );
+
+  expect(valueMissing).toBe(true);
+
+  // Invalid input must not create a saved test case
+  await expect(page.locator('#savedCount')).toHaveText('0');
+
+  // Scan the form in its invalid state
+  const results = await new AxeBuilder({ page })
+    .include('#testCaseForm')
+    .withTags([
+      'wcag2a',
+      'wcag2aa',
+      'wcag21a',
+      'wcag21aa'
+    ])
+    .analyze();
+
+  const findings = results.violations.map(violation => ({
+    rule: violation.id,
+    impact: violation.impact,
+    affectedElements: violation.nodes.map(node => node.target)
+  }));
+
+  expect(
+    results.violations,
+    JSON.stringify(findings, null, 2)
+  ).toEqual([]);
+});
