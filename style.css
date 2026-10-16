@@ -2583,3 +2583,22 @@ li {
 body:has(#home.hidden) .hero-practice-link {
   display: none;
 }
+
+/* Accessibility: homepage WCAG AA contrast fixes */
+
+/* Green text on light backgrounds */
+#home .eyebrow {
+  color: #086B50 !important;
+}
+
+#home .card-icon,
+#home .card-meta {
+  color: #086B50;
+}
+
+/* White text on green buttons */
+.progress-open-button,
+.book-link,
+.resource-download-primary {
+  background-color: #147F61;
+}
