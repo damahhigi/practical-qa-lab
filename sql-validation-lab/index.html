@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Practice SELECT, WHERE and JOIN, investigate fictional data-quality defects, and save SQL bug reports in Practical QA Lab.">
+  <title>SQL Validation Lab | Practical QA Lab</title>
+  <link rel="stylesheet" href="style.css?v=sql-stage3-review">
+  <script src="script.js?v=sql-stage4-progress" defer></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="../index.html" aria-label="Practical QA Lab — back to homepage">
+        <span class="brand-mark" aria-hidden="true">✓</span>
+        <span class="brand-copy"><strong>Practical QA Lab</strong><small>Hands-on testing challenges</small></span>
+      </a>
+      <nav class="site-nav" aria-label="Lab navigation">
+        <a href="../index.html">← Main Lab</a>
+        <a href="../api-testing-lab/">API Testing Lab</a>
+        <a href="../api-bug-hunt/">API Bug Hunt</a>
+      </nav>
+      <span class="mode-chip">SIMULATED DATABASE</span>
+    </div>
+  </header>
+
+  <main class="page-shell">
+    <section class="intro" aria-labelledby="page-title">
+      <div class="intro-copy">
+        <p class="eyebrow">PRACTICAL QA LAB · SQL VALIDATION · STAGE 3</p>
+        <h1 id="page-title">SQL <span>Validation Lab</span></h1>
+        <p class="intro-lead">You're testing a fictional e-commerce database. Explore customer and order records, write SQL queries, and use the returned rows to investigate data.</p>
+        <div class="step-pills" aria-label="Practice process">
+          <span><b>01</b> Explore the tables</span>
+          <span><b>02</b> Investigate records</span>
+          <span><b>03</b> Document defects</span>
+        </div>
+      </div>
+      <aside class="mission-card" aria-label="Your SQL mission">
+        <span class="mission-icon" aria-hidden="true">▤</span>
+        <p class="mission-label">YOUR QA MISSION</p>
+        <h2>Query the data. Verify the outcome.</h2>
+        <p>Practice read-only SQL against clean data, then switch to Investigation Mode to uncover three seeded data-quality defects.</p>
+        <p class="mission-footnote">This is a local teaching simulator — not a connection to a live SQL server. No real customer information is used.</p>
+      </aside>
+    </section>
+
+    <section class="workspace" aria-label="SQL practice workspace">
+      <div class="panel editor-panel">
+        <div class="panel-heading">
+          <span class="panel-icon" aria-hidden="true">&lt;/&gt;</span>
+          <div><h2>SQL query editor</h2><p>Choose a dataset, then write a query or try an example.</p></div>
+        </div>
+
+        <div class="dataset-picker" aria-labelledby="datasetPickerTitle">
+          <p id="datasetPickerTitle" class="section-label">CHOOSE YOUR DATASET</p>
+          <div class="dataset-options" role="group" aria-label="Dataset mode">
+            <button type="button" class="dataset-option active" data-dataset="practice" aria-pressed="true">Practice data <small>Original clean dataset</small></button>
+            <button type="button" class="dataset-option" data-dataset="investigation" aria-pressed="false">Investigation data <small>Explore seeded defects</small></button>
+          </div>
+          <p id="datasetStatus" class="dataset-status" role="status" aria-live="polite">Practice data selected · 6 customers · 8 orders.</p>
+        </div>
+
+        <div class="examples">
+          <p class="section-label">TRY AN EXAMPLE</p>
+          <div class="example-list" role="group" aria-label="Example queries">
+            <button type="button" data-example="all" class="example-button">All customers <small>SELECT *</small></button>
+            <button type="button" data-example="active" class="example-button">Active customers <small>WHERE</small></button>
+            <button type="button" data-example="sorting" class="example-button">Highest orders <small>ORDER BY</small></button>
+            <button type="button" data-example="filter" class="example-button">Orders over 1,000 <small>WHERE + ORDER BY</small></button>
+            <button type="button" data-example="join" class="example-button">Customer orders <small>INNER JOIN</small></button>
+          </div>
+        </div>
+
+        <label for="sqlQuery" class="field-label">Your SQL query</label>
+        <textarea id="sqlQuery" spellcheck="false" autocapitalize="off" autocomplete="off" aria-describedby="queryHelp">SELECT *
+FROM customers;</textarea>
+        <p id="queryHelp" class="field-help">Supported: <code>SELECT</code>, <code>WHERE</code>, <code>ORDER BY</code>, <code>INNER JOIN</code> and <code>LIMIT</code>. One read-only query at a time. Press Ctrl/⌘ + Enter to run.</p>
+        <div class="editor-actions">
+          <button id="runQuery" type="button" class="primary-button">Run query <span aria-hidden="true">→</span></button>
+          <button id="clearQuery" type="button" class="secondary-button">Clear editor</button>
+        </div>
+        <p id="queryError" class="query-error" role="alert" hidden></p>
+      </div>
+
+      <div class="panel results-panel">
+        <div class="panel-heading results-heading">
+          <span class="panel-icon" aria-hidden="true">{ }</span>
+          <div><h2>Query results</h2><p>Inspect returned data just like a QA engineer.</p></div>
+          <span id="resultBadge" class="result-badge">READY</span>
+        </div>
+        <div class="result-meta">
+          <span id="resultCount">Choose an example or run a query</span>
+          <span id="resultTiming">In-browser simulation</span>
+        </div>
+        <div id="resultWrap" class="table-scroller" tabindex="0" aria-label="SQL query results" aria-live="off">
+          <div class="empty-state" id="resultEmpty">
+            <span aria-hidden="true">▦</span>
+            <p>Your results will appear here.</p>
+            <small>Try <strong>SELECT * FROM customers;</strong> to begin.</small>
+          </div>
+          <table id="resultTable" hidden><caption class="sr-only">Results from the last SQL query</caption><thead id="resultHead"></thead><tbody id="resultBody"></tbody></table>
+        </div>
+        <p id="resultAnnouncement" class="sr-only" role="status" aria-live="polite"></p>
+        <div class="result-note"><strong>QA tip:</strong> A successful query is only the start. Check row counts, filtering, sorting, and relationships against what the application expects.</div>
+      </div>
+    </section>
+
+    <section class="panel explorer" aria-labelledby="explorer-title">
+      <div class="explorer-head">
+        <div><p class="eyebrow">UNDERSTAND THE DATA</p><h2 id="explorer-title">Database explorer</h2><p>Inspect the two fictional tables and their columns before writing queries.</p></div>
+        <div class="table-switch" role="group" aria-label="Choose database table">
+          <button class="table-toggle active" type="button" data-table="customers" aria-pressed="true">customers</button>
+          <button class="table-toggle" type="button" data-table="orders" aria-pressed="false">orders</button>
+        </div>
+      </div>
+      <div class="schema-row">
+        <div><strong id="schemaName">customers</strong><span id="schemaDescription"> Fictional customers • 6 rows</span></div>
+        <p id="schemaFields"></p>
+      </div>
+      <div id="previewWrap" class="table-scroller" tabindex="0" aria-label="Database table preview">
+        <table id="previewTable"><caption class="sr-only">Preview of the selected database table</caption><thead id="previewHead"></thead><tbody id="previewBody"></tbody></table>
+      </div>
+      <p class="explorer-footnote"><strong>Relationship:</strong> <code>customers.id</code> matches <code>orders.customer_id</code>. An INNER JOIN returns orders with matching customer records.</p>
+    </section>
+
+    <section id="investigationSection" class="panel investigation-panel" aria-labelledby="investigationTitle" hidden>
+      <div class="investigation-intro">
+        <p class="eyebrow">SQL DATA INVESTIGATION · STAGE 3</p>
+        <h2 id="investigationTitle">Three data-quality investigations</h2>
+        <p>Each case has a stated requirement. Use the SQL editor and database explorer above to investigate the records, compare expected and actual data, then save your findings below. The investigation dataset is fictional and intentionally inconsistent.</p>
+      </div>
+      <div class="case-grid">
+        <article class="case-card">
+          <p class="case-kicker">CASE 01 · BUSINESS VALIDATION</p>
+          <h3>Check order totals</h3>
+          <p><strong>Requirement:</strong> Each order total must be zero or greater. A negative total is invalid.</p>
+          <p class="case-hint">Start by sorting all orders by total and inspecting unusual values.</p>
+          <button type="button" class="secondary-button hint-button" data-hint="totals">Load investigation query ↗</button>
+        </article>
+        <article class="case-card">
+          <p class="case-kicker">CASE 02 · REFERENTIAL INTEGRITY</p>
+          <h3>Check order ownership</h3>
+          <p><strong>Requirement:</strong> Every order's <code>customer_id</code> must refer to a customer in the customers table.</p>
+          <p class="case-hint">Compare order identifiers with the customer table. Look for unmatched records.</p>
+          <button type="button" class="secondary-button hint-button" data-hint="ownership">Load investigation query ↗</button>
+        </article>
+        <article class="case-card">
+          <p class="case-kicker">CASE 03 · DATA UNIQUENESS</p>
+          <h3>Check customer emails</h3>
+          <p><strong>Requirement:</strong> Two customer accounts must not share the same email address.</p>
+          <p class="case-hint">Sort the email column so repeated values appear next to one another.</p>
+          <button type="button" class="secondary-button hint-button" data-hint="emails">Load investigation query ↗</button>
+        </article>
+      </div>
+      <div class="report-workspace">
+        <div>
+          <p class="eyebrow">DOCUMENT YOUR EVIDENCE</p>
+          <h3>SQL bug report notebook</h3>
+          <p>Save a concise defect report for each issue you discover. Reports remain in this browser. Finish the challenge for indicative, rule-based feedback; scores are not yet part of My Progress.</p>
+          <p class="report-storage-note">Keep using the same browser and local address to see your saved reports after a refresh.</p>
+        </div>
+        <form id="sqlReportForm" class="report-form">
+          <label for="sqlReportCase">Investigation case</label>
+          <select id="sqlReportCase" required>
+            <option value="">Choose a case</option>
+            <option value="totals">Case 01 — Order totals</option>
+            <option value="ownership">Case 02 — Order ownership</option>
+            <option value="emails">Case 03 — Customer emails</option>
+          </select>
+          <label for="sqlReportTitle">Bug title</label>
+          <input id="sqlReportTitle" type="text" maxlength="160" placeholder="Describe the data defect clearly" required>
+          <label for="sqlReportQuery">Evidence — SQL query</label>
+          <textarea id="sqlReportQuery" rows="3" maxlength="2500" placeholder="Paste the query that revealed the problem" required></textarea>
+          <label for="sqlReportExpected">Expected result</label>
+          <textarea id="sqlReportExpected" rows="3" maxlength="2000" placeholder="What should the data contain?" required></textarea>
+          <label for="sqlReportActual">Actual result</label>
+          <textarea id="sqlReportActual" rows="3" maxlength="2000" placeholder="What did your query actually show? Include record IDs." required></textarea>
+          <div class="editor-actions">
+            <button type="submit" class="primary-button" id="saveSqlReport">Save bug report</button>
+            <button type="button" class="secondary-button" id="clearSqlReport">Clear form</button>
+          </div>
+          <p id="sqlReportStatus" class="report-status" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+      <div class="saved-reports" aria-labelledby="savedSqlReportsTitle">
+        <div class="saved-reports-header">
+          <h3 id="savedSqlReportsTitle">Your saved SQL bug reports</h3>
+          <span id="sqlReportCount" class="report-count">0</span>
+        </div>
+        <p id="sqlReportsEmpty" class="report-empty">No reports saved yet. Investigate the data and document your findings.</p>
+        <div id="sqlReportsList"></div>
+      </div>
+      <section class="review-workspace" aria-labelledby="sqlReviewTitle">
+        <div class="review-intro">
+          <div>
+            <p class="eyebrow">STAGE 3 · INVESTIGATION REVIEW</p>
+            <h3 id="sqlReviewTitle">Ready to finish the challenge?</h3>
+            <p>Review your SQL findings against the three requirements. Feedback is indicative and keyword-based; it does not replace a human QA review.</p>
+          </div>
+          <div class="review-actions">
+            <strong id="sqlReviewCoverage">0 of 3 cases documented</strong>
+            <button id="finishSqlChallenge" type="button" class="primary-button">Finish challenge &amp; get feedback</button>
+          </div>
+        </div>
+        <p id="sqlReviewStatus" class="review-status" role="status" aria-live="polite">Save a report, then finish for your review.</p>
+        <div id="sqlReviewResult" class="review-result" hidden>
+          <div class="review-score-row">
+            <div>
+              <p class="section-label">YOUR INDICATIVE REVIEW SCORE</p>
+              <h3>Challenge feedback</h3>
+              <p id="sqlReviewBreakdown"></p>
+            </div>
+            <div class="review-score" id="sqlReviewScore" aria-label="Review score out of 100">0/100</div>
+          </div>
+          <div class="review-meter" aria-hidden="true"><div id="sqlReviewMeterFill" class="review-meter-fill"></div></div>
+          <p class="review-disclaimer">This automated review looks for evidence terms in your reports. A valid finding described in different language may score lower. Correctness, severity, and query quality should also be assessed by a human reviewer.</p>
+          <div id="sqlReviewCards" class="review-cards"></div>
+        </div>
+        <details id="sqlAnswerGuide" class="answer-guide" hidden>
+          <summary>View the SQL Data Investigation answer guide</summary>
+          <div class="answer-grid">
+            <article>
+              <h4>Case 01 — Order totals</h4>
+              <p><strong>Expected:</strong> Order totals must be zero or greater.</p>
+              <p><strong>Seeded defect:</strong> Order 5010 (customer 102, status paid) has total -350.</p>
+              <pre>SELECT * FROM orders ORDER BY total ASC;</pre>
+            </article>
+            <article>
+              <h4>Case 02 — Order ownership</h4>
+              <p><strong>Expected:</strong> Every orders.customer_id refers to an existing customer.</p>
+              <p><strong>Seeded defect:</strong> Order 5009 references customer_id 999, which is absent from customers.</p>
+              <pre>SELECT * FROM customers WHERE id = 999;</pre>
+            </article>
+            <article>
+              <h4>Case 03 — Unique customer emails</h4>
+              <p><strong>Expected:</strong> Each customer email belongs to one account only.</p>
+              <p><strong>Seeded defect:</strong> Customer 101 (Jane Wanjiku) and customer 107 (Mary Achieng) share jane@example.com.</p>
+              <pre>SELECT id, name, email FROM customers ORDER BY email ASC;</pre>
+            </article>
+          </div>
+        </details>
+      </section>
+    </section>
+
+    <section class="next-steps" aria-label="What comes next">
+      <p class="eyebrow">WHAT'S NEXT?</p>
+      <h2>From finding defects to reviewing evidence</h2>
+      <p>Stage 3 adds indicative feedback and an answer guide. Next we can connect completed SQL investigations to My Progress, without changing your saved bug reports.</p>
+    </section>
+  </main>
+  <footer class="site-footer">Practical QA Lab · SQL Validation Lab · Stage 3 · All data and responses are simulated locally.</footer>
+</body>
+</html>
