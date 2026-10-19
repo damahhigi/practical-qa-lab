@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Investigate seeded REST API defects, compare responses with requirements, and write bug reports in Practical QA Lab.">
+  <title>API Bug Hunt | Practical QA Lab</title>
+  <link rel="stylesheet" href="./style.css">
+  <script src="./script.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="brand">
+        <span class="brand-icon" aria-hidden="true">✓</span>
+        <div><strong>Practical QA Lab</strong><span>Hands-on testing challenges</span></div>
+      </div>
+      <nav class="header-links" aria-label="Lab navigation">
+        <a href="../index.html">← Main Practical QA Lab</a>
+        <a href="../api-testing-lab/">API Testing Lab</a>
+        <a href="../test-case-lab/">Test Case Lab</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="container hero" aria-labelledby="pageTitle">
+      <div>
+        <p class="eyebrow">PRACTICAL QA LAB · DEFECT INVESTIGATION</p>
+        <h1 id="pageTitle">API <span>Bug Hunt</span></h1>
+        <p class="lead">An API can return a successful status and still be wrong. Compare the requirements with simulated responses, reproduce unexpected behaviour, and document your findings.</p>
+        <div class="steps" aria-label="Challenge workflow">
+          <span><b>01</b> Read the contract</span>
+          <span><b>02</b> Send and verify</span>
+          <span><b>03</b> Write a bug report</span>
+          <span><b>04</b> Get review feedback</span>
+        </div>
+      </div>
+      <aside class="mission-card" aria-label="Challenge details">
+        <span class="mission-icon" aria-hidden="true">{ ! }</span>
+        <p class="mission-kicker">YOUR QA MISSION</p>
+        <h2>Three scenarios. Hidden defects.</h2>
+        <p>Investigate creation, partial updates and deletion. Each scenario includes a deliberately incorrect behaviour for you to discover.</p>
+        <p class="mission-note">Training only. No live HTTP requests. Simulated API state resets on refresh; saved bug reports stay in this browser. Finish the challenge to review your documentation.</p>
+      </aside>
+    </section>
+
+    <section class="container workspace" aria-labelledby="workspaceTitle">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">INVESTIGATION WORKSPACE</p>
+          <h2 id="workspaceTitle">Investigate an API scenario</h2>
+          <p>Select a scenario and compare the required behaviour with the actual response.</p>
+        </div>
+        <span class="mode-pill">● SIMULATED DEFECTS</span>
+      </div>
+
+      <div class="workspace-grid">
+        <section class="panel" aria-labelledby="contractTitle">
+          <h3 id="contractTitle">Requirement and request</h3>
+          <div class="field">
+            <label for="scenarioSelect">Choose a scenario</label>
+            <select id="scenarioSelect">
+              <option value="create">Scenario 1 · Create a user</option>
+              <option value="patch">Scenario 2 · Update selected fields</option>
+              <option value="delete">Scenario 3 · Delete a user</option>
+            </select>
+          </div>
+          <div class="requirement-card">
+            <p class="small-label">EXPECTED API CONTRACT</p>
+            <h4 id="requirementHeading"></h4>
+            <p id="requirementText"></p>
+          </div>
+          <p class="small-label">REQUEST TO SEND</p>
+          <p id="primaryRequestLine" class="request-line"></p>
+          <pre id="primaryRequestBody" class="request-code" aria-label="Request JSON body" tabindex="0"></pre>
+          <div class="action-row">
+            <button type="button" id="sendPrimary" class="button button-primary">Send request →</button>
+            <button type="button" id="verifyGet" class="button button-secondary" disabled>Verify with GET</button>
+          </div>
+          <p id="requestHelp" class="help-text"></p>
+          <button type="button" id="resetSimulation" class="text-button">Reset simulated API state</button>
+        </section>
+
+        <section class="panel" aria-labelledby="responseTitle">
+          <div class="panel-title-row">
+            <h3 id="responseTitle">Response inspector</h3>
+            <span id="responseStatus" class="status-badge status-idle">No request yet</span>
+          </div>
+          <p id="responseAnnouncement" role="status" aria-live="polite">Send a request to see what the simulated service returns.</p>
+          <p id="lastRequest" class="last-request"></p>
+          <p class="small-label">RESPONSE BODY</p>
+          <pre id="responseBody" class="response-code" aria-label="Simulated API response body" tabindex="0">Waiting for a request...</pre>
+          <p class="small-label">RESPONSE HEADERS</p>
+          <pre id="responseHeaders" class="headers-code" aria-label="Simulated response headers" tabindex="0">No response yet.</pre>
+          <div class="investigation-tip">
+            <strong>Think like a QA engineer.</strong>
+            <p>Does the status match the requirement? Did only the intended fields change? Does a follow-up GET prove that the operation worked?</p>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <section class="container reports-section" aria-labelledby="reportsTitle">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">DOCUMENT THE EVIDENCE</p>
+          <h2 id="reportsTitle">Write a bug report</h2>
+          <p>Use clear reproduction steps, expected behaviour and observed results. Reports are stored only in this browser.</p>
+        </div>
+      </div>
+      <div class="report-layout">
+        <form id="bugForm" class="panel report-form">
+          <div class="field">
+            <label for="reportScenario">Scenario</label>
+            <select id="reportScenario">
+              <option value="create">Scenario 1 · Create a user</option>
+              <option value="patch">Scenario 2 · Update selected fields</option>
+              <option value="delete">Scenario 3 · Delete a user</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="bugTitle">Bug title <span aria-hidden="true">*</span></label>
+            <input id="bugTitle" maxlength="160" required placeholder="Describe the difference between expected and actual results">
+          </div>
+          <div class="field">
+            <label for="bugSteps">Steps to reproduce <span aria-hidden="true">*</span></label>
+            <textarea id="bugSteps" rows="4" required placeholder="1. Send ...\n2. Verify ..."></textarea>
+          </div>
+          <div class="field">
+            <label for="bugExpected">Expected result <span aria-hidden="true">*</span></label>
+            <textarea id="bugExpected" rows="3" required placeholder="According to the contract, the API should..."></textarea>
+          </div>
+          <div class="field">
+            <label for="bugActual">Actual result <span aria-hidden="true">*</span></label>
+            <textarea id="bugActual" rows="3" required placeholder="Instead, the simulated API returns..."></textarea>
+          </div>
+          <div class="field">
+            <label for="bugSeverity">Severity</label>
+            <select id="bugSeverity">
+              <option value="Major">Major</option>
+              <option value="Minor">Minor</option>
+              <option value="Critical">Critical</option>
+            </select>
+          </div>
+          <div class="action-row">
+            <button id="saveReport" type="submit" class="button button-primary">Save bug report</button>
+            <button id="cancelEdit" type="button" class="button button-secondary" hidden>Cancel editing</button>
+          </div>
+          <p id="formStatus" class="help-text" role="status" aria-live="polite"></p>
+        </form>
+        <aside class="panel saved-panel" aria-labelledby="savedTitle">
+          <div class="panel-title-row">
+            <h3 id="savedTitle">Your saved reports</h3>
+            <span id="reportCount" class="count-badge">0</span>
+          </div>
+          <p class="help-text">Your detailed bug reports remain in this browser even after a refresh. Only completed review scores are copied to My Progress.</p>
+          <div id="reportList" class="report-list"></div>
+          <button type="button" id="clearReports" class="text-button" hidden>Clear all saved reports</button>
+          <p id="storageWarning" class="warning-text" role="status" hidden>Browser storage is unavailable. Your reports may not persist after refreshing.</p>
+        </aside>
+      </div>
+      <section class="review-panel" aria-labelledby="reviewTitle">
+        <div class="review-intro">
+          <div>
+            <p class="eyebrow">STAGE 3 · INVESTIGATION REVIEW</p>
+            <h2 id="reviewTitle">Ready to finish the challenge?</h2>
+            <p>Review your saved reports against the three API contracts. The score is <strong>indicative and rule-based</strong> — it checks documented evidence, not your testing expertise. The answer guide unlocks after you finish.</p>
+          </div>
+          <div class="review-actions">
+            <span id="reviewReportCount" class="review-count">0 of 3 scenarios documented</span>
+            <button id="finishChallenge" type="button" class="button button-primary" disabled>Finish challenge &amp; get feedback</button>
+          </div>
+        </div>
+        <p id="reviewPrompt" class="help-text" role="status" aria-live="polite">Save at least one bug report to enable the review.</p>
+        <section id="reviewResults" class="review-results" aria-labelledby="reviewResultsTitle" hidden>
+          <div class="review-score-header">
+            <div>
+              <p class="small-label">YOUR INDICATIVE REVIEW SCORE</p>
+              <h3 id="reviewResultsTitle" tabindex="-1">Challenge feedback</h3>
+              <p id="reviewSummary" class="review-summary"></p>
+            </div>
+            <output id="reviewScore" class="review-score" aria-label="Review score out of 100">0/100</output>
+          </div>
+          <progress id="reviewProgress" max="100" value="0" aria-label="Indicative review score"></progress>
+          <p id="reviewSaveStatus" class="review-save-status" role="status" aria-live="polite"></p>
+          <p class="review-disclaimer">This feedback matches phrases in your saved reports against expected findings; it can miss correct explanations expressed differently. A human QA reviewer should assess technical accuracy and severity.</p>
+          <div id="scenarioFeedback" class="scenario-feedback" aria-label="Feedback by API scenario"></div>
+        </section>
+        <details id="answerGuide" class="answer-guide" hidden>
+          <summary>View the API Bug Hunt answer guide</summary>
+          <div class="answer-guide-body">
+            <article>
+              <h3>Scenario 1 — POST /api/users</h3>
+              <p><strong>Expected:</strong> 201 Created, new user ID, and Location header.</p>
+              <p><strong>Seeded defect:</strong> The API creates user 103 but responds with 200 OK and omits the Location header. GET /api/users/103 still returns the new user.</p>
+            </article>
+            <article>
+              <h3>Scenario 2 — PATCH /api/users/101</h3>
+              <p><strong>Expected:</strong> Only the supplied role changes; all other fields stay as they were.</p>
+              <p><strong>Seeded defect:</strong> The API changes role to admin but clears the email to an empty string. Follow-up GET shows the unwanted change.</p>
+            </article>
+            <article>
+              <h3>Scenario 3 — DELETE /api/users/102</h3>
+              <p><strong>Expected:</strong> DELETE returns 204 No Content; GET /api/users/102 subsequently returns 404 Not Found.</p>
+              <p><strong>Seeded defect:</strong> The API says 204 No Content but leaves user 102 intact. Follow-up GET returns 200 OK.</p>
+            </article>
+          </div>
+        </details>
+      </section>
+      <p class="stage-note"><strong>API Bug Hunt · Stage 3:</strong> Investigate three seeded defects, save reports, and finish for indicative rule-based feedback. Reports remain browser-local. Completed review scores are saved to My Progress on this same browser and site origin. Repeating an unchanged review does not add duplicate progress.</p>
+    </section>
+  </main>
+
+  <footer class="site-footer"><div class="container footer-inner"><span>Practical QA Lab · API Bug Hunt</span><span>No external requests · Local practice only</span></div></footer>
+</body>
+</html>

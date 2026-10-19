@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Practice simulated GET, POST, PUT, PATCH and DELETE requests, JSON validation, and response inspection in Practical QA Lab.">
+  <title>API Testing Lab | Practical QA Lab</title>
+  <link rel="stylesheet" href="./style.css">
+  <script src="./script.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="brand" aria-label="Practical QA Lab">
+        <span class="brand-icon" aria-hidden="true">✓</span>
+        <div><strong>Practical QA Lab</strong><span>Hands-on testing challenges</span></div>
+      </div>
+      <nav class="header-links" aria-label="Lab navigation">
+        <a href="../index.html">← Main Practical QA Lab</a>
+        <a href="../test-case-lab/">Test Case Lab</a>
+        <a href="../checkout-bug-hunt/">Checkout Bug Hunt</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="container hero" aria-labelledby="page-title">
+      <div class="hero-copy">
+        <p class="eyebrow">PRACTICAL QA LAB · NEW HANDS-ON CHALLENGE</p>
+        <h1 id="page-title">API <span>Testing Lab</span></h1>
+        <p class="hero-description">Step into a QA engineer's role. Explore a simulated REST API: retrieve, create, replace, update and delete fictional users, then inspect status codes and JSON responses.</p>
+        <div class="steps" aria-label="Your workflow">
+          <span><b>01</b> Choose an endpoint</span>
+          <span><b>02</b> Send an HTTP request</span>
+          <span><b>03</b> Inspect evidence</span>
+        </div>
+      </div>
+      <aside class="mission-card" aria-label="Your QA mission">
+        <div class="mission-symbol" aria-hidden="true">{ }</div>
+        <p class="mission-kicker">YOUR QA MISSION</p>
+        <h2>Don't stop at the status code.</h2>
+        <p>Verify status codes, response bodies and data changes. Create a user, update selected fields, replace its details, then delete it and confirm it is gone.</p>
+        <div class="mission-note"><strong>Stage 3 · GET, POST, PUT, PATCH and DELETE.</strong> All responses are simulated in your browser; there are no real API calls. Changes reset whenever you refresh.</div>
+      </aside>
+    </section>
+
+    <section class="container workspace" aria-labelledby="workspace-title">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">YOUR API TESTING WORKSPACE</p>
+          <h2 id="workspace-title">Build and send a request</h2>
+          <p>Test the full lifecycle of a fictional user: GET, POST, PUT, PATCH and DELETE.</p>
+        </div>
+        <span class="mode-pill">● SIMULATED API</span>
+      </div>
+
+      <div class="workspace-grid">
+        <section class="panel request-panel" aria-labelledby="request-title">
+          <div class="panel-heading"><span class="panel-icon" aria-hidden="true">↗</span><h3 id="request-title">Request builder</h3></div>
+          <p id="methodDescription" class="panel-description">Choose a method to explore a simulated REST API.</p>
+
+          <div class="base-url"><span>DEMO BASE URL · NOT LIVE</span><code>https://api.qa-training.invalid</code></div>
+
+          <form id="requestForm">
+            <div class="request-row">
+              <div class="field method-field">
+                <label for="requestMethod">Method</label>
+                <select id="requestMethod" name="requestMethod"><option value="GET">GET</option><option value="POST">POST</option><option value="PUT">PUT</option><option value="PATCH">PATCH</option><option value="DELETE">DELETE</option></select>
+              </div>
+              <div class="field endpoint-field">
+                <label for="endpointPath">Endpoint path</label>
+                <input id="endpointPath" name="endpointPath" type="text" value="/api/users/101" placeholder="/api/users/101" spellcheck="false" autocomplete="off" required>
+              </div>
+            </div>
+            <div id="requestBodyGroup" class="field request-body-field" hidden>
+              <label for="requestBody">Request body (JSON)</label>
+              <textarea id="requestBody" name="requestBody" rows="9" spellcheck="false" autocapitalize="off" aria-describedby="requestBodyHelp"></textarea>
+              <p id="requestBodyHelp" class="field-help">Use JSON for POST, PUT or PATCH. Fields: name, email, role and active (boolean).</p>
+            </div>
+            <button id="sendRequest" class="button button-primary" type="submit">Send request <span aria-hidden="true">→</span></button>
+          </form>
+
+          <div class="examples" aria-labelledby="examples-heading">
+            <h4 id="examples-heading">Try an example</h4>
+            <p class="example-group-label">GET examples</p>
+            <div class="example-buttons">
+              <button class="example-button" type="button" data-method="GET" data-path="/api/users/101"><span class="example-label">Existing user</span><code>/api/users/101</code></button>
+              <button class="example-button" type="button" data-method="GET" data-path="/api/users/102"><span class="example-label">Another user</span><code>/api/users/102</code></button>
+              <button class="example-button" type="button" data-method="GET" data-path="/api/users/999"><span class="example-label">Missing user</span><code>/api/users/999</code></button>
+            </div>
+            <p class="example-group-label">POST examples</p>
+            <div class="example-buttons">
+              <button class="example-button" type="button" data-method="POST" data-path="/api/users" data-body-example="valid"><span class="example-label">Valid new user</span><code>201 Created</code></button>
+              <button class="example-button" type="button" data-method="POST" data-path="/api/users" data-body-example="missing"><span class="example-label">Missing email</span><code>422 Validation</code></button>
+              <button class="example-button" type="button" data-method="POST" data-path="/api/users" data-body-example="malformed"><span class="example-label">Broken JSON</span><code>400 Bad Request</code></button>
+            </div>
+            <p class="example-group-label">PUT examples</p>
+            <div class="example-buttons">
+              <button class="example-button" type="button" data-method="PUT" data-path="/api/users/101" data-body-example="putValid"><span class="example-label">Replace user 101</span><code>200 OK</code></button>
+              <button class="example-button" type="button" data-method="PUT" data-path="/api/users/101" data-body-example="putMissing"><span class="example-label">Missing fields</span><code>422 Validation</code></button>
+            </div>
+            <p class="example-group-label">PATCH examples</p>
+            <div class="example-buttons">
+              <button class="example-button" type="button" data-method="PATCH" data-path="/api/users/101" data-body-example="patchRole"><span class="example-label">Update role only</span><code>200 OK</code></button>
+              <button class="example-button" type="button" data-method="PATCH" data-path="/api/users/101" data-body-example="patchInvalid"><span class="example-label">Invalid field type</span><code>422 Validation</code></button>
+            </div>
+            <p class="example-group-label">DELETE examples</p>
+            <div class="example-buttons">
+              <button class="example-button" type="button" data-method="DELETE" data-path="/api/users/102"><span class="example-label">Delete user 102</span><code>204 No Content</code></button>
+              <button class="example-button" type="button" data-method="DELETE" data-path="/api/users/999"><span class="example-label">Delete missing user</span><code>404 Not Found</code></button>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel response-panel" aria-labelledby="response-title">
+          <div class="panel-heading response-heading"><div class="panel-heading-title"><span class="panel-icon" aria-hidden="true">{ }</span><h3 id="response-title">Response inspector</h3></div><span id="responseStatus" class="status-badge status-idle">Awaiting request</span></div>
+          <p id="requestAnnouncement" class="response-announcement" role="status" aria-live="polite">Send an API request to inspect the simulated response.</p>
+          <div id="responseEmpty" class="empty-response">
+            <span class="empty-icon" aria-hidden="true">⌁</span>
+            <strong>No response yet</strong>
+            <p>Start with GET <code>/api/users/101</code>, or choose an example to try POST, PUT, PATCH or DELETE.</p>
+          </div>
+          <div id="responseContent" hidden>
+            <p id="lastRequest" class="last-request"></p>
+            <div class="response-subheading"><h4 id="bodyHeading">JSON response body</h4><span id="bodyMediaType">application/json</span></div>
+            <pre id="responseBody" class="code-block" tabindex="0" aria-label="JSON response body"></pre>
+            <div class="response-subheading"><h4>Response headers</h4><span>Simulated headers</span></div>
+            <pre id="responseHeaders" class="code-block headers-block" tabindex="0" aria-label="Simulated response headers"></pre>
+            <p id="responseTip" class="response-tip" hidden></p>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <section class="container learning-section" aria-labelledby="learning-title">
+      <div class="section-heading"><div><p class="eyebrow">THINK LIKE A QA ENGINEER</p><h2 id="learning-title">What should you verify?</h2><p>Use these questions to investigate your responses.</p></div></div>
+      <div class="learning-grid">
+        <article class="learning-card"><span class="learning-number">01</span><h3>Status code</h3><p>Compare <code>200 OK</code> for GET/PUT/PATCH, <code>201 Created</code> for POST, and <code>204 No Content</code> for DELETE. Explore <code>400</code>, <code>404</code>, <code>405</code>, <code>409</code> and <code>422</code> errors.</p></article>
+        <article class="learning-card"><span class="learning-number">02</span><h3>PUT vs PATCH</h3><p>PUT requires all four editable fields and replaces the record. PATCH changes only the supplied fields. Confirm the <code>id</code> remains unchanged.</p></article>
+        <article class="learning-card"><span class="learning-number">03</span><h3>Delete and verify</h3><p>After <code>DELETE</code> returns <code>204</code>, check that the body is empty. GET the same user again: it should return <code>404</code>. A refresh resets this simulator.</p></article>
+      </div>
+      <p class="stage-note"><strong>Stage 3:</strong> GET, POST, PUT, PATCH and DELETE are all simulated in-browser. Changes reset when the page reloads. Coming later: intentionally seeded API defects, bug reporting, feedback and progress tracking. This is not a live HTTP client.</p>
+    </section>
+  </main>
+  <footer class="site-footer"><div class="container footer-inner"><span>Practical QA Lab · API Testing Lab · Stage 3</span><span>Training-only API simulation · No real data</span></div></footer>
+</body>
+</html>

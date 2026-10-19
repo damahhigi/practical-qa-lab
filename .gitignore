@@ -12,3 +12,13 @@ qa-tests/.cache/
 # macOS system files
 .DS_Store
 
+
+# Ignore Playwright reports created in the project root
+/test-results/
+/playwright-report/
+
+
+# Exclude README files from the new API labs
+/api-testing-lab/README.md
+/api-bug-hunt/README.md
+
