@@ -8,16 +8,16 @@
       name: 'Beginner QA',
       description: 'Begin with core testing practice, then write a test case and finish with SQL scenario questions.',
       steps: [
-        { type: 'practice', area: 'manual', title: 'Manual QA', description: 'Practice identifying defects, prioritizing tests and investigating common product issues.', url: '../', link: 'Go to homepage → Select Manual QA' },
+        { type: 'practice', area: 'manual', title: 'Manual QA', description: 'Practice identifying defects, prioritizing tests and investigating common product issues.', url: '../?qa-practice=manual', link: 'Start Manual QA' },
         { type: 'challenge', area: 'testcase', title: 'Test Case Writing Lab', description: 'Write a structured test case and submit it for review.', url: '../test-case-lab/', link: 'Open Test Case Writing Lab' },
-        { type: 'practice', area: 'sql', title: 'SQL Testing Questions', description: 'Practice SQL validation questions. For extra query practice, visit SQL Validation Lab.', url: '../', link: 'Go to homepage → Select SQL Testing' }
+        { type: 'practice', area: 'sql', title: 'SQL Testing Questions', description: 'Practice SQL validation questions. For extra query practice, visit SQL Validation Lab.', url: '../?qa-practice=sql', link: 'Start SQL Testing Questions' }
       ]
     },
     intermediate: {
       name: 'Intermediate QA',
       description: 'Apply your API and data investigation knowledge in realistic defect-finding challenges.',
       steps: [
-        { type: 'practice', area: 'api', title: 'API Testing Questions', description: 'Answer practical API troubleshooting questions. The separate API Testing Lab is also available for simulator practice.', url: '../', link: 'Go to homepage → Select API Testing' },
+        { type: 'practice', area: 'api', title: 'API Testing Questions', description: 'Answer practical API troubleshooting questions. The separate API Testing Lab is also available for simulator practice.', url: '../?qa-practice=api', link: 'Start API Testing Questions' },
         { type: 'challenge', area: 'sqlvalidation', title: 'SQL Validation Lab', description: 'Run SQL investigations, document data-quality defects and finish the review.', url: '../sql-validation-lab/', link: 'Open SQL Validation Lab' },
         { type: 'challenge', area: 'checkout', title: 'Checkout Bug Hunt', description: 'Explore an e-commerce checkout, report defects and assess your findings.', url: '../checkout-bug-hunt/', link: 'Open Checkout Bug Hunt' },
         { type: 'challenge', area: 'apibughunt', title: 'API Bug Hunt', description: 'Find and report API contract and data-behavior defects.', url: '../api-bug-hunt/', link: 'Open API Bug Hunt' }
@@ -27,9 +27,9 @@
       name: 'QA Interview Prep',
       description: 'Build confidence with progressive mock interviews and review your responses over time.',
       steps: [
-        { type: 'interview', area: 'junior', title: 'Junior QA Mock Interview', description: 'Practice core testing vocabulary and everyday test scenarios.', url: '../', link: 'Go to homepage → Select Mock Interview → Junior' },
-        { type: 'interview', area: 'mid', title: 'Mid-Level QA Mock Interview', description: 'Practice release risk, prioritization, and collaboration questions.', url: '../', link: 'Go to homepage → Select Mock Interview → Mid-Level' },
-        { type: 'interview', area: 'senior', title: 'Senior QA Mock Interview', description: 'Explore broader quality strategy and complex QA decisions.', url: '../', link: 'Go to homepage → Select Mock Interview → Senior' }
+        { type: 'interview', area: 'junior', title: 'Junior QA Mock Interview', description: 'Practice core testing vocabulary and everyday test scenarios.', url: '../?qa-interview=junior', link: 'Start Junior mock interview' },
+        { type: 'interview', area: 'mid', title: 'Mid-Level QA Mock Interview', description: 'Practice release risk, prioritization, and collaboration questions.', url: '../?qa-interview=mid', link: 'Start Mid-Level mock interview' },
+        { type: 'interview', area: 'senior', title: 'Senior QA Mock Interview', description: 'Explore broader quality strategy and complex QA decisions.', url: '../?qa-interview=senior', link: 'Start Senior mock interview' }
       ]
     }
   };
@@ -53,6 +53,16 @@
   const matches = (s, step) => s.type === step.type && s.area === step.area;
   const countSteps = (path, sessions) => path.steps.filter(step => sessions.some(s => matches(s, step))).length;
   const percent = (score, maxScore) => Math.round(100 * score / maxScore);
+  function mostRelevantPath(sessions) {
+    const recent = [...sessions]
+      .filter(session => Number.isFinite(Date.parse(session.completedAt)))
+      .sort((a, b) => Date.parse(b.completedAt) - Date.parse(a.completedAt));
+    const preferred = recent.map(session => Object.keys(PATHS).find(key =>
+      PATHS[key].steps.some(step => matches(session, step)))).find(Boolean);
+    if (preferred && countSteps(PATHS[preferred], sessions) < PATHS[preferred].steps.length) return preferred;
+    return Object.keys(PATHS).find(key => countSteps(PATHS[key], sessions) < PATHS[key].steps.length) || 'beginner';
+  }
+  let pathChosenByUser = false;
   function render() {
     const { sessions, status } = readHistory();
     const historyStatus = $('historyStatus');
@@ -60,6 +70,10 @@
     else if (status === 'invalid') historyStatus.textContent = 'Saved progress was not in the expected format. No data has been changed.';
     else if (sessions.length === 0) historyStatus.textContent = 'No saved practice sessions yet. Choose any path to begin. Your progress will update after a session is saved.';
     else historyStatus.textContent = `${sessions.length} saved ${sessions.length === 1 ? 'practice session' : 'practice sessions'} found. Your path activity counts are based on those sessions.`;
+
+    // On first load, recommend the path connected to the latest saved activity.
+    // Subsequent explicit selections stay in place while the page is open.
+    if (!pathChosenByUser) selectedPath = mostRelevantPath(sessions);
 
     for (const [key, path] of Object.entries(PATHS)) {
       const completed = countSteps(path, sessions);
@@ -81,6 +95,16 @@
     $('detailsProgressBar').setAttribute('aria-valuenow', String(progress));
     const next = path.steps.find(step => !sessions.some(s => matches(s, step)));
     $('nextStep').textContent = next ? `Suggested next activity: ${next.title}` : 'Every activity in this path has a saved session. You can revisit any one to improve your score.';
+    // Prominent next-activity shortcut; the same fixed target appears in the step list below.
+    const suggested = next || path.steps[0];
+    $('continuePath').textContent = path.name;
+    $('continueTitle').textContent = next ? suggested.title : 'All activities recorded';
+    $('continueDescription').textContent = next
+      ? `Your next unfinished step in ${path.name}. You can still choose activities in any order.`
+      : `Every activity in ${path.name} has a saved session. Revisit an activity to practise again.`;
+    $('continueStatus').textContent = `${completed} of ${path.steps.length} activities recorded · ${progress}%`;
+    $('continueLink').href = suggested.url;
+    $('continueLink').textContent = next ? `Continue to ${suggested.title} →` : `Practise ${suggested.title} again →`;
 
     const list = $('stepList');
     list.replaceChildren();
@@ -118,6 +142,7 @@
   document.querySelectorAll('[data-path]').forEach(button => {
     button.addEventListener('click', () => {
       selectedPath = button.dataset.path;
+      pathChosenByUser = true;
       render();
       $('pathDetails').focus({ preventScroll: true });
       $('pathDetails').scrollIntoView({ behavior: 'smooth', block: 'start' });
