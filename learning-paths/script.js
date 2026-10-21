@@ -20,7 +20,8 @@
         { type: 'practice', area: 'api', title: 'API Testing Questions', description: 'Answer practical API troubleshooting questions. The separate API Testing Lab is also available for simulator practice.', url: '../?qa-practice=api', link: 'Start API Testing Questions' },
         { type: 'challenge', area: 'sqlvalidation', title: 'SQL Validation Lab', description: 'Run SQL investigations, document data-quality defects and finish the review.', url: '../sql-validation-lab/', link: 'Open SQL Validation Lab' },
         { type: 'challenge', area: 'checkout', title: 'Checkout Bug Hunt', description: 'Explore an e-commerce checkout, report defects and assess your findings.', url: '../checkout-bug-hunt/', link: 'Open Checkout Bug Hunt' },
-        { type: 'challenge', area: 'apibughunt', title: 'API Bug Hunt', description: 'Find and report API contract and data-behavior defects.', url: '../api-bug-hunt/', link: 'Open API Bug Hunt' }
+        { type: 'challenge', area: 'apibughunt', title: 'API Bug Hunt', description: 'Find and report API contract and data-behavior defects.', url: '../api-bug-hunt/', link: 'Open API Bug Hunt' },
+        { type: 'challenge', area: 'bugtriage', title: 'Bug Triage & Defect Management Lab', description: 'Investigate five defects, assess severity and priority, recommend actions and review your triage decisions.', url: '../bug-triage/', link: 'Open Bug Triage Lab' }
       ]
     },
     interview: {

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Practice QA defect triage: examine reproduction evidence, distinguish severity from priority, and recommend actions for five realistic bugs.">
+  <title>Bug Triage &amp; Defect Management | Practical QA Lab</title>
+  <link rel="stylesheet" href="style.css?v=triage-stage1">
+  <script src="script.js?v=triage-stage1" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to bug triage challenge</a>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="../" aria-label="Practical QA Lab homepage">PRACTICAL QA PRESS <span>· LAB</span></a>
+      <a class="back-link" href="../">← Back to main lab</a>
+    </div>
+  </header>
+
+  <main id="main" class="container">
+    <section class="hero" aria-labelledby="page-title">
+      <div class="hero-copy">
+        <p class="eyebrow">v1.2 · DEFECT MANAGEMENT</p>
+        <h1 id="page-title">You're leading bug triage.</h1>
+        <p class="hero-intro">Five defect reports have landed ahead of a ShopFlow release. Review the evidence, distinguish <strong>severity</strong> from <strong>priority</strong>, and recommend what the team should do next.</p>
+        <div class="hero-meta"><span>Fictional QA training case</span><span>5 defects</span><span>Approx. 15–20 min</span></div>
+      </div>
+      <aside class="release-brief" aria-label="Triage brief">
+        <span class="mini-label">TRIAGE BOARD</span>
+        <strong>ShopFlow v2.9</strong>
+        <span>Checkout, accounts &amp; reporting</span>
+        <div class="brief-rule"></div>
+        <span class="mini-label">YOUR ROLE</span>
+        <span>QA engineer · Release triage meeting</span>
+        <span class="brief-chip" id="briefStatus">Assessment not yet submitted</span>
+      </aside>
+    </section>
+
+    <nav class="section-nav" aria-label="On this page">
+      <a href="#rules">01 · Triage guide</a>
+      <a href="#workspace">02 · Investigate defects</a>
+      <a href="#review">03 · Triage review</a>
+    </nav>
+
+    <section id="rules" class="section" aria-labelledby="rules-heading">
+      <div class="section-heading">
+        <p class="eyebrow">01 · BEFORE YOU BEGIN</p>
+        <h2 id="rules-heading">Severity is not the same as priority.</h2>
+        <p class="section-lead">Use the same rubric for all five reports. Consider customer harm, frequency, affected workflow, time sensitivity and whether a workaround has been verified.</p>
+      </div>
+      <div class="guide-grid">
+        <article class="guide-card">
+          <span class="guide-number">01</span>
+          <h3>Severity = impact</h3>
+          <p><strong>Critical:</strong> financial or security harm. <strong>High:</strong> a major user journey is broken. <strong>Medium:</strong> meaningful but limited disruption. <strong>Low:</strong> cosmetic or negligible functional impact.</p>
+        </article>
+        <article class="guide-card">
+          <span class="guide-number">02</span>
+          <h3>Priority = urgency</h3>
+          <p><strong>P0:</strong> act immediately. <strong>P1:</strong> fix before a committed deadline or release. <strong>P2:</strong> plan the next cycle. <strong>P3:</strong> backlog / approved deferral.</p>
+        </article>
+        <article class="guide-card">
+          <span class="guide-number">03</span>
+          <h3>Action = decision</h3>
+          <p>Choose whether to stop the rollout, fix and retest before release, schedule a prioritized fix, or explicitly defer with the right approval.</p>
+        </article>
+      </div>
+      <p class="tip"><strong>QA tip:</strong> A lower-severity issue can still have high priority when a customer deadline is close. Avoid ranking bugs from severity labels alone.</p>
+    </section>
+
+    <section id="workspace" class="section" aria-labelledby="workspace-heading">
+      <div class="section-heading heading-row">
+        <div>
+          <p class="eyebrow">02 · HANDS-ON TRIAGE</p>
+          <h2 id="workspace-heading">Review the defect inbox</h2>
+          <p class="section-lead">Select a report, inspect the evidence, and record four decisions. Drafts are stored in this browser only.</p>
+        </div>
+        <div class="progress-mini" role="status" aria-live="polite"><strong id="completedCount">0/5</strong><span>reports documented</span></div>
+      </div>
+
+      <div class="workspace-layout">
+        <aside class="inbox" aria-labelledby="inbox-heading">
+          <h3 id="inbox-heading">Incoming defects</h3>
+          <p>Select an issue to investigate.</p>
+          <div id="caseNav" class="case-nav" aria-label="Defect reports"></div>
+          <div class="draft-info"><span id="draftStatus" role="status" aria-live="polite">Draft ready</span><button type="button" id="resetDraft" class="text-button">Clear my draft</button></div>
+        </aside>
+
+        <div class="case-workspace">
+          <article class="case-card" aria-labelledby="caseTitle">
+            <div class="case-head">
+              <div><p class="eyebrow" id="caseCounter">CASE 01 OF 05</p><span class="bug-code" id="caseCode">PAY-381</span><h3 id="caseTitle">Loading report…</h3></div>
+              <span class="status-pill" id="caseState">Needs triage</span>
+            </div>
+            <div class="report-details">
+              <div><span class="field-label">Environment</span><p id="caseEnvironment"></p></div>
+              <div><span class="field-label">Reported by</span><p id="caseReporter"></p></div>
+              <div><span class="field-label">Reproduction</span><p id="caseFrequency"></p></div>
+              <div><span class="field-label">Release timing</span><p id="caseDeadline"></p></div>
+            </div>
+            <h4>Observed behaviour</h4><p id="caseObserved"></p>
+            <h4>Expected behaviour</h4><p id="caseExpected"></p>
+            <div class="impact-box"><strong>Business / customer evidence</strong><p id="caseImpact"></p></div>
+          </article>
+
+          <form id="triageForm" class="triage-form" novalidate>
+            <h3>Your triage assessment</h3>
+            <p class="form-help">Make a judgement using the current evidence—not a hypothetical fix. Choose one option in each category.</p>
+            <div class="decision-grid">
+              <fieldset class="option-group"><legend>Severity <span class="required">*</span></legend><div id="severityOptions" class="option-list"></div></fieldset>
+              <fieldset class="option-group"><legend>Priority <span class="required">*</span></legend><div id="priorityOptions" class="option-list"></div></fieldset>
+            </div>
+            <fieldset class="option-group action-group"><legend>Recommended action <span class="required">*</span></legend><div id="actionOptions" class="option-list action-list"></div></fieldset>
+            <div class="rationale-group"><label for="caseRationale">Explain your decision <span class="required">*</span></label><p class="form-help">Refer to evidence such as frequency, harm, workaround or deadline. Minimum 30 characters.</p><textarea id="caseRationale" maxlength="1000" minlength="30" rows="4" placeholder="The impact is ...; the priority is ... because ...; I recommend ..."></textarea><p class="character-count" id="characterCount">0 / 1,000 characters</p></div>
+            <div class="case-controls"><button class="secondary-button" type="button" id="previousCase">← Previous</button><button class="primary-button" type="button" id="nextCase">Next issue →</button></div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <section id="review" class="section review-section" aria-labelledby="review-heading">
+      <div class="section-heading heading-row">
+        <div><p class="eyebrow">03 · YOUR TRIAGE REVIEW</p><h2 id="review-heading">Ready for the triage meeting?</h2><p class="section-lead">Complete all five reports, then assess your decisions. You'll receive a per-defect score and an answer guide.</p></div>
+        <span class="review-chip" id="readinessStatus">0 of 5 ready</span>
+      </div>
+      <div id="missingSummary" class="missing-summary" role="status" aria-live="polite">Five defect reports are waiting for your assessment.</div>
+      <div class="review-actions"><button id="finishReview" type="button" class="primary-button">Finish triage &amp; get feedback →</button><span id="progressSaveStatus" class="fineprint" role="status" aria-live="polite">Your score will be saved to My Progress after review.</span></div>
+      <section id="reviewResult" class="result-panel" aria-label="Triage assessment feedback" tabindex="-1" hidden>
+        <div class="result-top"><div><p class="eyebrow">INDICATIVE TRIAGE REVIEW</p><h3>Your defect-triage feedback</h3><p id="reviewMessage"></p></div><div id="totalScore" class="big-score">—/100</div></div>
+        <div class="score-track" aria-hidden="true"><span id="scoreFill"></span></div>
+        <p class="review-caveat">Rule-based training feedback: severity, priority and actions are compared to this fictional case's rubric. The rationale check looks for documentation and evidence terms; it cannot judge professional reasoning like a human reviewer.</p>
+        <div id="feedbackCards" class="feedback-grid"></div>
+        <details class="answer-guide"><summary>Show the reviewer answer guide</summary><div id="answerGuide"></div></details>
+      </section>
+    </section>
+  </main>
+  <footer class="site-footer">Practical QA Lab · Fictional training environment · No information sent to a server.</footer>
+</body>
+</html>
