@@ -716,7 +716,7 @@
       <div class="progress-dashboard-header">
         <p class="eyebrow">PRACTICAL QA LAB · MY PROGRESS</p>
         <h2 id="progressDashboardTitle">Your learning progress</h2>
-        <p>Track practice sessions, mock interviews and completed Bug Hunt challenges in this browser.</p>
+        <p>Track your QA practice, mock interviews, hands-on lab assessments and learning progress in this browser.</p>
       </div>
 
       <p class="progress-privacy">
@@ -729,7 +729,7 @@
 
       <div class="progress-stat-grid" aria-label="Progress overview">
         <div class="progress-stat"><span class="progress-stat-value" id="progressSessions">0</span><span class="progress-stat-label">Sessions completed</span></div>
-        <div class="progress-stat"><span class="progress-stat-value" id="progressAreas">0/11</span><span class="progress-stat-label">Areas practiced</span></div>
+        <div class="progress-stat"><span class="progress-stat-value" id="progressAreas">0/12</span><span class="progress-stat-label">Areas practiced</span></div>
         <div class="progress-stat"><span class="progress-stat-value" id="progressAverage">—</span><span class="progress-stat-label">Average score</span></div>
         <div class="progress-stat"><span class="progress-stat-value" id="progressBest">—</span><span class="progress-stat-label">Best score</span></div>
       </div>
@@ -741,9 +741,21 @@
         <p id="progressSuggestion" class="progress-suggestion" aria-live="polite"></p>
       </div>
 
+      <!-- v1.3: Read-only Progress Insights -->
+      <div class="progress-section-card"
+           aria-labelledby="progressTrendHeading">
+        <h3 id="progressTrendHeading">Recent score comparison</h3>
+        <p class="progress-section-help">
+          Compare your two most recent attempts in the same practice area.
+        </p>
+        <p id="progressTrendSummary" aria-live="polite">
+          Checking your saved assessment history…
+        </p>
+      </div>
+
       <div class="progress-section-card">
         <h3>Recent completed sessions</h3>
-        <p class="progress-section-help">Scores are saved after a five-question session, a Bug Hunt finish, or a Test Case Lab design review.</p>
+        <p class="progress-section-help">Review your latest recorded scores from QA practice, mock interviews and supported hands-on lab assessments.</p>
         <div id="progressEmpty" class="progress-empty">
           No completed sessions yet. Try any practice area or mock interview to get started.
         </div>
@@ -1579,7 +1591,8 @@
 
   </main>
 
-  <script src="script.js?v=0.8-stage4"></script>
+  <script src="progress-insights.js?v=1.3-1"></script>
+  <script src="script.js?v=1.3-insights"></script>
   <script src="release-readiness/progress-home.js?v=stage7-part2" defer></script>
   <script src="bug-triage/progress-home.js?v=stage2-1" defer></script>
 

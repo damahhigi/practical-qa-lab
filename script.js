@@ -5181,6 +5181,16 @@ function showProgressDashboard() {
 
 function renderProgressDashboard() {
   const sessions = readSavedSessions();
+
+  // v1.3: Read-only comparison of repeated practice attempts.
+  // Insights must never interrupt the existing dashboard.
+  if (typeof window.renderProgressInsights === "function") {
+    try {
+      window.renderProgressInsights(sessions, PROGRESS_AREAS);
+    } catch (error) {
+      console.warn("Progress Insights could not render.", error);
+    }
+  }
   const percent = item => Math.round((item.score / item.maxScore) * 100);
   const sums = sessions.reduce((total, item) => total + percent(item), 0);
   const best = sessions.length ? Math.max(...sessions.map(percent)) : null;

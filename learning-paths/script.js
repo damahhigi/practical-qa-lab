@@ -21,7 +21,8 @@
         { type: 'challenge', area: 'sqlvalidation', title: 'SQL Validation Lab', description: 'Run SQL investigations, document data-quality defects and finish the review.', url: '../sql-validation-lab/', link: 'Open SQL Validation Lab' },
         { type: 'challenge', area: 'checkout', title: 'Checkout Bug Hunt', description: 'Explore an e-commerce checkout, report defects and assess your findings.', url: '../checkout-bug-hunt/', link: 'Open Checkout Bug Hunt' },
         { type: 'challenge', area: 'apibughunt', title: 'API Bug Hunt', description: 'Find and report API contract and data-behavior defects.', url: '../api-bug-hunt/', link: 'Open API Bug Hunt' },
-        { type: 'challenge', area: 'bugtriage', title: 'Bug Triage & Defect Management Lab', description: 'Investigate five defects, assess severity and priority, recommend actions and review your triage decisions.', url: '../bug-triage/', link: 'Open Bug Triage Lab' }
+        { type: 'challenge', area: 'bugtriage', title: 'Bug Triage & Defect Management Lab', description: 'Investigate five defects, assess severity and priority, recommend actions and review your triage decisions.', url: '../bug-triage/', link: 'Open Bug Triage Lab' },
+        { type: 'challenge', area: 'releasereadiness', title: 'Release Readiness Challenge', description: 'Evaluate regression results and outstanding defects, then make an evidence-based Go / No-Go release recommendation.', url: '../release-readiness/', link: 'Open Release Readiness Challenge' }
       ]
     },
     interview: {
@@ -63,7 +64,18 @@
     if (preferred && countSteps(PATHS[preferred], sessions) < PATHS[preferred].steps.length) return preferred;
     return Object.keys(PATHS).find(key => countSteps(PATHS[key], sessions) < PATHS[key].steps.length) || 'beginner';
   }
-  let pathChosenByUser = false;
+  // Preserve an explicitly selected path through the page URL.
+  // No learning-path state is written to browser storage.
+  const requestedPath = new URLSearchParams(
+    window.location.search
+  ).get('path');
+
+  const validRequestedPath = requestedPath !== null &&
+    Object.prototype.hasOwnProperty.call(PATHS, requestedPath);
+
+  let pathChosenByUser = validRequestedPath;
+
+  if (validRequestedPath) selectedPath = requestedPath;
   function render() {
     const { sessions, status } = readHistory();
     const historyStatus = $('historyStatus');
@@ -98,12 +110,18 @@
     $('nextStep').textContent = next ? `Suggested next activity: ${next.title}` : 'Every activity in this path has a saved session. You can revisit any one to improve your score.';
     // Prominent next-activity shortcut; the same fixed target appears in the step list below.
     const suggested = next || path.steps[0];
+    const nextPosition = next ? path.steps.indexOf(next) + 1 : null;
+
     $('continuePath').textContent = path.name;
     $('continueTitle').textContent = next ? suggested.title : 'All activities recorded';
+
     $('continueDescription').textContent = next
-      ? `Your next unfinished step in ${path.name}. You can still choose activities in any order.`
-      : `Every activity in ${path.name} has a saved session. Revisit an activity to practise again.`;
-    $('continueStatus').textContent = `${completed} of ${path.steps.length} activities recorded · ${progress}%`;
+      ? `${suggested.description} You can complete activities in any order.`
+      : `Every activity in ${path.name} has a saved session. Revisit an activity to practise and improve your score.`;
+
+    $('continueStatus').textContent = next
+      ? `Step ${nextPosition} of ${path.steps.length} · ${completed} of ${path.steps.length} recorded · ${progress}%`
+      : `All ${path.steps.length} activities recorded · 100% of steps recorded`;
     $('continueLink').href = suggested.url;
     $('continueLink').textContent = next ? `Continue to ${suggested.title} →` : `Practise ${suggested.title} again →`;
 
@@ -144,6 +162,12 @@
     button.addEventListener('click', () => {
       selectedPath = button.dataset.path;
       pathChosenByUser = true;
+
+      // Update the URL without navigating or reloading.
+      const url = new URL(window.location.href);
+      url.searchParams.set('path', selectedPath);
+      window.history.replaceState(window.history.state, '', url);
+
       render();
       $('pathDetails').focus({ preventScroll: true });
       $('pathDetails').scrollIntoView({ behavior: 'smooth', block: 'start' });
