@@ -8,7 +8,7 @@ test.describe('Practical QA Lab smoke regression', () => {
     await expect(page.getByRole('link', { name: /Start Test Case Lab/ })).toBeVisible();
 
     await page.getByRole('button', { name: /View my progress/ }).first().click();
-    await expect(page.locator('#progressAreas')).toHaveText('0/10');
+    await expect(page.locator('#progressAreas')).toHaveText('0/11');
     await expect(page.locator('#progressSessions')).toHaveText('0');
   });
 
@@ -44,7 +44,7 @@ test.describe('Practical QA Lab smoke regression', () => {
     await expect(page.locator('#reviewResults')).toBeVisible();
     await page.getByRole('link', { name: /Main Practical QA Lab/ }).click();
     await page.getByRole('button', { name: /View my progress/ }).first().click();
-    await expect(page.locator('#progressAreas')).toHaveText('1/10');
+    await expect(page.locator('#progressAreas')).toHaveText('1/11');
     await expect(page.locator('#progressSessions')).toHaveText('1');
   });
 });

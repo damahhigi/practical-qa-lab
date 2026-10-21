@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Practice release readiness as a QA engineer: assess test coverage, prioritize defects, and write a Go/No-Go recommendation for a fictional release.">
+  <title>Release Readiness Challenge | Practical QA Lab</title>
+  <link rel="stylesheet" href="style.css?v=stage7-part1">
+  <script src="script.js?v=stage7-part2-fixed" defer></script>
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to challenge</a>
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="../" class="brand" aria-label="Practical QA Lab homepage">PRACTICAL QA PRESS <span>· LAB</span></a>
+      <a href="../" class="back-link">← Back to main lab</a>
+    </div>
+  </header>
+
+  <main id="main" class="container">
+    <section class="hero" aria-labelledby="challenge-title">
+      <div class="hero-copy">
+        <p class="eyebrow">STAGE 7 · RELEASE MANAGEMENT</p>
+        <h1 id="challenge-title">Would you approve this release?</h1>
+        <p class="intro">You're the QA engineer reviewing ShopFlow's upcoming checkout release. Examine the evidence, triage open defects, then give a defensible <strong>Go / No-Go recommendation</strong>.</p>
+        <div class="hero-meta"><span>Fictional case study</span><span>Release candidate RC-4</span><span>Approx. 10–15 min</span></div>
+      </div>
+      <aside class="release-card" aria-label="Release details">
+        <span class="mini-label">RELEASE BRIEF</span>
+        <strong>ShopFlow v2.8</strong>
+        <span>Checkout &amp; customer account update</span>
+        <div class="release-divider"></div>
+        <span class="mini-label">TARGET</span>
+        <span>Friday · 17:00 EAT</span>
+        <span class="candidate">Pending QA sign-off</span>
+      </aside>
+    </section>
+
+    <nav class="section-nav" aria-label="Challenge sections">
+      <a href="#policy">01 · Criteria</a>
+      <a href="#test-results">02 · Test evidence</a>
+      <a href="#defects">03 · Defects</a>
+      <a href="#signoff">04 · Decision</a>
+    </nav>
+
+    <section class="content-section" id="policy" aria-labelledby="policy-title">
+      <div class="section-title"><div><p class="eyebrow">01 · THE RELEASE GATES</p><h2 id="policy-title">What must be true before we ship?</h2></div></div>
+      <p class="section-lead">The product and engineering teams have agreed on the following fictional release policy. Evaluate this release <strong>against these rules</strong>, not just its overall pass rate.</p>
+      <div class="policy-grid">
+        <article class="policy-item"><span class="policy-no">01</span><h3>No open critical defects</h3><p>Critical payment and data-integrity defects must be resolved and verified.</p></article>
+        <article class="policy-item"><span class="policy-no">02</span><h3>Critical flows verified</h3><p>Failed, blocked, and not-run tests affecting core journeys need evidence and disposition.</p></article>
+        <article class="policy-item"><span class="policy-no">03</span><h3>Fixes must be retested</h3><p>A developer's “fixed” status is not enough. QA verification is required.</p></article>
+        <article class="policy-item"><span class="policy-no">04</span><h3>Documented exceptions</h3><p>Low-impact issues can be deferred only with an explicit business owner approval.</p></article>
+      </div>
+    </section>
+
+    <section class="content-section" id="test-results" aria-labelledby="tests-title">
+      <div class="section-title"><div><p class="eyebrow">02 · TEST EVIDENCE</p><h2 id="tests-title">Regression results</h2></div><span class="subtle-chip">RC-4 · latest QA run</span></div>
+      <p class="section-lead">A summary dashboard can appear healthy while high-risk problems remain. Review both the totals and which areas are unfinished.</p>
+      <div class="stats-grid" aria-label="Test execution totals">
+        <div class="stat"><span>Total tests</span><strong>120</strong></div>
+        <div class="stat positive"><span>Passed</span><strong>102</strong></div>
+        <div class="stat negative"><span>Failed</span><strong>7</strong></div>
+        <div class="stat caution"><span>Blocked</span><strong>6</strong></div>
+        <div class="stat"><span>Not run</span><strong>5</strong></div>
+      </div>
+      <div class="evidence-panel">
+        <div class="bar-head"><strong>Execution distribution</strong><span>85% passed · 15% not passing / unverified</span></div>
+        <div class="stack-bar" role="img" aria-label="Of 120 tests: 102 passed, 7 failed, 6 blocked and 5 not run"><span class="passed" style="width:85%"></span><span class="failed" style="width:5.8333%"></span><span class="blocked" style="width:5%"></span><span class="not-run" style="width:4.1667%"></span></div>
+        <div class="legend"><span><i class="dot pass"></i>Passed</span><span><i class="dot fail"></i>Failed</span><span><i class="dot block"></i>Blocked</span><span><i class="dot todo"></i>Not run</span></div>
+        <div class="table-scroll" tabindex="0" aria-label="Scrollable test coverage by area">
+          <table>
+            <caption>Regression results by functional area</caption>
+            <thead><tr><th scope="col">Functional area</th><th scope="col">Total</th><th scope="col">Passed</th><th scope="col">Failed</th><th scope="col">Blocked</th><th scope="col">Not run</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">Payment authorization &amp; retries</th><td>28</td><td>24</td><td>2</td><td>2</td><td>0</td></tr>
+              <tr><th scope="row">Orders &amp; fulfillment</th><td>33</td><td>30</td><td>1</td><td>2</td><td>0</td></tr>
+              <tr><th scope="row">Authentication &amp; profiles</th><td>29</td><td>26</td><td>2</td><td>1</td><td>0</td></tr>
+              <tr><th scope="row">UI &amp; notifications</th><td>30</td><td>22</td><td>2</td><td>1</td><td>5</td></tr>
+            </tbody>
+            <tfoot><tr><th scope="row">TOTAL</th><td>120</td><td>102</td><td>7</td><td>6</td><td>5</td></tr></tfoot>
+          </table>
+        </div>
+        <p class="evidence-tip"><strong>QA note:</strong> “Blocked” means execution could not finish; it does not mean the feature passed. “Not run” means there is no execution evidence.</p>
+      </div>
+    </section>
+
+    <section class="content-section" id="defects" aria-labelledby="defects-title">
+      <div class="section-title"><div><p class="eyebrow">03 · DEFECT TRIAGE</p><h2 id="defects-title">Open items in the release</h2></div><span class="subtle-chip">4 tracked issues</span></div>
+      <p class="section-lead">The details below are the information available to QA at sign-off time. You will classify the appropriate action for each issue in the decision form.</p>
+      <div class="defect-list">
+        <article class="defect" aria-labelledby="bug-pay"><div class="defect-top"><span class="bug-id">PAY-214</span><span class="severity critical">Critical</span><span class="status-tag">Open · no verified fix</span></div><h3 id="bug-pay">Possible duplicate charge after a payment timeout</h3><p>When a customer retries a timed-out card payment, two captured transactions appear for one order in <strong>3 of 10 attempts</strong>. The payment team has not supplied a verified fix or safe workaround.</p><p class="defect-impact"><strong>Impact:</strong> direct financial harm, refunds, and customer trust.</p></article>
+        <article class="defect" aria-labelledby="bug-order"><div class="defect-top"><span class="bug-id">ORD-337</span><span class="severity high">High</span><span class="status-tag">Open · workaround unverified</span></div><h3 id="bug-order">Paid order missing from Order History</h3><p>After successful checkout, the order is absent from the mobile Order History view in <strong>2 of 10 attempts</strong>. Support can manually search order IDs, but this workaround has not been validated for release use.</p><p class="defect-impact"><strong>Impact:</strong> customers cannot reliably confirm their purchases.</p></article>
+        <article class="defect" aria-labelledby="bug-auth"><div class="defect-top"><span class="bug-id">AUTH-122</span><span class="severity medium">Medium</span><span class="status-tag">Fix available · QA retest pending</span></div><h3 id="bug-auth">Password reset email arrives late</h3><p>Some reset emails took up to 18 minutes to arrive. Engineering says the fix is in RC-4, but QA has <strong>not rerun</strong> the affected recovery tests.</p><p class="defect-impact"><strong>Impact:</strong> recovery delays and avoidable support contacts.</p></article>
+        <article class="defect" aria-labelledby="bug-ui"><div class="defect-top"><span class="bug-id">UI-052</span><span class="severity low">Low</span><span class="status-tag">Approved for deferral</span></div><h3 id="bug-ui">Promo-code helper text overlaps at 320px</h3><p>The checkout promo helper text clips at a narrow viewport. It does not prevent entering or applying the discount. The product owner has <strong>signed off deferral</strong> to the next release.</p><p class="defect-impact"><strong>Impact:</strong> limited visual inconvenience on narrow screens.</p></article>
+      </div>
+    </section>
+
+    <section class="content-section signoff-section" id="signoff" aria-labelledby="signoff-title">
+      <div class="section-title"><div><p class="eyebrow">04 · YOUR QA SIGN-OFF</p><h2 id="signoff-title">Make the release decision</h2></div><span class="draft-state" id="saveStatus" role="status" aria-live="polite">Draft not yet saved</span></div>
+      <p class="section-lead">Think like the person accountable for explaining release risk. Your answers are saved <strong>in this browser only</strong>. Completed reviews also save to My Progress.</p>
+      <form id="signoffForm" novalidate>
+        <fieldset class="form-panel"><legend>1. Your release recommendation <span class="required">*</span></legend>
+          <p class="field-help">Evaluate the release <em>as it stands right now</em>, not after hypothetical fixes.</p>
+          <div class="decision-options">
+            <label class="choice"><input type="radio" name="decision" value="go" required><span><strong>GO</strong><small>Ship as planned</small></span></label>
+            <label class="choice"><input type="radio" name="decision" value="conditional" required><span><strong>GO WITH CONDITIONS</strong><small>Authorize release while tracking conditions</small></span></label>
+            <label class="choice"><input type="radio" name="decision" value="no-go" required><span><strong>NO-GO</strong><small>Do not approve until release gates are satisfied</small></span></label>
+          </div>
+        </fieldset>
+        <fieldset class="form-panel"><legend>2. Recommend an action for each defect <span class="required">*</span></legend>
+          <p class="field-help">Choose the most appropriate present disposition for each item.</p>
+          <div class="triage-row"><div><strong>PAY-214</strong><span>Possible duplicate payment</span></div><label class="sr-only" for="triagePay">Action for PAY-214</label><select id="triagePay" name="pay" required><option value="">Choose action…</option><option value="block">Block release until fix verified</option><option value="retest">Verify the fix before sign-off</option><option value="defer">Accept / defer this defect</option></select></div>
+          <div class="triage-row"><div><strong>ORD-337</strong><span>Paid order missing from history</span></div><label class="sr-only" for="triageOrder">Action for ORD-337</label><select id="triageOrder" name="order" required><option value="">Choose action…</option><option value="block">Block release until fix verified</option><option value="retest">Verify the fix before sign-off</option><option value="defer">Accept / defer this defect</option></select></div>
+          <div class="triage-row"><div><strong>AUTH-122</strong><span>Password reset delay; fix ready</span></div><label class="sr-only" for="triageAuth">Action for AUTH-122</label><select id="triageAuth" name="auth" required><option value="">Choose action…</option><option value="block">Block release until fix verified</option><option value="retest">Verify the fix before sign-off</option><option value="defer">Accept / defer this defect</option></select></div>
+          <div class="triage-row"><div><strong>UI-052</strong><span>Approved cosmetic deferral</span></div><label class="sr-only" for="triageUi">Action for UI-052</label><select id="triageUi" name="ui" required><option value="">Choose action…</option><option value="block">Block release until fix verified</option><option value="retest">Verify the fix before sign-off</option><option value="defer">Accept / defer this defect</option></select></div>
+        </fieldset>
+        <fieldset class="form-panel"><legend>3. What actions belong in the release plan?</legend>
+          <p class="field-help">Select every action that should be completed <strong>before approving the release</strong>. Some choices are unsafe shortcuts.</p>
+          <div class="check-options">
+            <label><input name="actions" type="checkbox" value="payment"><span>Fix the payment retry defect; rerun focused tests and payment regression.</span></label>
+            <label><input name="actions" type="checkbox" value="coverage"><span>Resolve failing-test outcomes and complete or formally disposition blocked/not-run critical tests.</span></label>
+            <label><input name="actions" type="checkbox" value="auth"><span>Retest the password reset fix and record QA evidence.</span></label>
+            <label><input name="actions" type="checkbox" value="rollback"><span>Confirm the rollback and incident-response plan before a new release decision.</span></label>
+            <label><input name="actions" type="checkbox" value="ship"><span>Ship immediately and monitor payment errors in production instead of fixing PAY-214.</span></label>
+            <label><input name="actions" type="checkbox" value="ignore"><span>Ignore blocked tests because the overall pass rate is above 80%.</span></label>
+          </div>
+        </fieldset>
+        <div class="form-panel"><label class="textarea-label" for="rationale">4. Explain your recommendation <span class="required">*</span></label>
+          <p class="field-help">State the release risk and the evidence that supports your decision. Include what would have to change before you approve.</p>
+          <textarea id="rationale" name="rationale" rows="5" maxlength="1800" minlength="30" required placeholder="I recommend ... because ... Before sign-off, I would ..."></textarea>
+          <p class="character-note"><span id="characterCount">0</span> / 1,800 characters · minimum 30</p>
+        </div>
+        <div class="form-actions"><button type="submit" class="primary-button" id="assessButton">Finish challenge &amp; get feedback →</button><button type="button" class="text-button" id="resetButton">Clear draft</button></div>
+        <p class="form-error" id="formError" role="alert" hidden></p>
+      </form>
+      <section class="review-result" id="reviewResult" aria-label="Your challenge feedback" tabindex="-1" hidden>
+        <div class="result-head"><div><p class="eyebrow">INDICATIVE REVIEW</p><h3>Release sign-off feedback</h3><p id="reviewSummary"></p></div><div class="result-score" id="reviewScore">— /100</div></div>
+        <div class="meter" aria-hidden="true"><span class="meter-fill" id="reviewMeter"></span></div>
+        <p class="review-caveat">This is a rule-based learning review. It checks your choices and key evidence, not the full quality of your professional judgment.</p>
+        <div class="feedback-grid" id="feedbackGrid"></div>
+        <p id="progressSaveStatus" role="status" aria-live="polite"></p>
+        <details class="answer-guide"><summary>Show the reviewer answer guide</summary><div id="answerGuide"><p><strong>Training recommendation: NO-GO now.</strong> An unresolved critical double-charge defect violates the agreed release gate. A high-impact order-history defect is also unresolved; a support workaround is not yet validated. The password-reset fix needs QA retesting. The low-impact UI item can remain deferred because its business owner approved the exception.</p><p>Before reconsidering approval, require a verified payment fix, validation of the order-history issue, documented disposition of failures and incomplete critical tests, recovery-flow retesting, and an agreed rollback/incident plan. A high aggregate pass percentage cannot overrule a critical safety or payment gate.</p></div></details>
+      </section>
+    </section>
+  </main>
+  <footer class="site-footer">Practical QA Lab · Fictional training environment · Nothing submitted to a server.</footer>
+</body>
+</html>
