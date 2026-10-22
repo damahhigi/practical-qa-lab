@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Practise reliable Playwright locators, labelled inputs, scoped buttons, and assertions in a guided QA lab.">
+  <title>Locators &amp; Interactions | Test Automation Lab | Practical QA Lab</title>
+  <link rel="stylesheet" href="../style.css?v=automation-m1-1">
+  <link rel="stylesheet" href="style.css?v=automation-m2-1">
+  <script src="../progress-save.js?v=1.4-1" defer></script>
+  <script src="script.js?v=automation-m2-1" defer></script>
+  <link rel="stylesheet" href="../module-path.css?v=automation-nav-1">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to locator exercises</a>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="../../" aria-label="Practical QA Lab homepage">PRACTICAL QA PRESS <span>· LAB</span></a>
+      <a class="back-link" href="../">← Module 1</a>
+    </div>
+  </header>
+  <main id="main" class="container">
+    <section class="hero" aria-labelledby="page-title">
+      <div>
+        <p class="eyebrow">v1.4 · TEST AUTOMATION LAB · MODULE 2</p>
+        <h1 id="page-title">Find the right element, every time.</h1>
+        <p class="hero-intro">Practise Playwright locators with a fictional account-settings page. Learn why accessible names, form labels, and scoped locators are more reliable than position-based guesses.</p>
+        <div class="hero-meta"><span>4 locator decisions</span><span>100 points</span><span>Practical DOM scenario</span></div>
+      </div>
+      <aside class="brief" aria-label="Exercise details">
+        <span class="mini-label">YOUR MISSION</span>
+        <strong>Update an account email</strong>
+        <p>Choose code that navigates, fills the correct input, clicks the intended Save button, and checks the result.</p>
+        <span class="brief-status" id="draftStatus" role="status" aria-live="polite">Ready to begin</span>
+      </aside>
+    </section>
+
+    <nav class="section-nav" aria-label="On this page">
+      <a href="#learn">01 · Learn</a>
+      <a href="#reference">02 · Reference page</a>
+      <a href="#exercise">03 · Practise</a>
+      <a href="#review">04 · Review</a>
+    </nav>
+
+    <section class="section" id="learn" aria-labelledby="learn-heading">
+      <p class="eyebrow">01 · QUICK CONCEPTS</p>
+      <h2 id="learn-heading">Choose locators with intent</h2>
+      <p class="section-lead">Good locators describe what a learner or user can perceive, and target one specific element. A selector that happens to work today may become fragile when the page changes.</p>
+      <div class="concept-grid">
+        <article class="concept"><span class="concept-number">01</span><h3>Role and name</h3><p><code>getByRole('link', { name: ... })</code> identifies an accessible link instead of selecting an arbitrary <code>a</code> tag.</p></article>
+        <article class="concept"><span class="concept-number">02</span><h3>Visible labels</h3><p><code>getByLabel('Email address')</code> uses the label associated with a form control.</p></article>
+        <article class="concept"><span class="concept-number">03</span><h3>Scope duplicates</h3><p>If two buttons share a name, first find the appropriate region, then the button inside it.</p></article>
+        <article class="concept"><span class="concept-number">04</span><h3>Assert a result</h3><p><code>await expect(...).toHaveText(...)</code> waits for the expected confirmation.</p></article>
+      </div>
+    </section>
+
+    <section class="section" id="reference" aria-labelledby="reference-heading">
+      <p class="eyebrow">02 · READ THE PAGE</p>
+      <h2 id="reference-heading">Your reference application</h2>
+      <p class="section-lead">Imagine you're testing a fictional customer portal. The simplified HTML below shows the accessible structure relevant to the task. It is a <strong>reference snapshot</strong>, not a working application. The success message represents the state after saving.</p>
+      <div class="reference-grid">
+        <article class="reference-card" aria-labelledby="reference-app-title">
+          <div class="reference-top"><span class="mini-label">VISUAL REFERENCE</span><h3 id="reference-app-title">Customer portal · Settings</h3></div>
+          <div class="demo-banner"><span class="demo-brand">SHOPFLOW</span><span class="demo-caption">Illustrative UI only</span></div>
+          <div class="mock-content">
+            <p class="mock-nav">🔗 <strong>Account settings</strong> <span>— navigation link</span></p>
+            <div class="mock-panel"><span class="mock-heading">Account details</span><div class="mock-label">Email address</div><div class="mock-input">qa@example.com</div><span class="mock-button">Save changes</span></div>
+            <div class="mock-panel mock-secondary"><span class="mock-heading">Notifications</span><span class="mock-button">Save changes</span></div>
+            <div class="mock-success">✓ Changes saved</div>
+          </div>
+          <p class="reference-hint">Notice the two identically named buttons. A locator based on the button name alone would match both.</p>
+        </article>
+        <article class="reference-card reference-code" aria-labelledby="reference-dom-title">
+          <div class="reference-top"><span class="mini-label">SIMPLIFIED DOM REFERENCE</span><h3 id="reference-dom-title">Relevant HTML</h3></div>
+          <pre tabindex="0" aria-label="Sample HTML element structure"><code>&lt;a href="/settings"&gt;Account settings&lt;/a&gt;
+
+&lt;section aria-label="Account details"&gt;
+  &lt;label for="email"&gt;Email address&lt;/label&gt;
+  &lt;input id="email" type="email" /&gt;
+  &lt;button&gt;Save changes&lt;/button&gt;
+&lt;/section&gt;
+
+&lt;section aria-label="Notifications"&gt;
+  &lt;button&gt;Save changes&lt;/button&gt;
+&lt;/section&gt;
+
+&lt;p role="status"&gt;Changes saved&lt;/p&gt;</code></pre>
+          <p class="reference-hint">The named <code>section</code> is exposed as a <strong>region</strong> in the accessibility tree. That lets Playwright scope the correct Save button.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="exercise" aria-labelledby="exercise-heading">
+      <div class="section-heading">
+        <div><p class="eyebrow">03 · INTERACTIVE EXERCISE</p><h2 id="exercise-heading">Build reliable interactions</h2><p class="section-lead">Choose one statement per step. Each selected statement appears in full below its dropdown and in your TypeScript preview.</p></div>
+        <div class="count-chip" role="status" aria-live="polite"><strong id="completedCount">0/4</strong> choices made</div>
+      </div>
+      <div class="workspace">
+        <form id="constructionForm" class="exercise-form" novalidate>
+          <fieldset class="question" data-stage="link">
+            <legend><span class="question-number">01</span> Open account settings <span class="points">20 points</span></legend>
+            <span class="mobile-points">20 points</span>
+            <p>The landing page has a link named <strong>Account settings</strong>. Which locator clearly identifies and clicks that link?</p>
+            <label for="linkChoice">Choose a link interaction</label>
+            <select id="linkChoice" data-choice="link" required>
+              <option value="">Select a statement…</option>
+              <option value="wrong1">await page.locator('a').first().click();</option>
+              <option value="correct">await page.getByRole('link', { name: 'Account settings' }).click();</option>
+              <option value="wrong2">await page.getByText('Account settings').click();</option>
+            </select>
+            <div class="chosen-statement" aria-live="polite"><span>Full selected statement</span><code id="linkSelected">None yet</code></div>
+          </fieldset>
+          <fieldset class="question" data-stage="email">
+            <legend><span class="question-number">02</span> Enter the email <span class="points">25 points</span></legend>
+            <span class="mobile-points">25 points</span>
+            <p>The input has a visible <strong>Email address</strong> label. How should the test fill <code>qa@example.com</code>?</p>
+            <label for="emailChoice">Choose an input interaction</label>
+            <select id="emailChoice" data-choice="email" required>
+              <option value="">Select a statement…</option>
+              <option value="wrong1">await page.getByPlaceholder('Email address').fill('qa@example.com');</option>
+              <option value="wrong2">await page.locator('input').first().fill('qa@example.com');</option>
+              <option value="correct">await page.getByLabel('Email address').fill('qa@example.com');</option>
+            </select>
+            <div class="chosen-statement" aria-live="polite"><span>Full selected statement</span><code id="emailSelected">None yet</code></div>
+          </fieldset>
+          <fieldset class="question" data-stage="scoped">
+            <legend><span class="question-number">03</span> Choose the correct Save button <span class="points">30 points</span></legend>
+            <span class="mobile-points">30 points</span>
+            <p>Two sections contain a button named <strong>Save changes</strong>. How do you click the one inside <strong>Account details</strong>?</p>
+            <label for="scopedChoice">Choose a scoped interaction</label>
+            <select id="scopedChoice" data-choice="scoped" required>
+              <option value="">Select a statement…</option>
+              <option value="wrong1">await page.getByRole('button', { name: 'Save changes' }).click();</option>
+              <option value="correct">await page.getByRole('region', { name: 'Account details' }).getByRole('button', { name: 'Save changes' }).click();</option>
+              <option value="wrong2">await page.getByRole('button', { name: 'Save changes' }).last().click();</option>
+            </select>
+            <div class="chosen-statement" aria-live="polite"><span>Full selected statement</span><code id="scopedSelected">None yet</code></div>
+          </fieldset>
+          <fieldset class="question" data-stage="status">
+            <legend><span class="question-number">04</span> Verify the confirmation <span class="points">25 points</span></legend>
+            <span class="mobile-points">25 points</span>
+            <p>After a successful save, the app shows a <strong>status</strong> message containing the text <strong>Changes saved</strong>. Which assertion checks it?</p>
+            <label for="statusChoice">Choose a status assertion</label>
+            <select id="statusChoice" data-choice="status" required>
+              <option value="">Select a statement…</option>
+              <option value="wrong1">expect(page.getByRole('status')).toHaveText('Changes saved');</option>
+              <option value="wrong2">await expect(page.getByRole('status')).toBeHidden();</option>
+              <option value="correct">await expect(page.getByRole('status')).toHaveText('Changes saved');</option>
+            </select>
+            <div class="chosen-statement" aria-live="polite"><span>Full selected statement</span><code id="statusSelected">None yet</code></div>
+          </fieldset>
+        </form>
+        <aside class="code-panel" aria-labelledby="code-heading">
+          <div class="code-heading"><div><span class="mini-label">LIVE PREVIEW</span><h3 id="code-heading">Your TypeScript test</h3></div><button id="copyCode" class="secondary-button" type="button">Copy code</button></div>
+          <pre tabindex="0" aria-label="Generated Playwright code"><code id="codePreview"></code></pre>
+          <p class="code-note">This is a code-selection simulation. The sample customer portal and <code>/settings</code> route are fictional. Nothing here runs a browser test; executing this code requires a matching test application and Playwright configuration.</p>
+          <p class="copy-status" id="copyStatus" role="status" aria-live="polite"></p>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section review-section" id="review" aria-labelledby="review-heading">
+      <p class="eyebrow">04 · ASSESSMENT</p><h2 id="review-heading">Review your locators</h2>
+      <p class="section-lead">Complete all four decisions for rubric-based feedback. The score describes your selections, not an executed test.</p>
+      <div class="review-actions"><button class="primary-button" id="reviewButton" type="button">Review my locators →</button><button class="secondary-button" id="resetButton" type="button">Clear module draft</button></div>
+      <p class="form-status" id="formStatus" role="status" aria-live="polite">Scores for Module 2 are not yet connected to My Progress.</p>
+      <section class="review-result" id="reviewResult" aria-labelledby="result-heading" tabindex="-1" hidden>
+        <div class="review-top"><div><p class="eyebrow">LOCATOR SELECTION REVIEW</p><h3 id="result-heading">Your Module 2 feedback</h3><p id="reviewMessage"></p></div><strong id="totalScore" class="total-score">—/100</strong></div>
+        <div class="score-track" aria-hidden="true"><div id="scoreFill"></div></div>
+        <div id="feedbackList" class="feedback-list"></div>
+      </section>
+    </section>
+    <section class="module-route" aria-labelledby="module-route-heading">
+      <p class="eyebrow">KEEP LEARNING</p>
+      <h2 id="module-route-heading">Continue your automation learning path</h2>
+      <p>Explore another module. Your saved answers will remain in this browser.</p>
+      <nav class="module-route-links" aria-label="Module navigation">
+        <a href="../">← Previous: Playwright Fundamentals</a>
+        <a href="../learning-path/">Back to learning path</a>
+        <a href="../module-3/" class="next">Next: Assertions & Validation →</a>
+      </nav>
+    </section>
+  </main>
+  <footer class="site-footer">Practical QA Lab · Fictional application · Module 2 drafts stay in this browser</footer>
+</body>
+</html>

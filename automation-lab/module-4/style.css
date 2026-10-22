@@ -1,0 +1,18 @@
+/* Module 4 additions. Uses Module 1's shared styles; no existing CSS is changed. */
+.reference-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;align-items:stretch}
+.reference-card{min-width:0;background:#fff;border:1px solid var(--border);border-radius:18px;overflow:hidden;box-shadow:var(--shadow)}
+.reference-top{padding:20px 22px 12px}.reference-top .mini-label{color:var(--green)}.reference-top h3{margin:5px 0 0;font-size:1.18rem}
+.demo-banner{display:flex;justify-content:space-between;align-items:center;gap:10px;background:#0B2239;color:white;padding:14px 22px}
+.demo-brand{font-weight:900;letter-spacing:.12em}.demo-caption{font-size:.75rem;color:#C6DCE8}
+.mock-content{padding:18px 22px}.mock-panel{border:1px solid var(--border);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:9px;margin-bottom:12px}
+.mock-heading{font-weight:800}.mock-label{font-size:.8rem;font-weight:700}.mock-input{border:1px solid #ADC6D1;border-radius:8px;padding:10px 12px;color:var(--navy);background:#F6FAFB;font-size:.86rem}
+.mock-button{align-self:flex-start;background:var(--green);color:white;border-radius:9px;padding:8px 12px;font-size:.8rem;font-weight:800}
+.mock-error{background:#FFF2F1;color:#9B2833;border:1px solid #F5D5D5;font-size:.82rem;padding:10px 12px;border-radius:9px;font-weight:800}
+.reference-hint{font-size:.83rem;color:var(--muted);margin:0;padding:0 22px 20px}.reference-hint code{overflow-wrap:anywhere}
+.reference-code pre{margin:0 20px 16px;padding:18px;background:#102B41;color:#E2F3F1;border-radius:12px;overflow:auto;max-width:calc(100% - 40px);font:12px/1.6 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;tab-size:2}
+.rule-list{padding:0 22px 16px}.rule-list p{font-size:.88rem;color:var(--muted);margin:8px 0;overflow-wrap:anywhere}.rule-list strong{color:var(--navy)}
+.chosen-statement{background:#F1F7F8;border-left:3px solid var(--green);border-radius:7px;padding:9px 10px;margin-top:11px;min-width:0}
+.chosen-statement span{display:block;color:var(--muted);font-size:.7rem;letter-spacing:.03em;font-weight:800;margin-bottom:5px}
+.chosen-statement code{display:block;white-space:pre-wrap;overflow-wrap:anywhere;word-break:break-word;color:var(--navy);font:12px/1.6 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+@media(max-width:950px){.reference-grid{grid-template-columns:1fr}}
+@media(max-width:360px){.reference-top,.mock-content{padding-left:15px;padding-right:15px}.reference-hint,.rule-list{padding-left:15px;padding-right:15px}.reference-code pre{margin-left:12px;margin-right:12px;max-width:calc(100% - 24px)}.demo-banner{padding-left:15px;padding-right:15px}}

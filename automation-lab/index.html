@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Build your first Playwright test in this interactive TypeScript code-construction exercise.">
+  <title>Test Automation Lab | Practical QA Lab</title>
+  <link rel="stylesheet" href="style.css?v=automation-m1-1">
+  <script src="progress-save.js?v=1.4-1" defer></script>
+  <script src="script.js?v=automation-m1-1" defer></script>
+  <link rel="stylesheet" href="module-path.css?v=automation-nav-1">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to automation exercise</a>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="../" aria-label="Practical QA Lab homepage">PRACTICAL QA PRESS <span>· LAB</span></a>
+      <a class="back-link" href="../">← Back to main lab</a>
+    </div>
+  </header>
+  <main id="main" class="container">
+    <section class="hero" aria-labelledby="page-title">
+      <div>
+        <p class="eyebrow">v1.4 · TEST AUTOMATION LAB · MODULE 1</p>
+        <h1 id="page-title">Build your first Playwright test.</h1>
+        <p class="hero-intro">Assemble a small, readable TypeScript test that opens Practical QA Lab and verifies the main heading. Learn the purpose of every statement as you go.</p>
+        <div class="hero-meta"><span>4 guided decisions</span><span>100 points</span><span>Beginner friendly</span></div>
+      </div>
+      <aside class="brief" aria-label="Exercise details">
+        <span class="mini-label">YOUR MISSION</span>
+        <strong>Homepage smoke test</strong>
+        <p>Choose the Playwright statements that accurately describe the user-facing behaviour.</p>
+        <span class="brief-status" id="draftStatus" role="status" aria-live="polite">Ready to begin</span>
+      </aside>
+    </section>
+
+    <nav class="section-nav" aria-label="On this page">
+      <a href="#learn">01 · Learn</a>
+      <a href="#exercise">02 · Build the test</a>
+      <a href="#review">03 · Review</a>
+    </nav>
+
+    <section class="section" id="learn" aria-labelledby="learn-heading">
+      <p class="eyebrow">01 · QUICK CONCEPTS</p>
+      <h2 id="learn-heading">What makes up a Playwright test?</h2>
+      <p class="section-lead">A basic test brings in Playwright helpers, defines a test, navigates to a page, and asserts what a user should see.</p>
+      <div class="concept-grid">
+        <article class="concept"><span class="concept-number">01</span><h3>Import</h3><p><code>test</code> defines a test and <code>expect</code> checks its outcome.</p></article>
+        <article class="concept"><span class="concept-number">02</span><h3>Test declaration</h3><p>The test's callback receives Playwright's <code>page</code> fixture.</p></article>
+        <article class="concept"><span class="concept-number">03</span><h3>Navigation</h3><p><code>page.goto('/')</code> visits the site's base URL, when Playwright <code>baseURL</code> is configured.</p></article>
+        <article class="concept"><span class="concept-number">04</span><h3>Assertion</h3><p><code>getByRole</code> finds a heading by its accessible name. <code>toBeVisible()</code> checks that it appears.</p></article>
+      </div>
+    </section>
+
+    <section class="section" id="exercise" aria-labelledby="exercise-heading">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">02 · INTERACTIVE EXERCISE</p>
+          <h2 id="exercise-heading">Construct the test</h2>
+          <p class="section-lead">Choose one statement per stage. The preview below updates instantly. You can revise your choices at any time.</p>
+        </div>
+        <div class="count-chip" role="status" aria-live="polite"><strong id="completedCount">0/4</strong> choices made</div>
+      </div>
+      <div class="workspace">
+        <form id="constructionForm" class="exercise-form" novalidate>
+          <fieldset class="question" data-stage="imports">
+            <legend><span class="question-number">01</span> Import the Playwright helpers <span class="points">20 points</span></legend>
+            <span class="mobile-points">20 points</span>
+            <p>Which import provides the test runner function and assertion helper?</p>
+            <label for="importsChoice">Choose an import statement</label>
+            <select id="importsChoice" data-choice="imports" required>
+              <option value="">Select a statement…</option>
+              <option value="correct">import { test, expect } from '@playwright/test';</option>
+              <option value="wrong1">import { page } from '@playwright/test';</option>
+              <option value="wrong2">import { test, assert } from 'playwright';</option>
+            </select>
+          </fieldset>
+
+          <fieldset class="question" data-stage="declaration">
+            <legend><span class="question-number">02</span> Declare the test <span class="points">20 points</span></legend>
+            <span class="mobile-points">20 points</span>
+            <p>Which callback can use Playwright's page fixture for asynchronous browser work?</p>
+            <label for="declarationChoice">Choose a test declaration</label>
+            <select id="declarationChoice" data-choice="declaration" required>
+              <option value="">Select a statement…</option>
+              <option value="wrong1">test('homepage loads correctly', () =&gt; {</option>
+              <option value="wrong2">describe('homepage loads correctly', async ({ page }) =&gt; {</option>
+              <option value="correct">test('homepage loads correctly', async ({ page }) =&gt; {</option>
+            </select>
+          </fieldset>
+
+          <fieldset class="question" data-stage="navigation">
+            <legend><span class="question-number">03</span> Open the homepage <span class="points">25 points</span></legend>
+            <span class="mobile-points">25 points</span>
+            <p>Assume <code>baseURL</code> points to the Practical QA Lab website. Which statement opens its homepage?</p>
+            <label for="navigationChoice">Choose a navigation statement</label>
+            <select id="navigationChoice" data-choice="navigation" required>
+              <option value="">Select a statement…</option>
+              <option value="wrong1">page.goto('/');</option>
+              <option value="correct">await page.goto('/');</option>
+              <option value="wrong2">await page.click('/');</option>
+            </select>
+          </fieldset>
+
+          <fieldset class="question" data-stage="assertion">
+            <legend><span class="question-number">04</span> Assert the heading is visible <span class="points">35 points</span></legend>
+            <span class="mobile-points">35 points</span>
+            <p>Which assertion finds the accessible heading named <strong>Practical QA Lab</strong> and waits for it to be visible?</p>
+            <label for="assertionChoice">Choose an assertion</label>
+            <select id="assertionChoice" data-choice="assertion" required>
+              <option value="">Select a statement…</option>
+              <option value="wrong1">expect(page.locator('h1')).toEqual('Practical QA Lab');</option>
+              <option value="wrong2">await expect(page.getByText('Practical QA Lab')).toBeHidden();</option>
+              <option value="correct">await expect(page.getByRole('heading', { name: 'Practical QA Lab', exact: true })).toBeVisible();</option>
+            </select>
+          </fieldset>
+        </form>
+
+        <aside class="code-panel" aria-labelledby="code-heading">
+          <div class="code-heading">
+            <div><span class="mini-label">LIVE PREVIEW</span><h3 id="code-heading">Your TypeScript test</h3></div>
+            <button id="copyCode" class="secondary-button" type="button">Copy code</button>
+          </div>
+          <pre aria-label="Generated Playwright code" tabindex="0"><code id="codePreview"></code></pre>
+          <p class="code-note">This is a guided code-construction exercise. The browser does <strong>not</strong> execute the TypeScript or start Playwright.</p>
+          <p class="copy-status" id="copyStatus" role="status" aria-live="polite"></p>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section review-section" id="review" aria-labelledby="review-heading">
+      <p class="eyebrow">03 · ASSESSMENT</p>
+      <h2 id="review-heading">Review your test</h2>
+      <p class="section-lead">Complete all four statements to receive rubric-based feedback. This is a simulated assessment, not a Playwright test run.</p>
+      <div class="review-actions">
+        <button class="primary-button" id="reviewButton" type="button">Review my test →</button>
+        <button class="secondary-button" id="resetButton" type="button">Clear module draft</button>
+      </div>
+      <p class="form-status" id="formStatus" role="status" aria-live="polite">Scores for this first module are not yet added to My Progress.</p>
+      <section class="review-result" id="reviewResult" aria-labelledby="result-heading" tabindex="-1" hidden>
+        <div class="review-top"><div><p class="eyebrow">CODE CONSTRUCTION REVIEW</p><h3 id="result-heading">Your Module 1 feedback</h3><p id="reviewMessage"></p></div><strong id="totalScore" class="total-score">—/100</strong></div>
+        <div class="score-track" aria-hidden="true"><div id="scoreFill"></div></div>
+        <div id="feedbackList" class="feedback-list"></div>
+      </section>
+    </section>
+    <section class="module-route" aria-labelledby="module-route-heading">
+      <p class="eyebrow">KEEP LEARNING</p>
+      <h2 id="module-route-heading">Continue your automation learning path</h2>
+      <p>Explore another module. Your saved answers will remain in this browser.</p>
+      <nav class="module-route-links" aria-label="Module navigation">
+        <a href="learning-path/">Back to learning path</a>
+        <a href="module-2/" class="next">Next: Locators & Interactions →</a>
+      </nav>
+    </section>
+  </main>
+  <footer class="site-footer">Practical QA Lab · Guided simulation · Saved drafts stay in this browser</footer>
+</body>
+</html>

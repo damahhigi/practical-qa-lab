@@ -5256,13 +5256,35 @@ function renderProgressDashboard() {
   historyList.replaceChildren();
   document.getElementById("progressEmpty").classList.toggle("hidden", sessions.length > 0);
 
+  // v1.4: Display Automation Lab module names in recent history.
+  // This changes presentation only, not saved sessions.
+  const automationModuleTitles = {
+    1: "Playwright Fundamentals",
+    2: "Locators & Interactions",
+    3: "Assertions & Validation",
+    4: "Negative & Boundary Testing",
+    5: "Debugging Flaky Tests",
+    6: "API Automation"
+  };
+
   sessions.slice(0, 10).forEach(item => {
     const area = PROGRESS_AREAS.find(a => a.type === item.type && a.key === item.area);
     const li = document.createElement("li");
     const details = document.createElement("div");
     const title = document.createElement("span");
     title.className = "progress-history-title";
-    title.textContent = area.title;
+
+    const moduleMatch = (
+      item.type === "practice" &&
+      item.area === "automation" &&
+      typeof item.id === "string"
+    )
+      ? /^automation-m([1-6])-[c12]{4}$/.exec(item.id)
+      : null;
+
+    title.textContent = moduleMatch
+      ? `Module ${moduleMatch[1]} — ${automationModuleTitles[moduleMatch[1]]}`
+      : area.title;
     const date = document.createElement("time");
     date.className = "progress-history-date";
     const parsed = new Date(item.completedAt);

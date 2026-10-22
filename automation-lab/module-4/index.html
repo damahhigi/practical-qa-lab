@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Practise negative and boundary tests in Playwright using missing required fields, invalid email, and password length limits.">
+  <title>Negative &amp; Boundary Testing | Test Automation Lab | Practical QA Lab</title>
+  <link rel="stylesheet" href="../style.css?v=automation-m1-1">
+  <link rel="stylesheet" href="style.css?v=automation-m4-1">
+  <script src="../progress-save.js?v=1.4-1" defer></script>
+  <script src="script.js?v=automation-m4-1" defer></script>
+  <link rel="stylesheet" href="../module-path.css?v=automation-nav-1">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to negative testing exercises</a>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="../../" aria-label="Practical QA Lab homepage">PRACTICAL QA PRESS <span>· LAB</span></a>
+      <a class="back-link" href="../module-3/">← Module 3</a>
+    </div>
+  </header>
+  <main class="container" id="main">
+    <section class="hero" aria-labelledby="page-title">
+      <div>
+        <p class="eyebrow">v1.4 · TEST AUTOMATION LAB · MODULE 4</p>
+        <h1 id="page-title">Test what should <em>not</em> be accepted.</h1>
+        <p class="hero-intro">Strong tests challenge the limits. Design four Playwright checks for missing required information, invalid email formats, and password inputs immediately below and above the allowed lengths.</p>
+        <div class="hero-meta"><span>4 negative-testing decisions</span><span>100 points</span><span>Fictional registration form</span></div>
+      </div>
+      <aside class="brief" aria-label="Exercise details">
+        <span class="mini-label">YOUR MISSION</span>
+        <strong>Challenge registration validation</strong>
+        <p>Select the best assertion or test input for each acceptance criterion. See your choices assembled into four separate TypeScript tests.</p>
+        <span class="brief-status" id="draftStatus" role="status" aria-live="polite">Ready to begin</span>
+      </aside>
+    </section>
+
+    <nav class="section-nav" aria-label="On this page">
+      <a href="#learn">01 · Learn</a>
+      <a href="#reference">02 · Reference</a>
+      <a href="#exercise">03 · Practise</a>
+      <a href="#review">04 · Review</a>
+    </nav>
+
+    <section class="section" id="learn" aria-labelledby="learn-heading">
+      <p class="eyebrow">01 · QUICK CONCEPTS</p>
+      <h2 id="learn-heading">Negative tests need precise evidence</h2>
+      <p class="section-lead">A negative test is successful when the application correctly rejects invalid input. Boundary-value testing examines values at and immediately beside a requirement's limit.</p>
+      <div class="concept-grid">
+        <article class="concept"><span class="concept-number">01</span><h3>Missing required fields</h3><p>Submit an empty required field and assert the exact validation error rather than checking only that an alert appears.</p></article>
+        <article class="concept"><span class="concept-number">02</span><h3>Invalid format</h3><p>Use a nonempty, malformed email value to test format validation separately from an empty-field rule.</p></article>
+        <article class="concept"><span class="concept-number">03</span><h3>Minimum − 1</h3><p>If a password needs at least <strong>8</strong> characters, test <strong>7</strong> to verify rejection at the lower boundary.</p></article>
+        <article class="concept"><span class="concept-number">04</span><h3>Maximum + 1</h3><p>If a password allows at most <strong>20</strong> characters, test <strong>21</strong> to verify rejection at the upper boundary.</p></article>
+      </div>
+    </section>
+
+    <section class="section" id="reference" aria-labelledby="reference-heading">
+      <p class="eyebrow">02 · ACCEPTANCE CRITERIA</p>
+      <h2 id="reference-heading">Understand the validation rules</h2>
+      <p class="section-lead">ShopFlow is a <strong>fictional</strong> web application. The form shown here is an illustration, not an interactive registration form. Each scenario starts with a fresh, otherwise valid registration.</p>
+      <div class="reference-grid">
+        <article class="reference-card" aria-labelledby="reference-app-heading">
+          <div class="reference-top"><span class="mini-label">VISUAL REFERENCE</span><h3 id="reference-app-heading">ShopFlow · Create account</h3></div>
+          <div class="demo-banner"><span class="demo-brand">SHOPFLOW</span><span class="demo-caption">Illustrative UI only</span></div>
+          <div class="mock-content">
+            <div class="mock-panel">
+              <span class="mock-heading">Create an account</span>
+              <span class="mock-label">Full name *</span><div class="mock-input">Taylor QA</div>
+              <span class="mock-label">Email address *</span><div class="mock-input">taylor@example.com</div>
+              <span class="mock-label">Password *</span><div class="mock-input">••••••••••</div>
+              <span class="mock-button">Create account</span>
+            </div>
+            <div class="mock-error">Example validation error: Password must be 8–20 characters</div>
+          </div>
+          <p class="reference-hint">The fictional app renders one relevant error as an accessible <code>role="alert"</code> after submission. Other fields are valid in every test.</p>
+        </article>
+        <article class="reference-card reference-code" aria-labelledby="reference-dom-heading">
+          <div class="reference-top"><span class="mini-label">RULES &amp; SIMPLIFIED HTML</span><h3 id="reference-dom-heading">Registration contract</h3></div>
+          <div class="rule-list">
+            <p><strong>Full name:</strong> Required. Empty input → <code>Full name is required</code></p>
+            <p><strong>Email address:</strong> Required and correctly formatted. Nonempty malformed email → <code>Enter a valid email address</code></p>
+            <p><strong>Password:</strong> 8–20 characters inclusive. 7 or 21 characters → <code>Password must be 8–20 characters</code></p>
+          </div>
+          <pre tabindex="0" aria-label="Simplified registration HTML"><code>&lt;form novalidate&gt;
+  &lt;label&gt;Full name &lt;input /&gt;&lt;/label&gt;
+  &lt;label&gt;Email address &lt;input /&gt;&lt;/label&gt;
+  &lt;label&gt;Password &lt;input type="password" /&gt;&lt;/label&gt;
+  &lt;button&gt;Create account&lt;/button&gt;
+  &lt;p role="alert"&gt;Validation message&lt;/p&gt;
+&lt;/form&gt;</code></pre>
+          <p class="reference-hint">For this fictional scenario the app uses custom validation rather than browser-native validation. It does not truncate overlong passwords.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="exercise" aria-labelledby="exercise-heading">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">03 · INTERACTIVE EXERCISE</p>
+          <h2 id="exercise-heading">Build four negative tests</h2>
+          <p class="section-lead">Choose one TypeScript statement for each scenario. The full selected statement appears below the dropdown and in the generated code preview.</p>
+        </div>
+        <div class="count-chip" role="status" aria-live="polite"><strong id="completedCount">0/4</strong> choices made</div>
+      </div>
+      <div class="workspace">
+        <form class="exercise-form" id="constructionForm" novalidate>
+          <fieldset class="question" data-stage="name">
+            <legend><span class="question-number">01</span> Missing required name <span class="points">20 points</span></legend>
+            <span class="mobile-points">20 points</span>
+            <p>The full name was left blank and the user clicked <strong>Create account</strong>. Which assertion confirms the <em>specific</em> validation error?</p>
+            <label for="nameChoice">Choose a validation assertion</label>
+            <select id="nameChoice" data-choice="name" required>
+              <option value="">Select a statement…</option>
+              <option value="wrong1">await expect(page.getByRole('alert')).toBeVisible();</option>
+              <option value="correct">await expect(page.getByRole('alert')).toHaveText('Full name is required');</option>
+              <option value="wrong2">await expect(page.getByRole('alert')).toHaveText('Email address is required');</option>
+            </select>
+            <div class="chosen-statement" aria-live="polite"><span>Full selected statement</span><code id="nameSelected">None yet</code></div>
+          </fieldset>
+          <fieldset class="question" data-stage="email">
+            <legend><span class="question-number">02</span> Invalid email format <span class="points">25 points</span></legend>
+            <span class="mobile-points">25 points</span>
+            <p>Choose a <strong>nonempty, malformed</strong> email address. Empty input tests a different rule; a correctly formatted email should be accepted.</p>
+            <label for="emailChoice">Choose the invalid-format input</label>
+            <select id="emailChoice" data-choice="email" required>
+              <option value="">Select a statement…</option>
+              <option value="wrong1">await page.getByLabel('Email address').fill('qa@example.com');</option>
+              <option value="correct">await page.getByLabel('Email address').fill('not-an-email');</option>
+              <option value="wrong2">await page.getByLabel('Email address').fill('');</option>
+            </select>
+            <div class="chosen-statement" aria-live="polite"><span>Full selected statement</span><code id="emailSelected">None yet</code></div>
+          </fieldset>
+          <fieldset class="question" data-stage="min">
+            <legend><span class="question-number">03</span> Password minimum boundary <span class="points">25 points</span></legend>
+            <span class="mobile-points">25 points</span>
+            <p>Passwords must contain at least <strong>8 characters</strong>. Which input tests rejection at <strong>minimum − 1</strong> (exactly 7 characters)?</p>
+            <label for="minChoice">Choose the below-minimum password</label>
+            <select id="minChoice" data-choice="min" required>
+              <option value="">Select a statement…</option>
+              <option value="wrong1">await page.getByLabel('Password').fill('Abc12345');</option>
+              <option value="correct">await page.getByLabel('Password').fill('Abc1234');</option>
+              <option value="wrong2">await page.getByLabel('Password').fill('Abc123');</option>
+            </select>
+            <div class="chosen-statement" aria-live="polite"><span>Full selected statement</span><code id="minSelected">None yet</code></div>
+          </fieldset>
+          <fieldset class="question" data-stage="max">
+            <legend><span class="question-number">04</span> Password maximum boundary <span class="points">30 points</span></legend>
+            <span class="mobile-points">30 points</span>
+            <p>Passwords can contain no more than <strong>20 characters</strong>. Which input tests rejection at <strong>maximum + 1</strong> (exactly 21 characters)?</p>
+            <label for="maxChoice">Choose the above-maximum password</label>
+            <select id="maxChoice" data-choice="max" required>
+              <option value="">Select a statement…</option>
+              <option value="wrong1">await page.getByLabel('Password').fill('Abc12345678901234567');</option>
+              <option value="correct">await page.getByLabel('Password').fill('Abc123456789012345678');</option>
+              <option value="wrong2">await page.getByLabel('Password').fill('Abc1234567890123456789');</option>
+            </select>
+            <div class="chosen-statement" aria-live="polite"><span>Full selected statement</span><code id="maxSelected">None yet</code></div>
+          </fieldset>
+        </form>
+        <aside class="code-panel" aria-labelledby="code-heading">
+          <div class="code-heading"><div><span class="mini-label">LIVE PREVIEW</span><h3 id="code-heading">Your TypeScript tests</h3></div><button class="secondary-button" id="copyCode" type="button">Copy code</button></div>
+          <pre tabindex="0" aria-label="Generated Playwright code"><code id="codePreview"></code></pre>
+          <p class="code-note">This is a code-selection simulation. The ShopFlow registration page is fictional. The tests are <strong>not executed</strong>; running the generated code requires an application implementing these rules.</p>
+          <p class="copy-status" id="copyStatus" role="status" aria-live="polite"></p>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section review-section" id="review" aria-labelledby="review-heading">
+      <p class="eyebrow">04 · ASSESSMENT</p>
+      <h2 id="review-heading">Review your negative tests</h2>
+      <p class="section-lead">Complete all four decisions for rubric-based feedback. The score describes your selections, not execution against a real application.</p>
+      <div class="review-actions"><button class="primary-button" id="reviewButton" type="button">Review my tests →</button><button class="secondary-button" id="resetButton" type="button">Clear module draft</button></div>
+      <p class="form-status" id="formStatus" role="status" aria-live="polite">Scores for Module 4 are not yet connected to My Progress.</p>
+      <section class="review-result" id="reviewResult" aria-labelledby="result-heading" tabindex="-1" hidden>
+        <div class="review-top"><div><p class="eyebrow">NEGATIVE TESTING REVIEW</p><h3 id="result-heading">Your Module 4 feedback</h3><p id="reviewMessage"></p></div><strong id="totalScore" class="total-score">—/100</strong></div>
+        <div class="score-track" aria-hidden="true"><div id="scoreFill"></div></div>
+        <div id="feedbackList" class="feedback-list"></div>
+      </section>
+    </section>
+    <section class="module-route" aria-labelledby="module-route-heading">
+      <p class="eyebrow">KEEP LEARNING</p>
+      <h2 id="module-route-heading">Continue your automation learning path</h2>
+      <p>Explore another module. Your saved answers will remain in this browser.</p>
+      <nav class="module-route-links" aria-label="Module navigation">
+        <a href="../module-3/">← Previous: Assertions & Validation</a>
+        <a href="../learning-path/">Back to learning path</a>
+        <a href="../module-5/" class="next">Next: Debugging Flaky Tests →</a>
+      </nav>
+    </section>
+  </main>
+  <footer class="site-footer">Practical QA Lab · Fictional application · Module 4 drafts stay in this browser</footer>
+</body>
+</html>

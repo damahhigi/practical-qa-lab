@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Practise debugging flaky Playwright tests: avoid fixed waits, use stable locators, retry assertions, and isolate test data.">
+  <title>Debugging Flaky Tests | Test Automation Lab | Practical QA Lab</title>
+  <link rel="stylesheet" href="../style.css?v=automation-m1-1">
+  <link rel="stylesheet" href="style.css?v=automation-m5-1">
+  <script src="../progress-save.js?v=1.4-1" defer></script>
+  <script src="script.js?v=automation-m5-1" defer></script>
+  <link rel="stylesheet" href="../module-path.css?v=automation-nav-1">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to debugging exercises</a>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="../../" aria-label="Practical QA Lab homepage">PRACTICAL QA PRESS <span>· LAB</span></a>
+      <a class="back-link" href="../module-4/">← Module 4</a>
+    </div>
+  </header>
+  <main class="container" id="main">
+    <section class="hero" aria-labelledby="page-title">
+      <div>
+        <p class="eyebrow">v1.4 · TEST AUTOMATION LAB · MODULE 5</p>
+        <h1 id="page-title">Make flaky tests <em>reliable.</em></h1>
+        <p class="hero-intro">Diagnose four common causes of inconsistent Playwright results. Choose repairs for timing, selectors, asynchronous updates, and test-data collisions.</p>
+        <div class="hero-meta"><span>4 debugging decisions</span><span>100 points</span><span>Fictional ShopFlow application</span></div>
+      </div>
+      <aside class="brief" aria-label="Exercise details">
+        <span class="mini-label">YOUR MISSION</span>
+        <strong>Repair the fragile tests</strong>
+        <p>For each failure report, select the most reliable replacement statement. Inspect your selections as four standalone TypeScript examples.</p>
+        <span class="brief-status" id="draftStatus" role="status" aria-live="polite">Ready to begin</span>
+      </aside>
+    </section>
+
+    <nav class="section-nav" aria-label="On this page">
+      <a href="#learn">01 · Learn</a>
+      <a href="#reference">02 · Reference</a>
+      <a href="#exercise">03 · Practise</a>
+      <a href="#review">04 · Review</a>
+    </nav>
+
+    <section class="section" id="learn" aria-labelledby="learn-heading">
+      <p class="eyebrow">01 · QUICK CONCEPTS</p>
+      <h2 id="learn-heading">Find the cause, not just the symptom</h2>
+      <p class="section-lead">A flaky test passes and fails without a meaningful product change. Diagnose why: a race, an unstable locator, a prematurely checked result, or shared test data.</p>
+      <div class="concept-grid">
+        <article class="concept"><span class="concept-number">01</span><h3>Wait for a condition</h3><p>Prefer an auto-retrying assertion like <code>toBeEnabled()</code> over fixed delays that can be too short or unnecessarily long.</p></article>
+        <article class="concept"><span class="concept-number">02</span><h3>Use stable locators</h3><p>Identify an element by role and accessible name, scoped to its product card, instead of relying on DOM order or CSS classes.</p></article>
+        <article class="concept"><span class="concept-number">03</span><h3>Assert the final state</h3><p>Wait for the expected async result with an auto-retrying assertion rather than checking an early snapshot.</p></article>
+        <article class="concept"><span class="concept-number">04</span><h3>Isolate test data</h3><p>Generate unique signup identities to avoid collisions. Unique data helps, but does not replace cleanup or broader environment isolation.</p></article>
+      </div>
+    </section>
+
+    <section class="section" id="reference" aria-labelledby="reference-heading">
+      <p class="eyebrow">02 · FAILURE REPORTS</p>
+      <h2 id="reference-heading">Understand the reported behaviour</h2>
+      <p class="section-lead">ShopFlow is a <strong>fictional</strong> application. These reports describe separate scenarios, not a single test flow. The reference UI and selectors are illustrative.</p>
+      <div class="reference-grid">
+        <article class="reference-card" aria-labelledby="reference-app-heading">
+          <div class="reference-top"><span class="mini-label">ILLUSTRATIVE UI</span><h3 id="reference-app-heading">ShopFlow · Test failures</h3></div>
+          <div class="demo-banner"><span class="demo-brand">SHOPFLOW</span><span class="demo-caption">Debugging case files</span></div>
+          <div class="mock-content">
+            <div class="mock-panel">
+              <span class="mock-heading">Checkout</span>
+              <span class="mock-label">Payment is ready after price calculation</span>
+              <span class="mock-button">Pay now</span>
+              <span class="mock-hint">Button starts disabled; becomes enabled asynchronously.</span>
+            </div>
+            <div class="mock-panel">
+              <span class="mock-heading">Products</span>
+              <div class="mock-product"><span>Canvas Backpack</span><span class="mock-button">Add to cart</span></div>
+              <div class="mock-product"><span>Travel Mug</span><span class="mock-button">Add to cart</span></div>
+            </div>
+            <div class="mock-error">Flake report: “Passed locally, failed in CI.”</div>
+          </div>
+          <p class="reference-hint">Illustrative buttons are not clickable. The code-selection exercise below does not interact with a real ShopFlow server.</p>
+        </article>
+        <article class="reference-card reference-code" aria-labelledby="reference-dom-heading">
+          <div class="reference-top"><span class="mini-label">SCENARIO CONTRACT</span><h3 id="reference-dom-heading">What the application promises</h3></div>
+          <div class="rule-list">
+            <p><strong>Timing:</strong> <code>Pay now</code> is visible first, then enabled after the calculation.</p>
+            <p><strong>Product list:</strong> Two named <code>article</code> elements each contain an <code>Add to cart</code> button.</p>
+            <p><strong>Async orders:</strong> After <code>Refresh orders</code>, the accessible status eventually becomes <code>3 orders loaded</code>.</p>
+            <p><strong>Signup:</strong> Each test creates a new account; reusing the same email causes conflicts.</p>
+          </div>
+          <pre tabindex="0" aria-label="Simplified example HTML"><code>&lt;button disabled&gt;Pay now&lt;/button&gt;
+
+&lt;article aria-label="Canvas Backpack"&gt;
+  &lt;button&gt;Add to cart&lt;/button&gt;
+&lt;/article&gt;
+&lt;article aria-label="Travel Mug"&gt;
+  &lt;button&gt;Add to cart&lt;/button&gt;
+&lt;/article&gt;
+
+&lt;p role="status"&gt;Loading orders...&lt;/p&gt;</code></pre>
+          <p class="reference-hint">The signup example generates unique data with Node's <code>randomUUID()</code>. Unique IDs reduce collisions but do not reset a shared database.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="exercise" aria-labelledby="exercise-heading">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">03 · INTERACTIVE EXERCISE</p>
+          <h2 id="exercise-heading">Repair four flaky tests</h2>
+          <p class="section-lead">Choose one replacement statement for each bug report. The full statement appears below the dropdown and in the TypeScript preview.</p>
+        </div>
+        <div class="count-chip" role="status" aria-live="polite"><strong id="completedCount">0/4</strong> choices made</div>
+      </div>
+      <div class="workspace">
+        <form class="exercise-form" id="constructionForm" novalidate>
+          <fieldset class="question" data-stage="timing">
+            <legend><span class="question-number">01</span> Fixed-wait timing issue <span class="points">20 points</span></legend>
+            <span class="mobile-points">20 points</span>
+            <p>The checkout button is already visible but remains disabled until price calculation completes. What should replace a hard-coded sleep?</p>
+            <label for="timingChoice">Choose the condition to wait for</label>
+            <select id="timingChoice" data-choice="timing" required>
+              <option value="">Select a statement…</option>
+              <option value="wrong1">await page.waitForTimeout(3000);</option>
+              <option value="correct">await expect(page.getByRole('button', { name: 'Pay now' })).toBeEnabled();</option>
+              <option value="wrong2">await expect(page.getByRole('button', { name: 'Pay now' })).toBeVisible();</option>
+            </select>
+            <div class="chosen-statement" aria-live="polite"><span>Full selected statement</span><code id="timingSelected">None yet</code></div>
+          </fieldset>
+          <fieldset class="question" data-stage="locator">
+            <legend><span class="question-number">02</span> Unstable product locator <span class="points">25 points</span></legend>
+            <span class="mobile-points">25 points</span>
+            <p>The product order changes, and both cards have <strong>Add to cart</strong> buttons. Locate the one belonging to <strong>Canvas Backpack</strong>.</p>
+            <label for="locatorChoice">Choose the reliable locator</label>
+            <select id="locatorChoice" data-choice="locator" required>
+              <option value="">Select a statement…</option>
+              <option value="wrong1">await page.locator('.product-card').nth(0).locator('button').click();</option>
+              <option value="correct">await page.getByRole('article', { name: 'Canvas Backpack' }).getByRole('button', { name: 'Add to cart' }).click();</option>
+              <option value="wrong2">await page.getByRole('button', { name: 'Add to cart' }).click();</option>
+            </select>
+            <div class="chosen-statement" aria-live="polite"><span>Full selected statement</span><code id="locatorSelected">None yet</code></div>
+          </fieldset>
+          <fieldset class="question" data-stage="async">
+            <legend><span class="question-number">03</span> Asynchronous orders result <span class="points">25 points</span></legend>
+            <span class="mobile-points">25 points</span>
+            <p>After clicking <strong>Refresh orders</strong>, the page first says “Loading orders…” and eventually shows “3 orders loaded.” Which check reliably waits for the expected result?</p>
+            <label for="asyncChoice">Choose the result assertion</label>
+            <select id="asyncChoice" data-choice="async" required>
+              <option value="">Select a statement…</option>
+              <option value="wrong1">await expect(page.getByRole('status')).toBeVisible();</option>
+              <option value="correct">await expect(page.getByRole('status')).toHaveText('3 orders loaded');</option>
+              <option value="wrong2">expect(await page.getByRole('status').textContent()).toBe('3 orders loaded');</option>
+            </select>
+            <div class="chosen-statement" aria-live="polite"><span>Full selected statement</span><code id="asyncSelected">None yet</code></div>
+          </fieldset>
+          <fieldset class="question" data-stage="isolation">
+            <legend><span class="question-number">04</span> Shared signup test data <span class="points">30 points</span></legend>
+            <span class="mobile-points">30 points</span>
+            <p>Repeated test runs create accounts with the same email and sometimes fail with “already registered.” Which statement creates a distinct signup address each time?</p>
+            <label for="isolationChoice">Choose the unique test data</label>
+            <select id="isolationChoice" data-choice="isolation" required>
+              <option value="">Select a statement…</option>
+              <option value="wrong1">const email = 'qa@example.com';</option>
+              <option value="correct">const email = `qa+${randomUUID()}@example.com`;</option>
+              <option value="wrong2">const email = `qa+${test.info().parallelIndex}@example.com`;</option>
+            </select>
+            <div class="chosen-statement" aria-live="polite"><span>Full selected statement</span><code id="isolationSelected">None yet</code></div>
+          </fieldset>
+        </form>
+        <aside class="code-panel" aria-labelledby="code-heading">
+          <div class="code-heading"><div><span class="mini-label">LIVE PREVIEW</span><h3 id="code-heading">Your TypeScript tests</h3></div><button class="secondary-button" id="copyCode" type="button">Copy code</button></div>
+          <pre tabindex="0" aria-label="Generated Playwright code"><code id="codePreview"></code></pre>
+          <p class="code-note">This is a <strong>code-selection simulation</strong>. ShopFlow and its endpoints are fictional. The preview is <strong>not executed</strong> and would need a matching test environment to run.</p>
+          <p class="copy-status" id="copyStatus" role="status" aria-live="polite"></p>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section review-section" id="review" aria-labelledby="review-heading">
+      <p class="eyebrow">04 · ASSESSMENT</p>
+      <h2 id="review-heading">Review your repairs</h2>
+      <p class="section-lead">Complete all four decisions for rubric-based feedback. Your score reflects chosen fixes, not execution against a real application.</p>
+      <div class="review-actions"><button class="primary-button" id="reviewButton" type="button">Review my fixes →</button><button class="secondary-button" id="resetButton" type="button">Clear module draft</button></div>
+      <p class="form-status" id="formStatus" role="status" aria-live="polite">Module 5 scores are not yet connected to My Progress.</p>
+      <section class="review-result" id="reviewResult" aria-labelledby="result-heading" tabindex="-1" hidden>
+        <div class="review-top"><div><p class="eyebrow">FLAKY TEST REPAIR REVIEW</p><h3 id="result-heading">Your Module 5 feedback</h3><p id="reviewMessage"></p></div><strong id="totalScore" class="total-score">—/100</strong></div>
+        <div class="score-track" aria-hidden="true"><div id="scoreFill"></div></div>
+        <div id="feedbackList" class="feedback-list"></div>
+      </section>
+    </section>
+    <section class="module-route" aria-labelledby="module-route-heading">
+      <p class="eyebrow">KEEP LEARNING</p>
+      <h2 id="module-route-heading">Continue your automation learning path</h2>
+      <p>Explore another module. Your saved answers will remain in this browser.</p>
+      <nav class="module-route-links" aria-label="Module navigation">
+        <a href="../module-4/">← Previous: Negative & Boundary Testing</a>
+        <a href="../learning-path/">Back to learning path</a>
+        <a href="../module-6/" class="next">Next: API Automation →</a>
+      </nav>
+    </section>
+  </main>
+  <footer class="site-footer">Practical QA Lab · Fictional application · Module 5 drafts stay in this browser</footer>
+</body>
+</html>

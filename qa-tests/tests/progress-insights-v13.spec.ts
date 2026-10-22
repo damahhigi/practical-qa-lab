@@ -13,7 +13,7 @@ test.describe('v1.3 Progress Insights', () => {
       .toContainText('at least twice');
 
     await expect(page.locator('#progressAreas'))
-      .toHaveText('0/12');
+      .toHaveText('0/13');
   });
 
   test('reports improvement between two API Testing attempts', async ({ page }) => {

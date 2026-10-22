@@ -1,14 +1,14 @@
 import { test, expect } from '@playwright/test';
 
 test.describe('Practical QA Lab smoke regression', () => {
-  test('homepage shows the hands-on labs and 12-area dashboard', async ({ page }) => {
+  test('homepage shows the hands-on labs and 13-area dashboard', async ({ page }) => {
     await page.goto('/');
     await expect(page.getByRole('heading', { name: 'Practical QA Lab', exact: true })).toBeVisible();
     await expect(page.getByRole('link', { name: /Start Bug Hunt/ })).toBeVisible();
     await expect(page.getByRole('link', { name: /Start Test Case Lab/ })).toBeVisible();
 
     await page.getByRole('button', { name: /View my progress/ }).first().click();
-    await expect(page.locator('#progressAreas')).toHaveText('0/12');
+    await expect(page.locator('#progressAreas')).toHaveText('0/13');
     await expect(page.locator('#progressSessions')).toHaveText('0');
   });
 
@@ -44,7 +44,7 @@ test.describe('Practical QA Lab smoke regression', () => {
     await expect(page.locator('#reviewResults')).toBeVisible();
     await page.getByRole('link', { name: /Main Practical QA Lab/ }).click();
     await page.getByRole('button', { name: /View my progress/ }).first().click();
-    await expect(page.locator('#progressAreas')).toHaveText('1/12');
+    await expect(page.locator('#progressAreas')).toHaveText('1/13');
     await expect(page.locator('#progressSessions')).toHaveText('1');
   });
 });

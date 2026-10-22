@@ -231,7 +231,7 @@ test.describe('Bug Triage & Defect Management Lab', () => {
     }).first().click();
 
     await expect(page.locator('#progressSessions')).toHaveText('1');
-    await expect(page.locator('#progressAreas')).toHaveText('1/12');
+    await expect(page.locator('#progressAreas')).toHaveText('1/13');
   });
 
 });

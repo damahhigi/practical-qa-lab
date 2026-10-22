@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Practise Playwright UI assertions, text validation, URL matching, and checkbox state with a guided TypeScript assessment.">
+  <title>Assertions &amp; Validation | Test Automation Lab | Practical QA Lab</title>
+  <link rel="stylesheet" href="../style.css?v=automation-m1-1">
+  <link rel="stylesheet" href="style.css?v=automation-m3-1">
+  <script src="../progress-save.js?v=1.4-1" defer></script>
+  <script src="script.js?v=automation-m3-1" defer></script>
+  <link rel="stylesheet" href="../module-path.css?v=automation-nav-1">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to assertion exercises</a>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="../../" aria-label="Practical QA Lab homepage">PRACTICAL QA PRESS <span>· LAB</span></a>
+      <a class="back-link" href="../module-2/">← Module 2</a>
+    </div>
+  </header>
+  <main class="container" id="main">
+    <section class="hero" aria-labelledby="page-title">
+      <div>
+        <p class="eyebrow">v1.4 · TEST AUTOMATION LAB · MODULE 3</p>
+        <h1 id="page-title">Prove that the application behaved correctly.</h1>
+        <p class="hero-intro">A click alone doesn't prove success. Build meaningful Playwright assertions that check a page heading, a confirmation message, the final URL, and a saved checkbox state.</p>
+        <div class="hero-meta"><span>4 validation decisions</span><span>100 points</span><span>Fictional profile scenario</span></div>
+      </div>
+      <aside class="brief" aria-label="Exercise details">
+        <span class="mini-label">YOUR MISSION</span>
+        <strong>Verify saved profile settings</strong>
+        <p>Imagine a Save profile action has completed. Select assertions that verify the visible, navigational, and state outcomes.</p>
+        <span class="brief-status" id="draftStatus" role="status" aria-live="polite">Ready to begin</span>
+      </aside>
+    </section>
+
+    <nav class="section-nav" aria-label="On this page">
+      <a href="#learn">01 · Learn</a>
+      <a href="#reference">02 · Reference</a>
+      <a href="#exercise">03 · Practise</a>
+      <a href="#review">04 · Review</a>
+    </nav>
+
+    <section class="section" id="learn" aria-labelledby="learn-heading">
+      <p class="eyebrow">01 · QUICK CONCEPTS</p>
+      <h2 id="learn-heading">Assertions are your evidence</h2>
+      <p class="section-lead">Playwright's <code>await expect(...)</code> assertions can automatically retry until the condition is met or the timeout is reached. Choose an assertion that proves the actual requirement—not just something that happens to be true.</p>
+      <div class="concept-grid">
+        <article class="concept"><span class="concept-number">01</span><h3>Visible UI</h3><p><code>toBeVisible()</code> verifies that the expected element is visible to the user.</p></article>
+        <article class="concept"><span class="concept-number">02</span><h3>Exact feedback</h3><p><code>toHaveText()</code> checks the text of an element, such as a success status.</p></article>
+        <article class="concept"><span class="concept-number">03</span><h3>Correct destination</h3><p><code>toHaveURL()</code> validates a route or URL after navigation.</p></article>
+        <article class="concept"><span class="concept-number">04</span><h3>Application state</h3><p><code>toBeChecked()</code> proves a checkbox is selected—not merely enabled.</p></article>
+      </div>
+    </section>
+
+    <section class="section" id="reference" aria-labelledby="reference-heading">
+      <p class="eyebrow">02 · EXPECTED RESULTS</p>
+      <h2 id="reference-heading">Read the acceptance criteria</h2>
+      <p class="section-lead">This is a fictional profile settings page after a successful save. The sample includes the relevant HTML and expected final route. It is a reference snapshot, <strong>not a live application</strong>.</p>
+      <div class="reference-grid">
+        <article class="reference-card" aria-labelledby="reference-app-heading">
+          <div class="reference-top"><span class="mini-label">VISUAL REFERENCE</span><h3 id="reference-app-heading">ShopFlow · Saved profile</h3></div>
+          <div class="demo-banner"><span class="demo-brand">SHOPFLOW</span><span class="demo-caption">Illustrative UI only</span></div>
+          <div class="mock-content">
+            <p class="mock-nav"><strong>Final route</strong> <span>/account/profile</span></p>
+            <div class="mock-panel">
+              <span class="mock-heading">Profile settings</span>
+              <span class="mock-label">Display name</span>
+              <div class="mock-input">Taylor QA</div>
+              <div class="mock-check">☑ &nbsp;Email updates</div>
+              <span class="mock-button">Save profile</span>
+            </div>
+            <div class="mock-success">✓ Profile saved</div>
+          </div>
+          <p class="reference-hint">The checkbox is <strong>checked</strong>, and the success message is presented as an accessible status.</p>
+        </article>
+        <article class="reference-card reference-code" aria-labelledby="reference-dom-heading">
+          <div class="reference-top"><span class="mini-label">SIMPLIFIED HTML SNAPSHOT</span><h3 id="reference-dom-heading">Post-save state</h3></div>
+          <pre tabindex="0" aria-label="Sample HTML after saving"><code>&lt;!-- URL: /account/profile --&gt;
+&lt;h1&gt;Profile settings&lt;/h1&gt;
+
+&lt;label&gt;
+  &lt;input type="checkbox" checked /&gt;
+  Email updates
+&lt;/label&gt;
+
+&lt;button&gt;Save profile&lt;/button&gt;
+&lt;p role="status"&gt;Profile saved&lt;/p&gt;</code></pre>
+          <p class="reference-hint">Your test begins on <code>/account/profile</code>, clicks Save profile, then checks the four post-save acceptance criteria.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="exercise" aria-labelledby="exercise-heading">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">03 · INTERACTIVE EXERCISE</p>
+          <h2 id="exercise-heading">Build four meaningful assertions</h2>
+          <p class="section-lead">Select one TypeScript statement for each requirement. The full selected code appears beneath its dropdown and in the generated test preview.</p>
+        </div>
+        <div class="count-chip" role="status" aria-live="polite"><strong id="completedCount">0/4</strong> choices made</div>
+      </div>
+      <div class="workspace">
+        <form class="exercise-form" id="constructionForm" novalidate>
+          <fieldset class="question" data-stage="visible">
+            <legend><span class="question-number">01</span> Verify the heading <span class="points">20 points</span></legend>
+            <span class="mobile-points">20 points</span>
+            <p>The page must display a visible heading named <strong>Profile settings</strong>. Which assertion proves that?</p>
+            <label for="visibleChoice">Choose a visibility assertion</label>
+            <select id="visibleChoice" data-choice="visible" required>
+              <option value="">Select a statement…</option>
+              <option value="wrong1">expect(page.getByRole('heading', { name: 'Profile settings' })).toBeVisible();</option>
+              <option value="correct">await expect(page.getByRole('heading', { name: 'Profile settings' })).toBeVisible();</option>
+              <option value="wrong2">await expect(page.getByRole('heading', { name: 'Profile settings' })).toBeHidden();</option>
+            </select>
+            <div class="chosen-statement" aria-live="polite"><span>Full selected statement</span><code id="visibleSelected">None yet</code></div>
+          </fieldset>
+
+          <fieldset class="question" data-stage="message">
+            <legend><span class="question-number">02</span> Validate the success message <span class="points">25 points</span></legend>
+            <span class="mobile-points">25 points</span>
+            <p>The accessible <strong>status</strong> must read exactly <strong>Profile saved</strong>. Which assertion verifies the text?</p>
+            <label for="messageChoice">Choose a text assertion</label>
+            <select id="messageChoice" data-choice="message" required>
+              <option value="">Select a statement…</option>
+              <option value="wrong1">await expect(page.getByRole('status')).toHaveText('Saving profile...');</option>
+              <option value="correct">await expect(page.getByRole('status')).toHaveText('Profile saved');</option>
+              <option value="wrong2">await expect(page.getByRole('status')).toBeVisible();</option>
+            </select>
+            <div class="chosen-statement" aria-live="polite"><span>Full selected statement</span><code id="messageSelected">None yet</code></div>
+          </fieldset>
+
+          <fieldset class="question" data-stage="url">
+            <legend><span class="question-number">03</span> Validate the destination <span class="points">25 points</span></legend>
+            <span class="mobile-points">25 points</span>
+            <p>After saving, the page URL must end with <code>/account/profile</code>. Which assertion checks the required route?</p>
+            <label for="urlChoice">Choose a URL assertion</label>
+            <select id="urlChoice" data-choice="url" required>
+              <option value="">Select a statement…</option>
+              <option value="wrong1">await expect(page).toHaveURL(/\/account\/settings$/);</option>
+              <option value="wrong2">expect(page).toHaveURL(/\/account\/profile$/);</option>
+              <option value="correct">await expect(page).toHaveURL(/\/account\/profile$/);</option>
+            </select>
+            <div class="chosen-statement" aria-live="polite"><span>Full selected statement</span><code id="urlSelected">None yet</code></div>
+          </fieldset>
+
+          <fieldset class="question" data-stage="state">
+            <legend><span class="question-number">04</span> Verify the saved checkbox <span class="points">30 points</span></legend>
+            <span class="mobile-points">30 points</span>
+            <p><strong>Email updates</strong> must remain checked after saving. What assertion proves the state?</p>
+            <label for="stateChoice">Choose a checkbox assertion</label>
+            <select id="stateChoice" data-choice="state" required>
+              <option value="">Select a statement…</option>
+              <option value="wrong1">await expect(page.getByRole('checkbox', { name: 'Email updates' })).toBeEnabled();</option>
+              <option value="wrong2">await expect(page.getByRole('checkbox', { name: 'Email updates' })).not.toBeChecked();</option>
+              <option value="correct">await expect(page.getByRole('checkbox', { name: 'Email updates' })).toBeChecked();</option>
+            </select>
+            <div class="chosen-statement" aria-live="polite"><span>Full selected statement</span><code id="stateSelected">None yet</code></div>
+          </fieldset>
+        </form>
+        <aside class="code-panel" aria-labelledby="code-heading">
+          <div class="code-heading"><div><span class="mini-label">LIVE PREVIEW</span><h3 id="code-heading">Your TypeScript test</h3></div><button class="secondary-button" id="copyCode" type="button">Copy code</button></div>
+          <pre tabindex="0" aria-label="Generated Playwright code"><code id="codePreview"></code></pre>
+          <p class="code-note">This is a code-selection simulation. The ShopFlow profile page is fictional, and these statements are not executed in your browser. Running them requires a matching application and Playwright configuration.</p>
+          <p class="copy-status" id="copyStatus" role="status" aria-live="polite"></p>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section review-section" id="review" aria-labelledby="review-heading">
+      <p class="eyebrow">04 · ASSESSMENT</p>
+      <h2 id="review-heading">Review your assertions</h2>
+      <p class="section-lead">Complete all four decisions for rubric-based feedback. The score describes your selections, not an executed browser test.</p>
+      <div class="review-actions"><button class="primary-button" id="reviewButton" type="button">Review my assertions →</button><button class="secondary-button" id="resetButton" type="button">Clear module draft</button></div>
+      <p class="form-status" id="formStatus" role="status" aria-live="polite">Scores for Module 3 are not yet connected to My Progress.</p>
+      <section class="review-result" id="reviewResult" aria-labelledby="result-heading" tabindex="-1" hidden>
+        <div class="review-top"><div><p class="eyebrow">ASSERTION SELECTION REVIEW</p><h3 id="result-heading">Your Module 3 feedback</h3><p id="reviewMessage"></p></div><strong id="totalScore" class="total-score">—/100</strong></div>
+        <div class="score-track" aria-hidden="true"><div id="scoreFill"></div></div>
+        <div id="feedbackList" class="feedback-list"></div>
+      </section>
+    </section>
+    <section class="module-route" aria-labelledby="module-route-heading">
+      <p class="eyebrow">KEEP LEARNING</p>
+      <h2 id="module-route-heading">Continue your automation learning path</h2>
+      <p>Explore another module. Your saved answers will remain in this browser.</p>
+      <nav class="module-route-links" aria-label="Module navigation">
+        <a href="../module-2/">← Previous: Locators & Interactions</a>
+        <a href="../learning-path/">Back to learning path</a>
+        <a href="../module-4/" class="next">Next: Negative & Boundary Testing →</a>
+      </nav>
+    </section>
+  </main>
+  <footer class="site-footer">Practical QA Lab · Fictional application · Module 3 drafts stay in this browser</footer>
+</body>
+</html>

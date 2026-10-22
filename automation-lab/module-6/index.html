@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Practise Playwright API automation: GET requests, HTTP status codes, JSON body assertions, and 404 negative testing.">
+  <title>API Automation | Test Automation Lab | Practical QA Lab</title>
+  <link rel="stylesheet" href="../style.css?v=automation-m1-1">
+  <link rel="stylesheet" href="style.css?v=automation-m6-1">
+  <script src="../progress-save.js?v=1.4-1" defer></script>
+  <script src="script.js?v=automation-m6-1" defer></script>
+  <link rel="stylesheet" href="../module-path.css?v=automation-nav-1">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to API exercises</a>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="../../" aria-label="Practical QA Lab homepage">PRACTICAL QA PRESS <span>· LAB</span></a>
+      <a class="back-link" href="../module-5/">← Module 5</a>
+    </div>
+  </header>
+  <main class="container" id="main">
+    <section class="hero" aria-labelledby="page-title">
+      <div>
+        <p class="eyebrow">v1.4 · TEST AUTOMATION LAB · MODULE 6</p>
+        <h1 id="page-title">Test the API <em>behind the screen.</em></h1>
+        <p class="hero-intro">Build Playwright request tests for a fictional ShopFlow product API. Verify the response status and JSON data, then check that a missing product returns 404.</p>
+        <div class="hero-meta"><span>4 API decisions</span><span>100 points</span><span>Fictional ShopFlow API</span></div>
+      </div>
+      <aside class="brief" aria-label="Exercise details">
+        <span class="mini-label">YOUR MISSION</span>
+        <strong>Write an API test with meaningful checks</strong>
+        <p>Choose the best TypeScript statement at each stage. Your choices appear in a full preview with two separate Playwright tests.</p>
+        <span class="brief-status" id="draftStatus" role="status" aria-live="polite">Ready to begin</span>
+      </aside>
+    </section>
+
+    <nav class="section-nav" aria-label="On this page">
+      <a href="#learn">01 · Learn</a>
+      <a href="#reference">02 · Reference</a>
+      <a href="#exercise">03 · Practise</a>
+      <a href="#review">04 · Review</a>
+    </nav>
+
+    <section class="section" id="learn" aria-labelledby="learn-heading">
+      <p class="eyebrow">01 · QUICK CONCEPTS</p>
+      <h2 id="learn-heading">Check the response, not just the request</h2>
+      <p class="section-lead">Playwright's <code>request</code> fixture sends HTTP requests without opening a browser page. A useful API test verifies the HTTP status and meaningful JSON data, including error responses.</p>
+      <div class="concept-grid">
+        <article class="concept"><span class="concept-number">01</span><h3>Send a request</h3><p>Use <code>await request.get('/api/products/42')</code> to receive an <code>APIResponse</code>. The request base URL must be configured in a real project.</p></article>
+        <article class="concept"><span class="concept-number">02</span><h3>Assert the status</h3><p><code>response.status()</code> returns a numeric status code. Check the exact expected result, such as <code>200</code> for a successful lookup.</p></article>
+        <article class="concept"><span class="concept-number">03</span><h3>Check the JSON</h3><p>Read the body with <code>await response.json()</code> and assert relevant fields, not merely that a response exists.</p></article>
+        <article class="concept"><span class="concept-number">04</span><h3>Test a missing resource</h3><p>A product that does not exist should return <code>404</code>. Negative API tests verify the documented error behaviour.</p></article>
+      </div>
+    </section>
+
+    <section class="section" id="reference" aria-labelledby="reference-heading">
+      <p class="eyebrow">02 · API CONTRACT</p>
+      <h2 id="reference-heading">Know the expected responses</h2>
+      <p class="section-lead">This is a <strong>fictional</strong> API specification for training. The preview is not connected to a live server and does not send HTTP requests.</p>
+      <div class="reference-grid">
+        <article class="reference-card" aria-labelledby="reference-app-heading">
+          <div class="reference-top"><span class="mini-label">ILLUSTRATIVE API RESPONSE</span><h3 id="reference-app-heading">ShopFlow · Products</h3></div>
+          <div class="demo-banner"><span class="demo-brand">SHOPFLOW</span><span class="demo-caption">Product service · v1</span></div>
+          <div class="mock-content">
+            <div class="mock-panel">
+              <span class="mock-heading">GET /api/products/42</span>
+              <span class="mock-label">Expected status</span>
+              <span class="mock-button">200 OK</span>
+              <span class="mock-hint">Product ID 42 exists in the fictional reference dataset.</span>
+            </div>
+            <div class="mock-panel">
+              <span class="mock-heading">GET /api/products/9999</span>
+              <span class="mock-label">Expected status</span>
+              <span class="mock-error">404 Not Found</span>
+              <span class="mock-hint">Product ID 9999 is intentionally absent.</span>
+            </div>
+          </div>
+          <p class="reference-hint">These response cards are illustrations. They do not make requests and are not a live API.</p>
+        </article>
+        <article class="reference-card reference-code" aria-labelledby="reference-dom-heading">
+          <div class="reference-top"><span class="mini-label">EXPECTED CONTRACT</span><h3 id="reference-dom-heading">Response requirements</h3></div>
+          <div class="rule-list">
+            <p><strong>Successful lookup:</strong> <code>GET /api/products/42</code> returns <code>200</code>.</p>
+            <p><strong>JSON body:</strong> The product has numeric <code>id: 42</code> and <code>name: "Canvas Backpack"</code>. Extra JSON fields may also appear.</p>
+            <p><strong>Missing product:</strong> <code>GET /api/products/9999</code> returns <code>404</code>, not a success code.</p>
+            <p><strong>Real execution:</strong> A test runner would need an API service and a configured <code>baseURL</code>.</p>
+          </div>
+          <pre tabindex="0" aria-label="Example JSON body"><code>{
+  "id": 42,
+  "name": "Canvas Backpack",
+  "price": 49.99,
+  "currency": "USD"
+}</code></pre>
+          <p class="reference-hint">This exercise practises static code selection. A real Playwright project should also test response headers, authentication, invalid payloads and other contract rules when applicable.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="exercise" aria-labelledby="exercise-heading">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">03 · INTERACTIVE EXERCISE</p>
+          <h2 id="exercise-heading">Build two API tests</h2>
+          <p class="section-lead">Choose one statement for each stage. The full selected code appears below its dropdown and in the live TypeScript preview.</p>
+        </div>
+        <div class="count-chip" role="status" aria-live="polite"><strong id="completedCount">0/4</strong> choices made</div>
+      </div>
+      <div class="workspace">
+        <form class="exercise-form" id="constructionForm" novalidate>
+          <fieldset class="question" data-stage="request">
+            <legend><span class="question-number">01</span> Fetch the product <span class="points">20 points</span></legend>
+            <span class="mobile-points">20 points</span>
+            <p>Use the Playwright API <code>request</code> fixture to fetch product 42 and wait for its response.</p>
+            <label for="requestChoice">Choose the API request</label>
+            <select id="requestChoice" data-choice="request" required>
+              <option value="">Select a statement…</option>
+              <option value="wrong1">const response = request.get('/api/products/42');</option>
+              <option value="correct">const response = await request.get('/api/products/42');</option>
+              <option value="wrong2">const response = await page.goto('/api/products/42');</option>
+            </select>
+            <div class="chosen-statement" aria-live="polite"><span>Full selected statement</span><code id="requestSelected">None yet</code></div>
+          </fieldset>
+          <fieldset class="question" data-stage="status">
+            <legend><span class="question-number">02</span> Successful HTTP status <span class="points">25 points</span></legend>
+            <span class="mobile-points">25 points</span>
+            <p>The contract expects an exact <strong>200 OK</strong> response for product 42. Which assertion verifies it?</p>
+            <label for="statusChoice">Choose the status assertion</label>
+            <select id="statusChoice" data-choice="status" required>
+              <option value="">Select a statement…</option>
+              <option value="wrong1">expect(response.status()).toBe(201);</option>
+              <option value="correct">expect(response.status()).toBe(200);</option>
+              <option value="wrong2">expect(response.ok()).toBeTruthy();</option>
+            </select>
+            <div class="chosen-statement" aria-live="polite"><span>Full selected statement</span><code id="statusSelected">None yet</code></div>
+          </fieldset>
+          <fieldset class="question" data-stage="body">
+            <legend><span class="question-number">03</span> Validate the JSON body <span class="points">25 points</span></legend>
+            <span class="mobile-points">25 points</span>
+            <p>The expected product has <strong>id 42</strong> and name <strong>Canvas Backpack</strong>. Assert both fields, allowing unrelated extra fields.</p>
+            <label for="bodyChoice">Choose the JSON assertion</label>
+            <select id="bodyChoice" data-choice="body" required>
+              <option value="">Select a statement…</option>
+              <option value="wrong1">expect(body).toBeTruthy();</option>
+              <option value="correct">expect(body).toMatchObject({ id: 42, name: 'Canvas Backpack' });</option>
+              <option value="wrong2">expect(body.name).toBe('Travel Mug');</option>
+            </select>
+            <div class="chosen-statement" aria-live="polite"><span>Full selected statement</span><code id="bodySelected">None yet</code></div>
+          </fieldset>
+          <fieldset class="question" data-stage="negative">
+            <legend><span class="question-number">04</span> Missing product response <span class="points">30 points</span></legend>
+            <span class="mobile-points">30 points</span>
+            <p>The second test requests product 9999, which doesn't exist. Verify the documented <strong>404 Not Found</strong> status.</p>
+            <label for="negativeChoice">Choose the negative-test assertion</label>
+            <select id="negativeChoice" data-choice="negative" required>
+              <option value="">Select a statement…</option>
+              <option value="wrong1">expect(missing.status()).toBe(200);</option>
+              <option value="correct">expect(missing.status()).toBe(404);</option>
+              <option value="wrong2">expect(missing.ok()).toBeTruthy();</option>
+            </select>
+            <div class="chosen-statement" aria-live="polite"><span>Full selected statement</span><code id="negativeSelected">None yet</code></div>
+          </fieldset>
+        </form>
+        <aside class="code-panel" aria-labelledby="code-heading">
+          <div class="code-heading"><div><span class="mini-label">LIVE PREVIEW</span><h3 id="code-heading">Your TypeScript tests</h3></div><button class="secondary-button" id="copyCode" type="button">Copy code</button></div>
+          <pre tabindex="0" aria-label="Generated Playwright API code"><code id="codePreview"></code></pre>
+          <p class="code-note">This is a <strong>code-selection simulation</strong>. The ShopFlow API is fictional. No HTTP requests are sent; running the preview requires a matching API and Playwright <code>baseURL</code> configuration.</p>
+          <p class="copy-status" id="copyStatus" role="status" aria-live="polite"></p>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section review-section" id="review" aria-labelledby="review-heading">
+      <p class="eyebrow">04 · ASSESSMENT</p>
+      <h2 id="review-heading">Review your API tests</h2>
+      <p class="section-lead">Answer all four questions to receive rubric-based feedback. Scoring evaluates your selected code, not actual API requests.</p>
+      <div class="review-actions"><button class="primary-button" id="reviewButton" type="button">Review my API tests →</button><button class="secondary-button" id="resetButton" type="button">Clear module draft</button></div>
+      <p class="form-status" id="formStatus" role="status" aria-live="polite">Module 6 scores are not yet connected to My Progress.</p>
+      <section class="review-result" id="reviewResult" aria-labelledby="result-heading" tabindex="-1" hidden>
+        <div class="review-top"><div><p class="eyebrow">API AUTOMATION REVIEW</p><h3 id="result-heading">Your Module 6 feedback</h3><p id="reviewMessage"></p></div><strong id="totalScore" class="total-score">—/100</strong></div>
+        <div class="score-track" aria-hidden="true"><div id="scoreFill"></div></div>
+        <div id="feedbackList" class="feedback-list"></div>
+      </section>
+    </section>
+    <section class="module-route" aria-labelledby="module-route-heading">
+      <p class="eyebrow">KEEP LEARNING</p>
+      <h2 id="module-route-heading">Continue your automation learning path</h2>
+      <p>Explore another module. Your saved answers will remain in this browser.</p>
+      <nav class="module-route-links" aria-label="Module navigation">
+        <a href="../module-5/">← Previous: Debugging Flaky Tests</a>
+        <a href="../learning-path/">Back to learning path</a>
+      </nav>
+    </section>
+  </main>
+  <footer class="site-footer">Practical QA Lab · Fictional application · Module 6 drafts stay in this browser</footer>
+</body>
+</html>
