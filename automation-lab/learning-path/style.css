@@ -13,3 +13,82 @@
 .note-panel h2{margin:0 0 10px;font-size:1.3rem}.note-panel p{color:var(--muted);margin:7px 0;max-width:940px}
 @media(max-width:900px){.path-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:620px){.path-grid{grid-template-columns:1fr}.path-card{padding:20px}}
+
+
+/* v1.5 — Automation Capstone preview */
+.capstone-preview {
+  margin-top: 42px;
+  padding: clamp(22px, 4vw, 38px);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  background: white;
+}
+
+.capstone-preview h2 {
+  margin: 0 0 12px;
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  line-height: 1.25;
+}
+
+.capstone-preview > p:not(.eyebrow):not(.capstone-status) {
+  max-width: 760px;
+  color: var(--muted);
+}
+
+.capstone-skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 20px 0;
+}
+
+.capstone-skills span {
+  padding: 7px 12px;
+  border-radius: 9px;
+  background: var(--pale);
+  color: var(--green);
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.capstone-status {
+  margin: 20px 0 0;
+  color: var(--muted);
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+
+/* v1.5 — ShopFlow Capstone entry */
+
+.capstone-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  margin-top: 16px;
+  padding: 12px 20px;
+  border-radius: 11px;
+  background: var(--green);
+  color: #FFFFFF;
+  font-size: 0.95rem;
+  font-weight: 800;
+  text-decoration: none;
+  text-align: center;
+}
+
+.capstone-cta:hover {
+  background: #056447;
+}
+
+.capstone-cta:focus-visible {
+  outline: 3px solid #073F33;
+  outline-offset: 4px;
+}
+
+@media (max-width: 620px) {
+  .capstone-cta {
+    display: flex;
+    width: 100%;
+  }
+}

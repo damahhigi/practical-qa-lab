@@ -1,0 +1,512 @@
+/* Practical QA Lab v1.5 — ShopFlow Capstone */
+
+.capstone-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.capstone-card {
+  min-width: 0;
+  padding: 22px;
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+}
+
+.capstone-label {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.capstone-summary-grid strong {
+  display: block;
+  font-size: 1.3rem;
+}
+
+.capstone-summary-grid p {
+  margin: 7px 0 0;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.criteria-list,
+.mission-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.criterion-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 13px;
+}
+
+.criterion-id {
+  flex: 0 0 auto;
+  padding: 5px 9px;
+  background: var(--pale);
+  color: var(--green);
+  border-radius: 8px;
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.criterion-card h3,
+.mission-card h3 {
+  margin: 0 0 8px;
+  font-size: 1.05rem;
+  line-height: 1.4;
+}
+
+.criterion-card p,
+.mission-card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+  overflow-wrap: anywhere;
+}
+
+.mission-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.mission-points {
+  flex: 0 0 auto;
+  padding: 5px 10px;
+  border-radius: 8px;
+  background: var(--pale);
+  color: var(--green);
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.mission-status {
+  display: inline-block;
+  margin-top: 18px;
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.deliverables-list {
+  margin: 0;
+  padding-left: 23px;
+  line-height: 1.9;
+}
+
+.capstone-disclaimer {
+  margin-top: 45px;
+  padding: 22px;
+  background: var(--pale);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+}
+
+.capstone-disclaimer h2 {
+  margin: 0 0 10px;
+  font-size: 1.15rem;
+}
+
+.capstone-disclaimer p {
+  margin: 8px 0;
+  font-size: 0.9rem;
+}
+
+@media (max-width: 690px) {
+  .capstone-summary-grid,
+  .criteria-list,
+  .mission-list {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .capstone-card {
+    padding: 18px;
+  }
+}
+
+
+/* v1.5 — Mission 1 guided assessment */
+
+.capstone-mission-workspace {
+  margin-top: 30px;
+  padding: clamp(18px, 3vw, 30px);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  background: white;
+}
+
+.capstone-mission-workspace h3 {
+  margin: 0 0 12px;
+  font-size: clamp(1.3rem, 2.5vw, 1.7rem);
+}
+
+.capstone-mission-workspace > p:not(.eyebrow) {
+  color: var(--muted);
+}
+
+#capstoneM1Form,
+#capstoneM2Form,
+#capstoneM3Form,
+#capstoneM4Form,
+#capstoneM5Form,
+#capstoneM6Form {
+  display: grid;
+  gap: 17px;
+  margin-top: 24px;
+}
+
+.capstone-mission-decision {
+  min-width: 0;
+  margin: 0;
+  padding: 18px;
+  border: 1px solid var(--border);
+  border-radius: 13px;
+}
+
+.capstone-mission-decision legend {
+  max-width: 100%;
+  padding: 0 6px;
+  font-weight: 800;
+  line-height: 1.5;
+}
+
+.capstone-mission-decision p {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.capstone-mission-decision label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 700;
+  font-size: 0.86rem;
+}
+
+.capstone-mission-decision select {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: white;
+  color: var(--navy);
+  font: inherit;
+  font-size: 0.85rem;
+}
+
+.capstone-mission-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.capstone-mission-status {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.86rem;
+}
+
+.capstone-mission-result {
+  padding: 20px;
+  background: var(--soft);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+}
+
+.capstone-mission-result[hidden] {
+  display: none;
+}
+
+.capstone-mission-result h4 {
+  margin: 0 0 10px;
+}
+
+.capstone-mission-score {
+  color: var(--green);
+  font-size: 1.6rem;
+  font-weight: 800;
+}
+
+.capstone-mission-feedback {
+  padding-left: 22px;
+  line-height: 1.6;
+}
+
+.capstone-mission-feedback li {
+  margin-bottom: 12px;
+}
+
+@media (max-width: 690px) {
+  .capstone-mission-actions {
+    flex-direction: column;
+  }
+
+  .capstone-mission-actions button {
+    width: 100%;
+  }
+
+  .capstone-mission-decision {
+    padding: 15px;
+  }
+}
+
+
+/* v1.5 — Combined Capstone scoring */
+
+.capstone-score-summary {
+  margin-top: 35px;
+}
+
+.capstone-score-summary .capstone-card {
+  padding: clamp(18px, 3vw, 30px);
+}
+
+.capstone-summary-status {
+  margin: 16px 0 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.capstone-summary-result {
+  margin-top: 24px;
+  padding-top: 22px;
+  border-top: 1px solid var(--border);
+}
+
+.capstone-summary-result[hidden] {
+  display: none;
+}
+
+.capstone-summary-result h3 {
+  margin: 0 0 12px;
+  font-size: 1.2rem;
+}
+
+.capstone-total-score {
+  margin: 0 0 22px;
+  color: var(--green);
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 800;
+}
+
+.capstone-score-breakdown {
+  display: grid;
+  gap: 10px;
+  margin: 0 0 22px;
+  padding: 0;
+  list-style: none;
+}
+
+.capstone-score-breakdown li {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 15px;
+  padding: 13px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+
+.capstone-score-breakdown strong {
+  flex: 0 0 auto;
+  color: var(--green);
+  white-space: nowrap;
+}
+
+.capstone-summary-notice {
+  color: var(--muted);
+  font-size: 0.85rem;
+  line-height: 1.6;
+}
+
+@media (max-width: 690px) {
+  .capstone-score-summary button {
+    width: 100%;
+  }
+}
+
+
+/* v1.5 — Guided Capstone assessment report */
+
+.capstone-report {
+  margin-top: 35px;
+}
+
+.capstone-report > .capstone-card {
+  padding: clamp(18px, 3vw, 30px);
+}
+
+.capstone-report-status {
+  margin: 16px 0 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.capstone-report-result {
+  margin-top: 25px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+
+.capstone-report-result[hidden] {
+  display: none;
+}
+
+.capstone-report-result h3 {
+  margin: 0 0 20px;
+  font-size: clamp(1.2rem, 3vw, 1.6rem);
+}
+
+.capstone-report-result h4 {
+  margin: 24px 0 12px;
+  font-size: 1.05rem;
+}
+
+.capstone-report-label {
+  color: var(--muted);
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+}
+
+.capstone-report-score {
+  margin: 5px 0 14px;
+  color: var(--green);
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 800;
+}
+
+.capstone-report-note {
+  color: var(--muted);
+  font-size: 0.88rem;
+  line-height: 1.65;
+}
+
+.capstone-report-breakdown,
+.capstone-report-coverage {
+  padding-left: 22px;
+  line-height: 1.7;
+}
+
+.capstone-report-breakdown li,
+.capstone-report-coverage li {
+  margin-bottom: 8px;
+  overflow-wrap: anywhere;
+}
+
+.capstone-report-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.capstone-report-panel {
+  min-width: 0;
+  padding: 20px;
+  border: 1px solid var(--border);
+  border-radius: 13px;
+  background: white;
+}
+
+.capstone-report-panel h4 {
+  margin-top: 0;
+}
+
+.capstone-report-panel ul {
+  margin: 0;
+  padding-left: 20px;
+  line-height: 1.7;
+}
+
+.capstone-report-panel li {
+  margin-bottom: 10px;
+  overflow-wrap: anywhere;
+}
+
+.capstone-report-recommendation {
+  margin: 24px 0;
+  padding: 20px;
+  background: var(--pale);
+  border: 1px solid var(--border);
+  border-radius: 13px;
+}
+
+.capstone-report-recommendation h4 {
+  margin-top: 0;
+}
+
+.capstone-report-recommendation p {
+  margin-bottom: 0;
+  line-height: 1.7;
+}
+
+@media (max-width: 690px) {
+  .capstone-report-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .capstone-report-panel {
+    padding: 16px;
+  }
+
+  #capstoneReportGenerate,
+  #capstoneReportDownload {
+    width: 100%;
+  }
+}
+
+
+/* v1.5 — Save completed Capstone assessment */
+
+.capstone-progress-save {
+  margin-top: 28px;
+  padding: 22px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--pale);
+}
+
+.capstone-progress-save h4 {
+  margin: 0 0 10px;
+  font-size: 1.05rem;
+}
+
+.capstone-progress-save > p {
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.65;
+}
+
+.capstone-progress-save button {
+  margin-top: 8px;
+}
+
+.capstone-progress-save .capstone-save-status {
+  margin: 14px 0 0;
+  font-weight: 700;
+  line-height: 1.6;
+}
+
+@media (max-width: 690px) {
+  .capstone-progress-save {
+    padding: 16px;
+  }
+
+  #capstoneProgressSave {
+    width: 100%;
+  }
+}

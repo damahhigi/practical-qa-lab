@@ -5282,9 +5282,19 @@ function renderProgressDashboard() {
       ? /^automation-m([1-6])-[c12]{4}$/.exec(item.id)
       : null;
 
-    title.textContent = moduleMatch
-      ? `Module ${moduleMatch[1]} — ${automationModuleTitles[moduleMatch[1]]}`
-      : area.title;
+    const capstoneMatch = (
+      item.type === "practice" &&
+      item.area === "automation" &&
+      typeof item.id === "string"
+    )
+      ? /^automation-capstone-v1-[123]{20}$/.test(item.id)
+      : false;
+
+    title.textContent = capstoneMatch
+      ? "ShopFlow Automation Capstone"
+      : moduleMatch
+        ? `Module ${moduleMatch[1]} — ${automationModuleTitles[moduleMatch[1]]}`
+        : area.title;
     const date = document.createElement("time");
     date.className = "progress-history-date";
     const parsed = new Date(item.completedAt);

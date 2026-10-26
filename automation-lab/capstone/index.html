@@ -1,0 +1,1204 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description"
+        content="ShopFlow Automation Capstone: a guided e-commerce QA release challenge.">
+  <title>ShopFlow Automation Capstone | Practical QA Lab</title>
+  <link rel="stylesheet" href="../style.css?v=automation-m1-1">
+  <link rel="stylesheet" href="style.css?v=capstone-v15-1">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to capstone content</a>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="../../"
+         aria-label="Practical QA Lab homepage">
+        PRACTICAL QA PRESS <span>· LAB</span>
+      </a>
+      <a class="back-link" href="../learning-path/">
+        ← Learning path
+      </a>
+    </div>
+  </header>
+
+  <main class="container" id="main">
+
+    <section class="hero" aria-labelledby="capstone-title">
+      <div>
+        <p class="eyebrow">
+          v1.5 · AUTOMATION CAPSTONE
+        </p>
+        <h1 id="capstone-title">
+          ShopFlow Release Check
+        </h1>
+        <p class="hero-intro">
+          You are the QA Automation Engineer responsible
+          for assessing a fictional e-commerce purchase
+          journey before release.
+        </p>
+        <div class="hero-meta">
+          <span>6 missions</span>
+          <span>7 acceptance criteria</span>
+          <span>100 possible points</span>
+        </div>
+      </div>
+
+      <aside class="brief" aria-label="Capstone status">
+        <span class="mini-label">YOUR ASSIGNMENT</span>
+        <strong>Plan. Test. Investigate. Report.</strong>
+        <p>
+          Apply what you learned in the six
+          Playwright automation modules.
+        </p>
+        <span class="brief-status">
+          Guided simulation
+        </span>
+      </aside>
+    </section>
+
+    <section class="section" aria-labelledby="briefing-title">
+      <p class="eyebrow">01 · PROJECT BRIEFING</p>
+      <h2 id="briefing-title">Meet ShopFlow</h2>
+      <p class="section-lead">
+        ShopFlow is a fictional online store. Your testing
+        assignment covers product details, cart quantities,
+        checkout validation, API responses and reliability.
+      </p>
+
+      <div class="capstone-summary-grid">
+        <div class="capstone-card">
+          <span class="capstone-label">Product</span>
+          <strong>Canvas Backpack</strong>
+          <p>Product ID: 42</p>
+        </div>
+        <div class="capstone-card">
+          <span class="capstone-label">Unit price</span>
+          <strong>KES 2,400</strong>
+          <p>Expected product price</p>
+        </div>
+        <div class="capstone-card">
+          <span class="capstone-label">Available stock</span>
+          <strong>5 units</strong>
+          <p>Maximum allowed cart quantity</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="criteria-title">
+      <p class="eyebrow">02 · EXPECTED BEHAVIOUR</p>
+      <h2 id="criteria-title">Acceptance criteria</h2>
+      <p class="section-lead">
+        Use these requirements as the source of truth
+        for your testing decisions.
+      </p>
+      <ol class="criteria-list">
+        <li class="capstone-card criterion-card">
+      <span class="criterion-id">AC-01</span>
+      <div>
+        <h3>Display the correct product</h3>
+        <p>Product 42 displays Canvas Backpack priced at KES 2,400.</p>
+      </div>
+    </li>
+<li class="capstone-card criterion-card">
+      <span class="criterion-id">AC-02</span>
+      <div>
+        <h3>Calculate the cart total</h3>
+        <p>Two Canvas Backpacks produce a cart subtotal of KES 4,800.</p>
+      </div>
+    </li>
+<li class="capstone-card criterion-card">
+      <span class="criterion-id">AC-03</span>
+      <div>
+        <h3>Enforce stock boundaries</h3>
+        <p>Quantities 1 through 5 are accepted. Quantities 0 and 6 are rejected without changing the cart.</p>
+      </div>
+    </li>
+<li class="capstone-card criterion-card">
+      <span class="criterion-id">AC-04</span>
+      <div>
+        <h3>Validate checkout email</h3>
+        <p>An empty or malformed email produces a validation error.</p>
+      </div>
+    </li>
+<li class="capstone-card criterion-card">
+      <span class="criterion-id">AC-05</span>
+      <div>
+        <h3>Validate product API response</h3>
+        <p>GET /api/products/42 returns 200 with id 42, name Canvas Backpack, and priceKES 2400.</p>
+      </div>
+    </li>
+<li class="capstone-card criterion-card">
+      <span class="criterion-id">AC-06</span>
+      <div>
+        <h3>Handle a missing product</h3>
+        <p>GET /api/products/9999 returns 404.</p>
+      </div>
+    </li>
+<li class="capstone-card criterion-card">
+      <span class="criterion-id">AC-07</span>
+      <div>
+        <h3>Ensure reliable automation</h3>
+        <p>Tests use stable locators, meaningful assertions, and isolated test data instead of arbitrary delays.</p>
+      </div>
+    </li>
+      </ol>
+    </section>
+
+    <section class="section" aria-labelledby="missions-title">
+      <p class="eyebrow">03 · ASSESSMENT</p>
+      <h2 id="missions-title">Your six QA missions</h2>
+      <p class="section-lead">
+        Each mission will assess a different automation
+        skill. All six missions are available for guided review.
+        Combined scoring, assessment feedback, and optional My Progress saving are available after reviewing all six missions.
+      </p>
+      <ol class="mission-list">
+        <li class="capstone-card mission-card">
+      <div class="mission-top">
+        <h3>Test Strategy &amp; Smoke Coverage</h3>
+        <span class="mission-points">15 points</span>
+      </div>
+      <p>Requirements: AC-01, AC-04</p>
+      <span class="mission-status">Available now · Guided review</span>
+    </li>
+<li class="capstone-card mission-card">
+      <div class="mission-top">
+        <h3>UI Locators &amp; Interactions</h3>
+        <span class="mission-points">20 points</span>
+      </div>
+      <p>Requirements: AC-01, AC-02</p>
+      <span class="mission-status">Available now · Guided review</span>
+    </li>
+<li class="capstone-card mission-card">
+      <div class="mission-top">
+        <h3>Assertions &amp; State Validation</h3>
+        <span class="mission-points">20 points</span>
+      </div>
+      <p>Requirements: AC-02</p>
+      <span class="mission-status">Available now · Guided review</span>
+    </li>
+<li class="capstone-card mission-card">
+      <div class="mission-top">
+        <h3>Negative &amp; Boundary Testing</h3>
+        <span class="mission-points">15 points</span>
+      </div>
+      <p>Requirements: AC-03, AC-04</p>
+      <span class="mission-status">Available now · Guided review</span>
+    </li>
+<li class="capstone-card mission-card">
+      <div class="mission-top">
+        <h3>Debugging Flaky Tests</h3>
+        <span class="mission-points">15 points</span>
+      </div>
+      <p>Requirements: AC-07</p>
+      <span class="mission-status">Available now · Guided review</span>
+    </li>
+<li class="capstone-card mission-card">
+      <div class="mission-top">
+        <h3>API Contract Validation</h3>
+        <span class="mission-points">15 points</span>
+      </div>
+      <p>Requirements: AC-05, AC-06</p>
+      <span class="mission-status">Available now · Guided review</span>
+    </li>
+      </ol>
+
+      <!-- v1.5: Mission 1 guided assessment -->
+      <section class="capstone-mission-workspace"
+        aria-labelledby="capstone-m1-title">
+
+        <p class="eyebrow">MISSION 01 · 15 POINTS</p>
+        <h3 id="capstone-m1-title">
+          Test Strategy &amp; Smoke Coverage
+        </h3>
+
+        <p>
+          You are planning the first release check for
+          ShopFlow. Make three testing decisions based
+          on the acceptance criteria above.
+        </p>
+
+        <form id="capstoneM1Form" novalidate>
+
+          <fieldset class="capstone-mission-decision">
+            <legend>Decision 1 — Critical smoke coverage</legend>
+
+            <p>
+              Which test provides the strongest initial
+              coverage of the purchase journey?
+            </p>
+
+            <label for="capstoneM1Smoke">
+              Select your smoke test
+            </label>
+
+            <select id="capstoneM1Smoke" required>
+              <option value="">Choose an approach…</option>
+              <option value="cosmetic">
+                Check only the product page colours.
+              </option>
+              <option value="journey">
+                Verify product 42, add two backpacks,
+                and assert the KES 4,800 subtotal.
+              </option>
+              <option value="api-only">
+                Check only the product API and skip the cart.
+              </option>
+            </select>
+          </fieldset>
+
+          <fieldset class="capstone-mission-decision">
+            <legend>Decision 2 — Checkout validation</legend>
+
+            <p>
+              Acceptance criterion AC-04 requires
+              checkout email validation.
+              Which coverage is appropriate?
+            </p>
+
+            <label for="capstoneM1Email">
+              Select your validation approach
+            </label>
+
+            <select id="capstoneM1Email" required>
+              <option value="">Choose an approach…</option>
+              <option value="valid-only">
+                Test only one correctly formatted email.
+              </option>
+              <option value="invalid-email">
+                Test both empty and malformed emails
+                and verify their validation errors.
+              </option>
+              <option value="skip-email">
+                Skip email validation entirely.
+              </option>
+            </select>
+          </fieldset>
+
+          <fieldset class="capstone-mission-decision">
+            <legend>Decision 3 — Release readiness</legend>
+
+            <p>
+              Your test reveals that checkout accepts
+              a malformed email despite AC-04.
+              What should you recommend?
+            </p>
+
+            <label for="capstoneM1Release">
+              Select your release recommendation
+            </label>
+
+            <select id="capstoneM1Release" required>
+              <option value="">Choose a recommendation…</option>
+              <option value="approve">
+                Approve the release because the product page works.
+              </option>
+              <option value="block-and-retest">
+                Report the defect with reproduction evidence,
+                block release, and retest after the fix.
+              </option>
+              <option value="retry">
+                Keep rerunning until the test passes,
+                then approve release.
+              </option>
+            </select>
+          </fieldset>
+
+          <div class="capstone-mission-actions">
+            <button class="primary-button"
+              type="submit"
+              id="capstoneM1Review">
+              Review Mission 1
+            </button>
+
+            <button class="secondary-button"
+              type="button"
+              id="capstoneM1Reset">
+              Clear draft
+            </button>
+          </div>
+
+          <p id="capstoneM1Status"
+            class="capstone-mission-status"
+            role="status"
+            aria-live="polite">
+            Choose all three answers before reviewing.
+          </p>
+
+          <section id="capstoneM1Result"
+            class="capstone-mission-result"
+            aria-labelledby="capstone-mission-feedback-title"
+            hidden>
+
+            <h4 id="capstone-mission-feedback-title">
+              Your Mission 1 feedback
+            </h4>
+
+            <p id="capstoneM1Score"
+              class="capstone-mission-score">
+              0/15
+            </p>
+
+            <ul id="capstoneM1Feedback"
+              class="capstone-mission-feedback"></ul>
+          </section>
+
+        </form>
+      </section>
+
+      <!-- v1.5: Mission 2 guided assessment -->
+      <section class="capstone-mission-workspace"
+        aria-labelledby="capstone-m2-title">
+
+        <p class="eyebrow">MISSION 02 · 20 POINTS</p>
+
+        <h3 id="capstone-m2-title">
+          UI Locators &amp; Interactions
+        </h3>
+
+        <p>
+          Apply reliable Playwright locators and
+          interactions to ShopFlow's fictional
+          product-to-cart journey.
+        </p>
+
+        <p>
+          The controls described here are part of the
+          guided scenario, not a live ShopFlow application.
+        </p>
+
+        <form id="capstoneM2Form" novalidate>
+          
+          <fieldset class="capstone-mission-decision">
+            <legend>
+              Decision 1 — Locate the correct product
+            </legend>
+
+            <p>ShopFlow displays a heading named Canvas Backpack. Which locator identifies it using an accessible role?</p>
+
+            <label for="capstoneM2Product">
+              Choose the Playwright statement
+            </label>
+
+            <select id="capstoneM2Product" required>
+              <option value="">Choose a statement…</option>
+              <option value="css">page.locator(&#x27;h1&#x27;).first()</option>
+<option value="role">page.getByRole(&#x27;heading&#x27;, { name: &#x27;Canvas Backpack&#x27; })</option>
+<option value="partial">page.getByText(&#x27;Backpack&#x27;)</option>
+            </select>
+          </fieldset>
+
+          <fieldset class="capstone-mission-decision">
+            <legend>
+              Decision 2 — Add the product to the cart
+            </legend>
+
+            <p>The product page exposes a button named Add to cart. Which interaction selects that button reliably?</p>
+
+            <label for="capstoneM2Cart">
+              Choose the Playwright statement
+            </label>
+
+            <select id="capstoneM2Cart" required>
+              <option value="">Choose a statement…</option>
+              <option value="role">await page.getByRole(&#x27;button&#x27;, { name: &#x27;Add to cart&#x27; }).click()</option>
+<option value="first">await page.locator(&#x27;button&#x27;).first().click()</option>
+<option value="delay">await page.waitForTimeout(3000)</option>
+            </select>
+          </fieldset>
+
+          <fieldset class="capstone-mission-decision">
+            <legend>
+              Decision 3 — Update the cart quantity
+            </legend>
+
+            <p>Assume the quantity input is labelled Quantity. Which statement sets the cart quantity to two?</p>
+
+            <label for="capstoneM2Quantity">
+              Choose the Playwright statement
+            </label>
+
+            <select id="capstoneM2Quantity" required>
+              <option value="">Choose a statement…</option>
+              <option value="invalid">await page.getByLabel(&#x27;Quantity&#x27;).fill(&#x27;6&#x27;)</option>
+<option value="position">await page.locator(&#x27;input&#x27;).first().fill(&#x27;2&#x27;)</option>
+<option value="label">await page.getByLabel(&#x27;Quantity&#x27;).fill(&#x27;2&#x27;)</option>
+            </select>
+          </fieldset>
+
+          <fieldset class="capstone-mission-decision">
+            <legend>
+              Decision 4 — Verify the cart subtotal
+            </legend>
+
+            <p>Assume the cart has a region named Cart summary. Which assertion verifies two backpacks total KES 4,800?</p>
+
+            <label for="capstoneM2Subtotal">
+              Choose the Playwright statement
+            </label>
+
+            <select id="capstoneM2Subtotal" required>
+              <option value="">Choose a statement…</option>
+              <option value="url">expect(page.url()).toContain(&#x27;/cart&#x27;)</option>
+<option value="subtotal">await expect(page.getByRole(&#x27;region&#x27;, { name: &#x27;Cart summary&#x27; }).getByText(&#x27;KES 4,800&#x27;)).toBeVisible()</option>
+<option value="unit">await expect(page.getByText(&#x27;KES 2,400&#x27;)).toBeVisible()</option>
+            </select>
+          </fieldset>
+
+          <div class="capstone-mission-actions">
+            <button class="primary-button"
+              type="submit" id="capstoneM2Review">
+              Review Mission 2
+            </button>
+
+            <button class="secondary-button"
+              type="button" id="capstoneM2Reset">
+              Clear draft
+            </button>
+          </div>
+
+          <p id="capstoneM2Status"
+            class="capstone-mission-status"
+            role="status" aria-live="polite">
+            Choose all four answers before reviewing.
+          </p>
+
+          <section id="capstoneM2Result"
+            class="capstone-mission-result"
+            aria-labelledby="capstone-m2-feedback-title"
+            hidden>
+
+            <h4 id="capstone-m2-feedback-title">
+              Your Mission 2 feedback
+            </h4>
+
+            <p id="capstoneM2Score"
+              class="capstone-mission-score">0/20</p>
+
+            <ul id="capstoneM2Feedback"
+              class="capstone-mission-feedback"></ul>
+          </section>
+        </form>
+      </section>
+
+      <!-- v1.5: Mission 3 guided assessment -->
+      <section class="capstone-mission-workspace"
+        aria-labelledby="capstone-m3-title">
+
+        <p class="eyebrow">MISSION 03 · 20 POINTS</p>
+
+        <h3 id="capstone-m3-title">
+          Assertions &amp; State Validation
+        </h3>
+
+        <p>
+          Verify ShopFlow's product details and cart
+          state using meaningful Playwright assertions.
+        </p>
+
+        <p>
+          This is a guided code-selection exercise.
+          The statements are not executed in the browser.
+        </p>
+
+        <form id="capstoneM3Form" novalidate>
+          
+          <fieldset class="capstone-mission-decision">
+            <legend>
+              Decision 1 — Verify the product heading
+            </legend>
+
+            <p>After opening /products/42, how should your test verify that Canvas Backpack is displayed?</p>
+
+            <label for="capstoneM3Heading">
+              Choose the Playwright assertion
+            </label>
+
+            <select id="capstoneM3Heading" required>
+              <option value="">Choose an assertion…</option>
+              <option value="url">expect(page.url()).toContain(&#x27;/products/42&#x27;)</option>
+<option value="heading">await expect(page.getByRole(&#x27;heading&#x27;, { name: &#x27;Canvas Backpack&#x27; })).toBeVisible()</option>
+<option value="timeout">await page.waitForTimeout(2000)</option>
+            </select>
+          </fieldset>
+
+          <fieldset class="capstone-mission-decision">
+            <legend>
+              Decision 2 — Verify the exact product price
+            </legend>
+
+            <p>AC-01 requires the price KES 2,400. Which assertion verifies that exact price text is visible?</p>
+
+            <label for="capstoneM3Price">
+              Choose the Playwright assertion
+            </label>
+
+            <select id="capstoneM3Price" required>
+              <option value="">Choose an assertion…</option>
+              <option value="constant">expect(2400).toBe(2400)</option>
+<option value="price">await expect(page.getByText(&#x27;KES 2,400&#x27;, { exact: true })).toBeVisible()</option>
+<option value="wrong-price">await expect(page.getByText(&#x27;KES 4,800&#x27;)).toBeVisible()</option>
+            </select>
+          </fieldset>
+
+          <fieldset class="capstone-mission-decision">
+            <legend>
+              Decision 3 — Verify the cart quantity
+            </legend>
+
+            <p>After setting the Quantity input to two, which assertion verifies the input state?</p>
+
+            <label for="capstoneM3Quantity">
+              Choose the Playwright assertion
+            </label>
+
+            <select id="capstoneM3Quantity" required>
+              <option value="">Choose an assertion…</option>
+              <option value="text">await expect(page.getByLabel(&#x27;Quantity&#x27;)).toHaveText(&#x27;2&#x27;)</option>
+<option value="five">await expect(page.getByLabel(&#x27;Quantity&#x27;)).toHaveValue(&#x27;5&#x27;)</option>
+<option value="value">await expect(page.getByLabel(&#x27;Quantity&#x27;)).toHaveValue(&#x27;2&#x27;)</option>
+            </select>
+          </fieldset>
+
+          <fieldset class="capstone-mission-decision">
+            <legend>
+              Decision 4 — Verify the calculated subtotal
+            </legend>
+
+            <p>Assume ShopFlow exposes a Cart summary region. Which assertion verifies the expected KES 4,800 subtotal for two backpacks?</p>
+
+            <label for="capstoneM3Subtotal">
+              Choose the Playwright assertion
+            </label>
+
+            <select id="capstoneM3Subtotal" required>
+              <option value="">Choose an assertion…</option>
+              <option value="navigation">expect(page.url()).toContain(&#x27;/cart&#x27;)</option>
+<option value="subtotal">await expect(page.getByRole(&#x27;region&#x27;, { name: &#x27;Cart summary&#x27; }).getByText(&#x27;KES 4,800&#x27;, { exact: true })).toBeVisible()</option>
+<option value="unit">await expect(page.getByText(&#x27;KES 2,400&#x27;)).toBeVisible()</option>
+            </select>
+          </fieldset>
+
+          <div class="capstone-mission-actions">
+            <button class="primary-button"
+              type="submit" id="capstoneM3Review">
+              Review Mission 3
+            </button>
+
+            <button class="secondary-button"
+              type="button" id="capstoneM3Reset">
+              Clear draft
+            </button>
+          </div>
+
+          <p id="capstoneM3Status"
+            class="capstone-mission-status"
+            role="status" aria-live="polite">
+            Choose all four answers before reviewing.
+          </p>
+
+          <section id="capstoneM3Result"
+            class="capstone-mission-result"
+            aria-labelledby="capstone-m3-feedback-title"
+            hidden>
+
+            <h4 id="capstone-m3-feedback-title">
+              Your Mission 3 feedback
+            </h4>
+
+            <p id="capstoneM3Score"
+              class="capstone-mission-score">0/20</p>
+
+            <ul id="capstoneM3Feedback"
+              class="capstone-mission-feedback"></ul>
+          </section>
+        </form>
+      </section>
+
+      <!-- v1.5: Mission 4 guided assessment -->
+      <section class="capstone-mission-workspace"
+        aria-labelledby="capstone-m4-title">
+
+        <p class="eyebrow">MISSION 04 · 15 POINTS</p>
+
+        <h3 id="capstone-m4-title">
+          Negative &amp; Boundary Testing
+        </h3>
+
+        <p>
+          Test ShopFlow's quantity limits, rejected
+          cart updates, and checkout email validation.
+        </p>
+
+        <p>
+          This is a guided simulation. No live product,
+          cart, or checkout requests are executed.
+        </p>
+
+        <form id="capstoneM4Form" novalidate>
+          
+          <fieldset class="capstone-mission-decision">
+            <legend>
+              Decision 1 — Select quantity boundary coverage
+            </legend>
+
+            <p>AC-03 allows quantities 1 through 5. Which set of test cases covers both valid boundaries and invalid adjacent values?</p>
+
+            <label for="capstoneM4Boundaries">
+              Select your testing approach
+            </label>
+
+            <select id="capstoneM4Boundaries" required>
+              <option value="">Choose an approach…</option>
+              <option value="happy-only">Test quantity 2 only because it is valid.</option>
+<option value="edges">Accept 1 and 5; reject 0 and 6.</option>
+<option value="six-valid">Accept quantities 1 through 6.</option>
+            </select>
+          </fieldset>
+
+          <fieldset class="capstone-mission-decision">
+            <legend>
+              Decision 2 — Verify rejected quantity behaviour
+            </legend>
+
+            <p>The cart contains two backpacks costing KES 4,800. A customer attempts quantity 6. What should your test verify?</p>
+
+            <label for="capstoneM4CartState">
+              Select your testing approach
+            </label>
+
+            <select id="capstoneM4CartState" required>
+              <option value="">Choose an approach…</option>
+              <option value="error-only">A validation message appears; the cart state is not checked.</option>
+<option value="unchanged">A validation error appears, quantity remains 2, and subtotal remains KES 4,800.</option>
+<option value="accept-six">The cart accepts six backpacks despite the five-unit stock limit.</option>
+            </select>
+          </fieldset>
+
+          <fieldset class="capstone-mission-decision">
+            <legend>
+              Decision 3 — Test checkout email validation
+            </legend>
+
+            <p>AC-04 requires errors for empty and malformed checkout email addresses. Which approach meets this requirement?</p>
+
+            <label for="capstoneM4Email">
+              Select your testing approach
+            </label>
+
+            <select id="capstoneM4Email" required>
+              <option value="">Choose an approach…</option>
+              <option value="valid-only">Test only a valid address such as customer@example.com.</option>
+<option value="malformed-only">Check one malformed address but skip the empty field.</option>
+<option value="both">Submit an empty email and a malformed email separately; verify each error.</option>
+            </select>
+          </fieldset>
+
+          <div class="capstone-mission-actions">
+            <button class="primary-button"
+              type="submit" id="capstoneM4Review">
+              Review Mission 4
+            </button>
+
+            <button class="secondary-button"
+              type="button" id="capstoneM4Reset">
+              Clear draft
+            </button>
+          </div>
+
+          <p id="capstoneM4Status"
+            class="capstone-mission-status"
+            role="status" aria-live="polite">
+            Choose all three answers before reviewing.
+          </p>
+
+          <section id="capstoneM4Result"
+            class="capstone-mission-result"
+            aria-labelledby="capstone-m4-feedback-title"
+            hidden>
+
+            <h4 id="capstone-m4-feedback-title">
+              Your Mission 4 feedback
+            </h4>
+
+            <p id="capstoneM4Score"
+              class="capstone-mission-score">0/15</p>
+
+            <ul id="capstoneM4Feedback"
+              class="capstone-mission-feedback"></ul>
+          </section>
+        </form>
+      </section>
+
+      <!-- v1.5: Mission 5 guided assessment -->
+      <section class="capstone-mission-workspace"
+        aria-labelledby="capstone-m5-title">
+
+        <p class="eyebrow">MISSION 05 · 15 POINTS</p>
+
+        <h3 id="capstone-m5-title">
+          Debugging Flaky Tests
+        </h3>
+
+        <p>
+          Investigate unreliable ShopFlow tests and
+          choose improvements that make automation
+          more predictable and maintainable.
+        </p>
+
+        <p>
+          These are guided debugging scenarios.
+          Playwright code is not executed here.
+        </p>
+
+        <form id="capstoneM5Form" novalidate>
+          
+          <fieldset class="capstone-mission-decision">
+            <legend>
+              Decision 1 — Replace a fixed timeout
+            </legend>
+
+            <p>An invalid checkout email produces an alert containing &#x27;Enter a valid email&#x27;. The alert sometimes appears after a variable delay. Which approach is most reliable?</p>
+
+            <label for="capstoneM5Waiting">
+              Select the most reliable approach
+            </label>
+
+            <select id="capstoneM5Waiting" required>
+              <option value="">Choose an approach…</option>
+              <option value="long-timeout">await page.waitForTimeout(10000)</option>
+<option value="retry-assertion">await expect(page.getByRole(&#x27;alert&#x27;)).toContainText(&#x27;Enter a valid email&#x27;)</option>
+<option value="skip">Skip the validation assertion entirely.</option>
+            </select>
+          </fieldset>
+
+          <fieldset class="capstone-mission-decision">
+            <legend>
+              Decision 2 — Repair a fragile locator
+            </legend>
+
+            <p>A product-list test clicks the wrong button after the page layout changes. Assume each product is an accessible article named after its product. Which locator is more reliable?</p>
+
+            <label for="capstoneM5Locator">
+              Select the most reliable approach
+            </label>
+
+            <select id="capstoneM5Locator" required>
+              <option value="">Choose an approach…</option>
+              <option value="position">await page.locator(&#x27;button&#x27;).nth(2).click()</option>
+<option value="scoped-role">await page.getByRole(&#x27;article&#x27;, { name: &#x27;Canvas Backpack&#x27; }).getByRole(&#x27;button&#x27;, { name: &#x27;Add to cart&#x27; }).click()</option>
+<option value="css-position">await page.locator(&#x27;article:nth-child(3) button&#x27;).click()</option>
+            </select>
+          </fieldset>
+
+          <fieldset class="capstone-mission-decision">
+            <legend>
+              Decision 3 — Eliminate shared test-data interference
+            </legend>
+
+            <p>Two Playwright tests run in parallel against the same customer cart. One test changes the quantity while the other checks the subtotal. How should you improve reliability?</p>
+
+            <label for="capstoneM5Isolation">
+              Select the most reliable approach
+            </label>
+
+            <select id="capstoneM5Isolation" required>
+              <option value="">Choose an approach…</option>
+              <option value="serial-only">Run every test serially without addressing shared cart state.</option>
+<option value="isolated-state">Give each test an independent customer and cart, with known initial state.</option>
+<option value="retry-failure">Rerun failing tests until they pass.</option>
+            </select>
+          </fieldset>
+
+          <div class="capstone-mission-actions">
+            <button class="primary-button"
+              type="submit" id="capstoneM5Review">
+              Review Mission 5
+            </button>
+
+            <button class="secondary-button"
+              type="button" id="capstoneM5Reset">
+              Clear draft
+            </button>
+          </div>
+
+          <p id="capstoneM5Status"
+            class="capstone-mission-status"
+            role="status" aria-live="polite">
+            Choose all three answers before reviewing.
+          </p>
+
+          <section id="capstoneM5Result"
+            class="capstone-mission-result"
+            aria-labelledby="capstone-m5-feedback-title"
+            hidden>
+
+            <h4 id="capstone-m5-feedback-title">
+              Your Mission 5 feedback
+            </h4>
+
+            <p id="capstoneM5Score"
+              class="capstone-mission-score">0/15</p>
+
+            <ul id="capstoneM5Feedback"
+              class="capstone-mission-feedback"></ul>
+          </section>
+        </form>
+      </section>
+
+      <!-- v1.5: Mission 6 guided assessment -->
+      <section class="capstone-mission-workspace"
+        aria-labelledby="capstone-m6-title">
+
+        <p class="eyebrow">MISSION 06 · 15 POINTS</p>
+
+        <h3 id="capstone-m6-title">
+          API Contract Validation
+        </h3>
+
+        <p>
+          Validate ShopFlow's fictional product API
+          using Playwright request methods and
+          meaningful response assertions.
+        </p>
+
+        <p>
+          This is a guided simulation. No HTTP requests
+          are sent to a live ShopFlow API.
+        </p>
+
+        <form id="capstoneM6Form" novalidate>
+          
+          <fieldset class="capstone-mission-decision">
+            <legend>
+              Decision 1 — Send the product API request
+            </legend>
+
+            <p>Assume Playwright&#x27;s request fixture has the ShopFlow API base URL configured. Which statement fetches product 42?</p>
+
+            <label for="capstoneM6Request">
+              Select the API testing approach
+            </label>
+
+            <select id="capstoneM6Request" required>
+              <option value="">Choose an approach…</option>
+              <option value="get">const response = await request.get(&#x27;/api/products/42&#x27;)</option>
+<option value="post">const response = await request.post(&#x27;/api/products/42&#x27;)</option>
+<option value="missing">const response = await request.get(&#x27;/api/products/9999&#x27;)</option>
+            </select>
+          </fieldset>
+
+          <fieldset class="capstone-mission-decision">
+            <legend>
+              Decision 2 — Validate the product API contract
+            </legend>
+
+            <p>After receiving the GET response for product 42, which checks verify both the HTTP status and required JSON properties?</p>
+
+            <label for="capstoneM6Contract">
+              Select the API testing approach
+            </label>
+
+            <select id="capstoneM6Contract" required>
+              <option value="">Choose an approach…</option>
+              <option value="status-only">expect(response.status()).toBe(200)</option>
+<option value="contract">expect(response.status()).toBe(200); const body = await response.json(); expect(body).toMatchObject({ id: 42, name: &#x27;Canvas Backpack&#x27;, priceKES: 2400 })</option>
+<option value="constant">expect(2400).toBe(2400)</option>
+            </select>
+          </fieldset>
+
+          <fieldset class="capstone-mission-decision">
+            <legend>
+              Decision 3 — Verify a missing resource
+            </legend>
+
+            <p>AC-06 states that product 9999 does not exist. Which test validates the API&#x27;s expected behaviour?</p>
+
+            <label for="capstoneM6Missing">
+              Select the API testing approach
+            </label>
+
+            <select id="capstoneM6Missing" required>
+              <option value="">Choose an approach…</option>
+              <option value="not-found">const missing = await request.get(&#x27;/api/products/9999&#x27;); expect(missing.status()).toBe(404)</option>
+<option value="wrong-status">const missing = await request.get(&#x27;/api/products/9999&#x27;); expect(missing.status()).toBe(200)</option>
+<option value="ignore">Skip missing resources because only successful requests matter.</option>
+            </select>
+          </fieldset>
+
+          <div class="capstone-mission-actions">
+            <button class="primary-button"
+              type="submit" id="capstoneM6Review">
+              Review Mission 6
+            </button>
+
+            <button class="secondary-button"
+              type="button" id="capstoneM6Reset">
+              Clear draft
+            </button>
+          </div>
+
+          <p id="capstoneM6Status"
+            class="capstone-mission-status"
+            role="status" aria-live="polite">
+            Choose all three answers before reviewing.
+          </p>
+
+          <section id="capstoneM6Result"
+            class="capstone-mission-result"
+            aria-labelledby="capstone-m6-feedback-title"
+            hidden>
+
+            <h4 id="capstone-m6-feedback-title">
+              Your Mission 6 feedback
+            </h4>
+
+            <p id="capstoneM6Score"
+              class="capstone-mission-score">0/15</p>
+
+            <ul id="capstoneM6Feedback"
+              class="capstone-mission-feedback"></ul>
+          </section>
+        </form>
+      </section>
+    </section>
+
+    <!-- v1.5: Combined assessment score -->
+    <section class="section capstone-score-summary"
+      aria-labelledby="capstone-summary-heading">
+
+      <p class="eyebrow">
+        05 · YOUR CAPSTONE RESULTS
+      </p>
+
+      <h2 id="capstone-summary-heading">
+        Final Assessment Summary
+      </h2>
+
+      <p class="section-lead">
+        Review all six missions, then calculate your
+        combined assessment score out of 100.
+      </p>
+
+      <div class="capstone-card">
+
+        <button class="primary-button"
+          type="button"
+          id="capstoneSummaryReview">
+          Calculate my Capstone score
+        </button>
+
+        <p id="capstoneSummaryStatus"
+          class="capstone-summary-status"
+          role="status"
+          aria-live="polite">
+          Review all six missions before calculating.
+        </p>
+
+        <section id="capstoneSummaryResult"
+          class="capstone-summary-result"
+          aria-labelledby="capstone-summary-result-title"
+          hidden>
+
+          <h3 id="capstone-summary-result-title">
+            Your combined score
+          </h3>
+
+          <p id="capstoneSummaryScore"
+            class="capstone-total-score">
+            0/100
+          </p>
+
+          <ol id="capstoneSummaryBreakdown"
+            class="capstone-score-breakdown"></ol>
+
+          <p class="capstone-summary-notice">
+            This is a guided assessment score, not
+            evidence that actual Playwright tests
+            passed or that ShopFlow is ready to release.
+          </p>
+
+          <p class="capstone-summary-notice">
+            Your combined score is not yet saved
+            to My Progress.
+          </p>
+
+        </section>
+
+      </div>
+    </section>
+
+    <!-- v1.5: Guided assessment report -->
+    <section class="section capstone-report"
+      aria-labelledby="capstone-report-heading">
+
+      <p class="eyebrow">06 · PRACTICE REPORT</p>
+
+      <h2 id="capstone-report-heading">
+        ShopFlow QA Assessment Report
+      </h2>
+
+      <p class="section-lead">
+        Turn your guided assessment into a structured
+        practice report. First calculate your combined
+        score, then generate your report.
+      </p>
+
+      <div class="capstone-card">
+
+        <button class="primary-button"
+          id="capstoneReportGenerate"
+          type="button">
+          Generate assessment report
+        </button>
+
+        <p id="capstoneReportStatus"
+          class="capstone-report-status"
+          role="status"
+          aria-live="polite">
+          Calculate your combined Capstone score first.
+        </p>
+
+        <section id="capstoneReportResult"
+          class="capstone-report-result"
+          aria-labelledby="capstone-report-result-heading"
+          hidden>
+
+          <h3 id="capstone-report-result-heading">
+            ShopFlow — Guided QA Assessment
+          </h3>
+
+          <p class="capstone-report-label">
+            OVERALL GUIDED ASSESSMENT SCORE
+          </p>
+
+          <p id="capstoneReportScore"
+            class="capstone-report-score">0/100</p>
+
+          <p class="capstone-report-note">
+            This score measures answers selected in a
+            guided simulation. It is not a real test
+            execution result.
+          </p>
+
+          <h4>Mission performance</h4>
+          <ol id="capstoneReportBreakdown"
+            class="capstone-report-breakdown"></ol>
+
+          <div class="capstone-report-grid">
+            <div class="capstone-report-panel">
+              <h4>Assessment strengths</h4>
+              <ul id="capstoneReportStrengths"></ul>
+            </div>
+
+            <div class="capstone-report-panel">
+              <h4>Development priorities</h4>
+              <ul id="capstoneReportImprovements"></ul>
+            </div>
+          </div>
+
+          <h4>Acceptance-criteria coverage plan</h4>
+          <p class="capstone-report-note">
+            The following requirements are included
+            in the learning scenario. Their behaviour
+            has not been verified against a live system.
+          </p>
+
+          <ol id="capstoneReportCoverage"
+            class="capstone-report-coverage"></ol>
+
+          <div class="capstone-report-recommendation">
+            <h4>Release-readiness recommendation</h4>
+            <p id="capstoneReportReadiness"></p>
+          </div>
+
+          <button class="secondary-button"
+            id="capstoneReportDownload"
+            type="button">
+            Download practice report (.txt)
+          </button>
+
+          <section class="capstone-progress-save"
+            aria-labelledby="capstone-save-heading">
+
+            <h4 id="capstone-save-heading">
+              Save your completed attempt
+            </h4>
+
+            <p>
+              Save your guided assessment score in
+              My Progress. Repeating the same answers
+              will not create a duplicate record.
+              Corrected attempts can be saved separately.
+            </p>
+
+            <button class="primary-button"
+              id="capstoneProgressSave"
+              type="button">
+              Save to My Progress
+            </button>
+
+            <p id="capstoneProgressStatus"
+              class="capstone-save-status"
+              role="status"
+              aria-live="polite">
+              Your assessment has not been saved
+              from this report yet.
+            </p>
+
+          </section>
+
+        </section>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="deliverables-title">
+      <p class="eyebrow">07 · FINAL DELIVERABLES</p>
+      <h2 id="deliverables-title">What you'll produce</h2>
+
+      <div class="capstone-card">
+        <ul class="deliverables-list">
+          <li>Assessment score and feedback</li>
+<li>Test coverage summary</li>
+<li>Identified testing risks</li>
+<li>Suggested release-readiness decision</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="capstone-disclaimer"
+             aria-labelledby="simulation-title">
+      <h2 id="simulation-title">About this simulation</h2>
+      <p>
+        ShopFlow is fictional. This capstone will evaluate
+        learner decisions against a guided rubric.
+        It will not execute Playwright or contact a live
+        application or API.
+      </p>
+      <p>
+        <strong>Current status:</strong> Mission 1 offers a local guided review. Mission 2 also offers a local guided review. Mission 3 offers a local guided review. Mission 4 offers a local guided review. Mission 5 offers a local guided review. Mission 6 offers a local guided review.
+        Combined scoring is available after reviewing all six
+        missions. Combined scoring, a downloadable guided assessment report, and optional My Progress saving are available.
+      </p>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    Practical QA Lab · ShopFlow Automation Capstone
+  </footer>
+  <script src="mission-1.js?v=capstone-m1-1" defer></script>
+  <script src="mission-2.js?v=capstone-m2-1" defer></script>
+  <script src="mission-3.js?v=capstone-m3-1" defer></script>
+  <script src="mission-4.js?v=capstone-m4-1" defer></script>
+  <script src="mission-5.js?v=capstone-m5-1" defer></script>
+  <script src="mission-6.js?v=capstone-m6-1" defer></script>
+  <script src="summary.js?v=capstone-summary-1" defer></script>
+  <script src="report.js?v=capstone-report-1" defer></script>
+  <script src="progress-save.js?v=capstone-progress-1" defer></script>
+  <script src="progress-ui.js?v=capstone-progress-ui-1" defer></script>
+</body>
+</html>

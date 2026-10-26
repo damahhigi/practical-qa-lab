@@ -1,0 +1,134 @@
+{
+  "id": "shopflow-release-check",
+  "title": "ShopFlow Automation Capstone",
+  "version": "0.1.0",
+  "mode": "guided-simulation",
+  "status": "under-development",
+  "scenario": {
+    "application": "ShopFlow",
+    "fictional": true,
+    "role": "QA Automation Engineer",
+    "assignment": "Assess an e-commerce product purchase journey before release using UI and API testing techniques.",
+    "product": {
+      "id": 42,
+      "name": "Canvas Backpack",
+      "priceKES": 2400,
+      "availableStock": 5
+    },
+    "routes": {
+      "product": "/products/42",
+      "cart": "/cart",
+      "checkout": "/checkout"
+    },
+    "api": {
+      "productEndpoint": "/api/products/42",
+      "missingEndpoint": "/api/products/9999",
+      "productStatus": 200,
+      "missingStatus": 404
+    }
+  },
+  "acceptanceCriteria": [
+    {
+      "id": "AC-01",
+      "requirement": "Display the correct product",
+      "expected": "Product 42 displays Canvas Backpack priced at KES 2,400."
+    },
+    {
+      "id": "AC-02",
+      "requirement": "Calculate the cart total",
+      "expected": "Two Canvas Backpacks produce a cart subtotal of KES 4,800."
+    },
+    {
+      "id": "AC-03",
+      "requirement": "Enforce stock boundaries",
+      "expected": "Quantities 1 through 5 are accepted. Quantities 0 and 6 are rejected without changing the cart."
+    },
+    {
+      "id": "AC-04",
+      "requirement": "Validate checkout email",
+      "expected": "An empty or malformed email produces a validation error."
+    },
+    {
+      "id": "AC-05",
+      "requirement": "Validate product API response",
+      "expected": "GET /api/products/42 returns 200 with id 42, name Canvas Backpack, and priceKES 2400."
+    },
+    {
+      "id": "AC-06",
+      "requirement": "Handle a missing product",
+      "expected": "GET /api/products/9999 returns 404."
+    },
+    {
+      "id": "AC-07",
+      "requirement": "Ensure reliable automation",
+      "expected": "Tests use stable locators, meaningful assertions, and isolated test data instead of arbitrary delays."
+    }
+  ],
+  "missions": [
+    {
+      "id": "strategy",
+      "title": "Test Strategy & Smoke Coverage",
+      "points": 15,
+      "criteria": [
+        "AC-01",
+        "AC-04"
+      ]
+    },
+    {
+      "id": "locators",
+      "title": "UI Locators & Interactions",
+      "points": 20,
+      "criteria": [
+        "AC-01",
+        "AC-02"
+      ]
+    },
+    {
+      "id": "assertions",
+      "title": "Assertions & State Validation",
+      "points": 20,
+      "criteria": [
+        "AC-02"
+      ]
+    },
+    {
+      "id": "boundary",
+      "title": "Negative & Boundary Testing",
+      "points": 15,
+      "criteria": [
+        "AC-03",
+        "AC-04"
+      ]
+    },
+    {
+      "id": "debugging",
+      "title": "Debugging Flaky Tests",
+      "points": 15,
+      "criteria": [
+        "AC-07"
+      ]
+    },
+    {
+      "id": "api",
+      "title": "API Contract Validation",
+      "points": 15,
+      "criteria": [
+        "AC-05",
+        "AC-06"
+      ]
+    }
+  ],
+  "finalDeliverables": [
+    "Assessment score and feedback",
+    "Test coverage summary",
+    "Identified testing risks",
+    "Suggested release-readiness decision"
+  ],
+  "assessment": {
+    "maximumScore": 100,
+    "scoringMethod": "guided-rubric",
+    "executesPlaywright": false,
+    "requiresLiveAPI": false,
+    "note": "Scores evaluate learner decisions, not actual execution of browser or API tests."
+  }
+}
