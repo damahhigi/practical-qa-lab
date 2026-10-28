@@ -2,136 +2,88 @@
 
 [![Playwright Regression Tests](https://github.com/damahhigi/practical-qa-lab/actions/workflows/playwright.yml/badge.svg)](https://github.com/damahhigi/practical-qa-lab/actions/workflows/playwright.yml)
 
+**Live website:** https://damahhigi.github.io/practical-qa-lab/
 
-Practical QA Lab is an interactive learning platform for practising real-world software quality assurance scenarios.
+**Release:** v1.6 — Connected QA Journey & Portable Evidence (October 2026)
 
-It is designed to help QA professionals and aspiring testers strengthen practical testing skills through scenario-based exercises, instant feedback and mock interview practice.
+Practical QA Lab is a free, browser-based QA practice environment featuring interactive scenarios, guided simulations, feedback, and interview preparation. The website is static: no account or backend is required.
 
-## Current Features
+## Main learning experiences
 
-### Manual QA Practice
-- Real-world testing scenarios
-- Investigation and debugging exercises
-- Risk-based reasoning
-- Weighted scoring
-- Instant feedback
+- **Manual QA practice:** test design, exploration, functional testing, debugging and risk-based decisions.
+- **API testing questions:** HTTP requests, authentication, persistence, pagination, idempotency and related testing concepts.
+- **SQL testing questions:** query writing and reasoning about joins, aggregation, transactions and data validation.
+- **QA Mock Interview:** junior, mid-level and senior exercises with scoring and feedback.
 
-### API Testing Practice
-- REST API scenarios
-- Authentication and authorization
-- Data persistence
-- Pagination
-- Idempotency and payment testing
+## Hands-on labs
 
-### SQL Testing Practice
-- Database validation
-- SELECT queries
-- GROUP BY and aggregation
-- JOIN scenarios
-- Transaction and persistence testing
+| Lab | Purpose |
+| --- | --- |
+| [Test Case Writing](test-case-lab/) | Create, edit, assess and export requirement-based test cases |
+| [Checkout Bug Hunt](checkout-bug-hunt/) | Investigate cart defects, document findings and download reports |
+| [API Testing Lab](api-testing-lab/) | Exercise an in-browser simulated REST API |
+| [API Bug Hunt](api-bug-hunt/) | Investigate seeded API defects, document findings and download reports |
+| [SQL Validation](sql-validation-lab/) | Query fictional datasets, investigate defects and download reports |
+| [Bug Triage](bug-triage/) | Evaluate severity, priority, assignment and next actions |
+| [Release Readiness](release-readiness/) | Review testing evidence, release risks and Go/No-Go decisions |
 
+These experiences provide educational simulations and rule-based feedback. They do not test production systems.
 
-### QA Mock Interview
-- Junior QA interview questions
-- Mid-Level QA interview questions
-- Weighted answer scoring
-- Strong-point feedback
-- Improvement recommendations
-- Level-specific interview feedback
-- Final interview scorecard
+## Test Automation Learning Path
 
+The [Automation Learning Path](automation-lab/learning-path/) contains six guided Playwright and TypeScript modules:
 
-## Scoring
+1. Playwright Fundamentals
+2. Locators & Interactions
+3. Assertions & Validation
+4. Negative & Boundary Testing
+5. Debugging Flaky Tests
+6. API Automation
 
-Answers are evaluated using structured QA concepts and weighted criteria.
+The modules provide selected-code exercises, feedback, browser-local drafts and completed-session progress saving.
 
-Each scenario is scored out of 10, with higher-value concepts receiving more weight based on their importance to the testing approach.
+### ShopFlow Automation Capstone (v1.5)
 
-## Responsive Design
+The [ShopFlow Capstone](automation-lab/capstone/) combines six missions, seven fictional acceptance criteria and 20 guided assessment decisions. Learners can calculate an overall score out of 100, see mission feedback and recommended improvements, download a text assessment report and optionally save completed attempts to My Progress. Repeating the same answers does not create duplicate progress records.
 
-Practical QA Lab supports desktop and mobile layouts, including smaller mobile screens.
+**Simulation disclosure:** These exercises evaluate the choices learners make. They do not execute learner-written Playwright tests or interact with a live ShopFlow store/API. The Capstone's release-readiness guidance is an educational exercise, not a real system release decision.
 
-## Technology
+## Learning Paths
 
-- HTML
-- CSS
-- JavaScript
+The [main Learning Paths](learning-paths/) now include four routes: Beginner QA, Intermediate QA, Interview Preparation and QA Test Automation. The automation route connects six existing Playwright modules and the ShopFlow Capstone, tracking each of the seven activities independently.
 
-The current version runs entirely in the browser and does not require a backend.
+## My Progress and learner data
 
+The platform saves supported assessment sessions in browser-local storage (`practicalQaLab.progress.v1`), with recent history, area averages, best scores, suggestions and versioned JSON export/import. Saved-session history is limited to 250 entries.
 
+**Back up authored work separately:** My Progress JSON backups contain completed-session records, not every draft or full written bug report. The Test Case Writing Lab has its own test-case JSON export/import; ShopFlow can download a text assessment report. Checkout Bug Hunt, API Bug Hunt and SQL Validation now offer separate text downloads of learner-written reports. Those reports remain in separate browser storage and are not included in the central My Progress backup.
 
+There is no account-based synchronization. Storage is specific to a browser profile and website origin. Back up important work before clearing browser data.
 
-## Current Version
+## Testing and technology
 
+- HTML, CSS and JavaScript for the website and its in-browser simulations
+- Playwright and TypeScript for automated regression testing
+- GitHub Actions for CI and GitHub Pages for hosting
+- Python 3 local HTTP server for development/test runs
 
-### v0.8 — Test Case Writing Lab
+The v1.6 regression suite passes **188 Playwright tests**, up from 165 in v1.5; see [the test README](qa-tests/README.md) for setup and run commands.
 
-Practical QA Lab now includes a second hands-on
-QA learning challenge focused on test case design.
+```bash
+cd qa-tests
+npm ci
+npx playwright install chromium
+npx playwright test --reporter=line
+```
 
-#### New Features
-- User registration testing scenario
-- Eight business requirements
-- Structured test case writing workspace
-- Automatic test case IDs
-- Positive, Negative and Boundary test types
-- Save, edit and delete test cases
-- Local browser draft storage
-- Rule-based coverage assessment
-- Requirement coverage analysis
-- Test type diversity feedback
-- Documentation quality checks
-- Duplicate test case detection
-- Sample test scenario recommendations
-- Indicative coverage score out of 100
-- Integration with the learning progress dashboard
-- JSON export and import for written test cases
-- Merge and Replace backup options
-- Invalid backup protection
-- Responsive desktop and mobile layouts
+Targeted automated accessibility and responsive-layout checks are included; they are not a full accessibility certification or exhaustive cross-browser audit.
 
-#### Learning Progress
+## Resources
 
-Test Case Writing Lab is the eighth learning area.
+The [`resources/`](resources/) folder provides QA test-case, bug-report and interview-preparation templates.
 
-Completed design reviews are saved in the main
-progress dashboard and included in progress
-JSON backups.
+## v1.6 release highlights
 
-#### Test Case Backups
+v1.6 adds the connected Automation Learning Path, seven-activity progress tracking, and downloadable reports in Checkout Bug Hunt, API Bug Hunt and SQL Validation. It also corrects outdated documentation and includes additional regression coverage. No new duplicate labs were introduced.
 
-Written test cases are stored separately from
-learning progress.
-
-Learners can export their test case drafts as JSON
-and restore them using Merge or Replace.
-
-Export Progress saves scores and session history.
-Export Test Cases saves the actual written cases.
-
-#### Assessment Limitations
-
-The assessment uses predefined rules rather than AI.
-Scores indicate coverage evidence and documentation
-completeness, not verified test case correctness.
-
-The registration requirements are a test design
-exercise, not a functioning registration backend.
-
-No account or real personal information is required.
-
-
-## Planned Features
-
-Future versions may include:
-
-- Larger question banks
-- User accounts
-- AI-assisted answer evaluation
-- Interview history
-- Additional QA practice areas
-
-## Project
-
-Practical QA Lab is a Practical QA Press project.
+Practical QA Lab is a **Practical QA Press** project.

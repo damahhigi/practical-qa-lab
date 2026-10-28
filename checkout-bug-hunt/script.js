@@ -274,6 +274,14 @@ function reportField(parent, label, value) {
 
 function renderSavedReports() {
   const container = $("savedReports");
+
+  $("exportCheckoutReports").disabled =
+    savedBugReports.length === 0;
+
+  $("checkoutExportStatus").textContent =
+    savedBugReports.length
+      ? `${savedBugReports.length} saved report(s) available to download.`
+      : "Save a bug report to enable downloads.";
   $("reportCount").textContent = `${savedBugReports.length} ${savedBugReports.length === 1 ? "report" : "reports"}`;
   if (!savedBugReports.length) {
     container.innerHTML = '<div class="empty-reports"><strong>No reports yet</strong><p>Explore the store, then save your first finding using the form.</p></div>';
@@ -315,6 +323,80 @@ function renderSavedReports() {
     card.append(top, details, actions);
     container.append(card);
   });
+}
+
+function exportSavedBugReports() {
+  const status = $("checkoutExportStatus");
+
+  if (!savedBugReports.length) {
+    status.textContent = "No saved reports to download.";
+    return;
+  }
+
+  const lines = [
+    "NORTHSTAR SHOP — DEFECT REPORTS",
+    "Practical QA Lab | Guided simulation",
+    "Learner-written findings; not independently verified.",
+    `Exported: ${new Date().toISOString()}`,
+    `Reports: ${savedBugReports.length}`,
+    ""
+  ];
+
+  savedBugReports.forEach((report, index) => {
+    lines.push(
+      `REPORT ${index + 1}: ${report.title}`,
+      `Reference: ${report.id}`,
+      `Requirement: ${report.requirement}`,
+      `Suggested severity: ${report.severity}`,
+      `Saved at: ${report.createdAt || "Date unavailable"}`,
+      "",
+      "STEPS TO REPRODUCE",
+      report.steps,
+      "",
+      "EXPECTED RESULT",
+      report.expected,
+      "",
+      "ACTUAL RESULT",
+      report.actual,
+      "",
+      "----------------------------------------",
+      ""
+    );
+  });
+
+  let url;
+
+  try {
+    const blob = new Blob(
+      [lines.join("\n") + "\n"],
+      { type: "text/plain;charset=utf-8" }
+    );
+
+    url = URL.createObjectURL(blob);
+
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "northstar-shop-defect-reports.txt";
+
+    document.body.appendChild(link);
+
+    try {
+      link.click();
+    } finally {
+      link.remove();
+    }
+
+    window.setTimeout(() => URL.revokeObjectURL(url), 1000);
+
+    status.textContent =
+      `Download prepared for ${savedBugReports.length} report(s).`;
+
+  } catch (_) {
+    if (url) URL.revokeObjectURL(url);
+
+    status.textContent =
+      "Download unavailable. Saved reports were not changed.";
+  }
 }
 
 function resetReportForm(message = "Reports are saved locally. Finish the challenge for feedback.") {
@@ -401,6 +483,9 @@ function setupReportForm() {
   updateFinishAvailability();
   $("finishChallenge").addEventListener("click", finishBugHunt);
   $("bugReportForm").addEventListener("submit", saveReport);
+  $("exportCheckoutReports").addEventListener(
+    "click", exportSavedBugReports
+  );
   $("cancelReportEdit").addEventListener("click", () => resetReportForm("Editing cancelled. The saved report was not changed."));
   $("savedReports").addEventListener("click", event => {
     const edit = event.target.closest("[data-edit-report]");

@@ -148,6 +148,10 @@ function renderReports() {
   list.replaceChildren();
   $('reportCount').textContent = String(reports.length);
   $('clearReports').hidden = reports.length === 0;
+  $('downloadApiReports').disabled = reports.length === 0;
+  $('downloadApiStatus').textContent = reports.length
+    ? `${reports.length} saved report(s) available to download.`
+    : 'Save a report to enable downloads.';
   if (!reports.length) {
     const p = document.createElement('p');
     p.className = 'empty-reports';
@@ -184,6 +188,45 @@ function renderReports() {
   });
   refreshReviewButton();
 }
+function downloadApiReports() {
+  if (!reports.length) return;
+  const lines = [
+    'API BUG HUNT — DEFECT REPORTS',
+    'Practical QA Lab | Guided simulation',
+    'Learner-written findings; not independently verified.',
+    `Exported: ${new Date().toISOString()}`,
+    `Reports: ${reports.length}`,
+    ''
+  ];
+  reports.forEach((r, index) => lines.push(
+    `REPORT ${index + 1}: ${r.title}`,
+    `Reference: ${r.id}`,
+    `Scenario: ${SCENARIOS[r.scenario].title}`,
+    `Requirement: ${SCENARIOS[r.scenario].requirement}`,
+    `Suggested severity: ${r.severity}`,
+    `Saved at: ${r.createdAt || 'Date unavailable'}`,
+    '', 'STEPS TO REPRODUCE', r.steps,
+    '', 'EXPECTED RESULT', r.expected,
+    '', 'ACTUAL RESULT', r.actual,
+    '', '----------------------------------------', ''
+  ));
+  let url;
+  try {
+    url = URL.createObjectURL(new Blob([lines.join('\n') + '\n'],
+      { type: 'text/plain;charset=utf-8' }));
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'api-bug-hunt-defect-reports.txt';
+    document.body.appendChild(link);
+    try { link.click(); } finally { link.remove(); }
+    window.setTimeout(() => URL.revokeObjectURL(url), 1000);
+    $('downloadApiStatus').textContent = `Download prepared for ${reports.length} report(s).`;
+  } catch (_) {
+    if (url) URL.revokeObjectURL(url);
+    $('downloadApiStatus').textContent = 'Download unavailable. Saved reports were not changed.';
+  }
+}
+
 function editReport(id) {
   const r = reports.find(item => item.id === id);
   if (!r) return;
@@ -440,6 +483,7 @@ function init() {
     $('responseAnnouncement').textContent = 'Simulated API reset. Saved reports were not changed.';
   });
   $('bugForm').addEventListener('submit', saveReport);
+  $('downloadApiReports').addEventListener('click', downloadApiReports);
   $('cancelEdit').addEventListener('click', () => { cancelEdit(); $('formStatus').textContent = 'Editing cancelled.'; });
   $('clearReports').addEventListener('click', () => {
     if (!window.confirm('Delete every saved API bug report? This cannot be undone.')) return;

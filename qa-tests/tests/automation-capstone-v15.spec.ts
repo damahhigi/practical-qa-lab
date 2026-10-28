@@ -108,7 +108,16 @@ test.describe('v1.5 ShopFlow Automation Capstone', () => {
       .toContainText('It will not execute Playwright');
 
     await expect(disclaimer)
-      .toContainText('Mission 1 offers a local guided review');
+      .toContainText('Review all six guided missions');
+
+    await expect(disclaimer)
+      .toContainText('download a practice report');
+
+    await expect(disclaimer)
+      .toContainText('My Progress');
+
+    await expect(disclaimer)
+      .not.toContainText('Mission 1 offers a local guided review');
 
     // All six missions are interactive.
     for (let number = 1; number <= 6; number++) {

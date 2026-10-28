@@ -237,6 +237,19 @@
           <div id="savedReports" class="saved-reports-list" aria-live="polite">
             <div class="empty-reports"><strong>No reports yet</strong><p>Explore the store, then save your first finding using the form.</p></div>
           </div>
+          <div class="report-actions">
+            <button id="exportCheckoutReports"
+                    class="button button-outline"
+                    type="button" disabled>
+              Download reports (.txt)
+            </button>
+          </div>
+          <p id="checkoutExportStatus"
+             class="form-message"
+             role="status"
+             aria-live="polite">
+            Save a bug report to enable downloads.
+          </p>
           <p class="report-storage-note">Saved bug reports stay in this browser and are not included in progress JSON backups. Only your finished challenge scores are included. Reset Shop does not delete reports.</p>
         </section>
       </div>

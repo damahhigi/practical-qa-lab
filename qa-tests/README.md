@@ -1,48 +1,63 @@
-# Practical QA Lab — Playwright smoke tests (v0.9 Stage 1)
+# Practical QA Lab — Playwright Regression Tests
 
-**This folder contains only tests.** Keep it beside the existing `index.html` and the two lab folders. Do not replace existing application files.
+This folder contains automated browser tests for the Practical QA Lab website: practice areas, interactive labs, progress and backup handling, navigation, Automation Lab modules, and the ShopFlow Capstone.
 
-## Expected folder layout
+## Requirements and setup
 
-```text
-practical-qa-lab/
-├── index.html
-├── script.js
-├── style.css
-├── checkout-bug-hunt/
-├── test-case-lab/
-└── qa-tests/
-    ├── package.json
-    ├── playwright.config.ts
-    ├── tests/smoke.spec.ts
-    └── .gitignore
+Install Node.js, npm and Python 3. From the repository root:
+
+```bash
+cd qa-tests
+npm ci
+npx playwright install chromium
 ```
 
-## Setup on Mac (Node.js installed)
+## Run the tests
 
-1. Open the existing `practical-qa-lab` folder in VS Code.
-2. Open the integrated terminal.
-3. Run `cd qa-tests`.
-4. Run `npm install`.
-5. Run `npx playwright install chromium`.
-6. Run `npm test`.
+```bash
+# Complete suite
+npx playwright test --reporter=line
 
-Playwright will start a local Python web server automatically if port 8000 is free. If you already have `python3 -m http.server 8000` running, it will reuse the server. Ensure an existing server serves your *current* practical-qa-lab project. To stop an old server, press Ctrl+C in its terminal.
+# Only the ShopFlow Capstone test files
+npx playwright test 'tests/automation-capstone-*.spec.ts' --reporter=line
 
-## What the tests cover
+# Visible browser / Playwright UI / HTML report
+npm run test:headed
+npm run test:ui
+npm run test:report
+```
 
-1. Homepage links and initial progress dashboard.
-2. Checkout Bug Hunt — Notebook subtotal, discount, shipping and final total baseline.
-3. Test Case Writing Lab — create, refresh, review, and main dashboard integration.
+You can also use `npm test` for the default suite. The v1.6 suite passes **188 Playwright tests** (up from 165 in v1.5); the count may increase as coverage grows.
 
-Each Playwright test uses a fresh browser context, so your normal Chrome data is not touched. Existing intentional bugs in Checkout Bug Hunt are NOT treated as regressions here.
+## Local test server
 
-## Troubleshooting
+The `playwright.config.ts` configuration:
 
-- **`npm: command not found`**: install Node.js (LTS) before proceeding.
-- **`python3: command not found`**: install Python 3 or run the server separately and adjust the webServer config.
-- **`Port 8000 already used` / wrong page appears**: stop the existing server and rerun.
-- **Chromium missing**: run `npx playwright install chromium`.
-- **Failed assertion**: share the terminal failure and `test-results/` screenshot or trace. Don't change the app just to make the test pass until we establish the expected behaviour.
+- Uses `http://127.0.0.1:8001` as the base URL.
+- Starts `python3 -m http.server 8001 --bind 127.0.0.1` from the repository root.
+- Does **not** reuse an existing server; port 8001 must be available.
+- Uses Playwright's Desktop Chrome configuration (Chromium).
+- Retains traces and captures screenshots on test failures.
 
-Run `npm run test:headed` if you want to see a real browser window during the tests. After tests pass, we can add mobile checks and GitHub Actions.
+You can run a separate manual preview server on another port, such as 8002, without changing the Playwright configuration.
+
+## Coverage
+
+The suite includes homepage smoke tests, QA scenarios, the Test Case Writing Lab, Checkout Bug Hunt, API/SQL activities, bug triage, release readiness, four connected learning paths, the six automation modules, and ShopFlow Capstone missions. v1.6 additionally verifies independent automation-module progress and text report exports from Checkout Bug Hunt, API Bug Hunt and SQL Validation. It also checks assessment totals and reports, local progress storage, duplicates, backup export/import, keyboard navigation and selected mobile viewport behaviour.
+
+Some tests use `@axe-core/playwright` for automated accessibility checks. These are targeted checks, not a guarantee of full WCAG compliance or coverage on every browser.
+
+## CI
+
+The workflow at `.github/workflows/playwright.yml` runs on pushes to `main`, pull requests into `main` and manual dispatch. It uses Node.js 24, installs dependencies and Chromium, runs Playwright and uploads an HTML report when the workflow fails.
+
+## Safety and troubleshooting
+
+- Playwright tests normally run in isolated browser contexts; their test `localStorage` does not touch your everyday Chrome profile.
+- Deliberately seeded defects in educational bug-hunt exercises are expected scenario content, not automatically application regressions.
+- If `node` or `npm` is missing, install Node.js. If `python3` is missing, install Python 3.
+- If port 8001 is occupied, stop the conflicting server before testing.
+- If Chromium is missing, run `npx playwright install chromium`.
+- For a failed test, inspect its error, screenshot and trace before modifying source or assertions.
+
+Generated `test-results/` and `playwright-report/` folders are ignored by Git.

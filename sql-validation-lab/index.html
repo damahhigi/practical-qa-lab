@@ -157,7 +157,7 @@ FROM customers;</textarea>
         <div>
           <p class="eyebrow">DOCUMENT YOUR EVIDENCE</p>
           <h3>SQL bug report notebook</h3>
-          <p>Save a concise defect report for each issue you discover. Reports remain in this browser. Finish the challenge for indicative, rule-based feedback; scores are not yet part of My Progress.</p>
+          <p>Save a concise defect report for each issue you discover. Reports remain in this browser. Finish the challenge for indicative, rule-based feedback. Once all three investigation cases are documented, the completed review score is saved to My Progress when browser storage is available.</p>
           <p class="report-storage-note">Keep using the same browser and local address to see your saved reports after a refresh.</p>
         </div>
         <form id="sqlReportForm" class="report-form">
@@ -190,6 +190,10 @@ FROM customers;</textarea>
         </div>
         <p id="sqlReportsEmpty" class="report-empty">No reports saved yet. Investigate the data and document your findings.</p>
         <div id="sqlReportsList"></div>
+        <div class="editor-actions" style="margin-top: 15px;">
+          <button type="button" id="downloadSqlReports" class="secondary-button" disabled>Download reports (.txt)</button>
+        </div>
+        <p id="downloadSqlStatus" class="report-status" role="status" aria-live="polite">Save a report to enable downloads.</p>
       </div>
       <section class="review-workspace" aria-labelledby="sqlReviewTitle">
         <div class="review-intro">
@@ -246,7 +250,7 @@ FROM customers;</textarea>
     <section class="next-steps" aria-label="What comes next">
       <p class="eyebrow">WHAT'S NEXT?</p>
       <h2>From finding defects to reviewing evidence</h2>
-      <p>Stage 3 adds indicative feedback and an answer guide. Next we can connect completed SQL investigations to My Progress, without changing your saved bug reports.</p>
+      <p>Review your SQL investigation feedback and answer guide after documenting all three cases. Completed review scores are saved to My Progress. Your written bug reports remain separately stored in this browser and are not included in the My Progress backup.</p>
     </section>
   </main>
   <footer class="site-footer">Practical QA Lab · SQL Validation Lab · Stage 3 · All data and responses are simulated locally.</footer>

@@ -33,6 +33,19 @@
         { type: 'interview', area: 'mid', title: 'Mid-Level QA Mock Interview', description: 'Practice release risk, prioritization, and collaboration questions.', url: '../?qa-interview=mid', link: 'Start Mid-Level mock interview' },
         { type: 'interview', area: 'senior', title: 'Senior QA Mock Interview', description: 'Explore broader quality strategy and complex QA decisions.', url: '../?qa-interview=senior', link: 'Start Senior mock interview' }
       ]
+    },
+    automation: {
+      name: 'QA Test Automation',
+      description: 'Complete six guided Playwright modules, then apply those decisions in the ShopFlow Capstone.',
+      steps: [
+        { type: 'practice', area: 'automation', idPattern: /^automation-m1-[c12]{4}$/, title: 'Module 1 — Playwright Fundamentals', description: 'Build a browser smoke test with reliable assertions.', url: '../automation-lab/', link: 'Open Module 1' },
+        { type: 'practice', area: 'automation', idPattern: /^automation-m2-[c12]{4}$/, title: 'Module 2 — Locators & Interactions', description: 'Practise role-based and scoped locators.', url: '../automation-lab/module-2/', link: 'Open Module 2' },
+        { type: 'practice', area: 'automation', idPattern: /^automation-m3-[c12]{4}$/, title: 'Module 3 — Assertions & Validation', description: 'Validate interface behaviour and application state.', url: '../automation-lab/module-3/', link: 'Open Module 3' },
+        { type: 'practice', area: 'automation', idPattern: /^automation-m4-[c12]{4}$/, title: 'Module 4 — Negative & Boundary Testing', description: 'Test invalid inputs and boundary conditions.', url: '../automation-lab/module-4/', link: 'Open Module 4' },
+        { type: 'practice', area: 'automation', idPattern: /^automation-m5-[c12]{4}$/, title: 'Module 5 — Debugging Flaky Tests', description: 'Investigate synchronization, selectors and shared state.', url: '../automation-lab/module-5/', link: 'Open Module 5' },
+        { type: 'practice', area: 'automation', idPattern: /^automation-m6-[c12]{4}$/, title: 'Module 6 — API Automation', description: 'Practise status codes, JSON assertions and API errors.', url: '../automation-lab/module-6/', link: 'Open Module 6' },
+        { type: 'practice', area: 'automation', idPattern: /^automation-capstone-v1-[123]{20}$/, title: 'ShopFlow Automation Capstone', description: 'Complete six guided missions and generate a practice report.', url: '../automation-lab/capstone/', link: 'Open ShopFlow Capstone' }
+      ]
     }
   };
 
@@ -52,7 +65,8 @@
       return { sessions: [], status: 'unavailable' };
     }
   }
-  const matches = (s, step) => s.type === step.type && s.area === step.area;
+  const matches = (s, step) => s.type === step.type && s.area === step.area &&
+    (!step.idPattern || (typeof s.id === 'string' && step.idPattern.test(s.id)));
   const countSteps = (path, sessions) => path.steps.filter(step => sessions.some(s => matches(s, step))).length;
   const percent = (score, maxScore) => Math.round(100 * score / maxScore);
   function mostRelevantPath(sessions) {

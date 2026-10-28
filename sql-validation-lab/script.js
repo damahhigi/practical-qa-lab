@@ -659,6 +659,8 @@
     const count = document.getElementById('sqlReportCount');
     const empty = document.getElementById('sqlReportsEmpty');
     const list = document.getElementById('sqlReportsList');
+    const downloadButton = document.getElementById('downloadSqlReports');
+    const downloadStatus = document.getElementById('downloadSqlStatus');
     const inputIds = ['sqlReportCase', 'sqlReportTitle', 'sqlReportQuery', 'sqlReportExpected', 'sqlReportActual'];
     let editId = null;
     let reports = [];
@@ -710,10 +712,67 @@
         parent.appendChild(p);
       }
     }
+    // Export the in-memory saved report records. Never mutate storage or review scores.
+    function downloadSqlReports() {
+      if (!reports.length) {
+        downloadStatus.textContent = 'No saved reports to download.';
+        return;
+      }
+
+      const lines = [
+        'SQL VALIDATION — DEFECT REPORTS',
+        'Practical QA Lab | Guided simulation',
+        'Learner-written findings; not independently verified.',
+        `Exported: ${new Date().toISOString()}`,
+        `Reports: ${reports.length}`,
+        ''
+      ];
+
+      reports.forEach((report, index) => lines.push(
+        `REPORT ${index + 1}: ${report.title}`,
+        `Reference: ${report.id}`,
+        `Investigation case: ${CASE_LABELS[report.caseId]}`,
+        '',
+        'EVIDENCE — SQL QUERY',
+        report.query,
+        '',
+        'EXPECTED RESULT',
+        report.expected,
+        '',
+        'ACTUAL RESULT',
+        report.actual,
+        '',
+        '----------------------------------------',
+        ''
+      ));
+
+      let url;
+      try {
+        url = URL.createObjectURL(new Blob(
+          [lines.join('\n') + '\n'],
+          { type: 'text/plain;charset=utf-8' }
+        ));
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'sql-validation-defect-reports.txt';
+        document.body.appendChild(link);
+        try { link.click(); } finally { link.remove(); }
+        window.setTimeout(() => URL.revokeObjectURL(url), 1000);
+        downloadStatus.textContent = `Download prepared for ${reports.length} report(s).`;
+      } catch (_) {
+        if (url) URL.revokeObjectURL(url);
+        downloadStatus.textContent = 'Download unavailable. Saved reports were not changed.';
+      }
+    }
+
     function render() {
       list.replaceChildren();
       count.textContent = String(reports.length);
       empty.hidden = reports.length > 0;
+      downloadButton.disabled = reports.length === 0;
+      downloadStatus.textContent = reports.length
+        ? `${reports.length} saved report(s) available to download.`
+        : 'Save a report to enable downloads.';
       for (const report of reports) {
         const card = document.createElement('article');
         card.className = 'report-card';
@@ -756,6 +815,7 @@
         list.appendChild(card);
       }
     }
+    downloadButton.addEventListener('click', downloadSqlReports);
     document.getElementById('clearSqlReport').addEventListener('click', () => {
       resetForm();
       status.textContent = 'Report form cleared. Saved reports are unchanged.';

@@ -3,7 +3,7 @@
   "title": "ShopFlow Automation Capstone",
   "version": "0.1.0",
   "mode": "guided-simulation",
-  "status": "under-development",
+  "status": "released",
   "scenario": {
     "application": "ShopFlow",
     "fictional": true,
