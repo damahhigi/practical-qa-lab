@@ -2534,6 +2534,10 @@ li {
   margin-bottom: 30px;
 }
 
+.home-quick-nav > button {
+  grid-column: 1 / -1;
+}
+
 .home-quick-nav a,
 .home-quick-nav button {
   display: flex;
@@ -2573,9 +2577,6 @@ li {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .home-quick-nav > button {
-    grid-column: 1 / -1;
-  }
 }
 
 

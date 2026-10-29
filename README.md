@@ -4,7 +4,7 @@
 
 **Live website:** https://damahhigi.github.io/practical-qa-lab/
 
-**Release:** v1.6 — Connected QA Journey & Portable Evidence (October 2026)
+**Release:** v1.7 — Portfolio & Career Readiness (October 2026)
 
 Practical QA Lab is a free, browser-based QA practice environment featuring interactive scenarios, guided simulations, feedback, and interview preparation. The website is static: no account or backend is required.
 
@@ -52,6 +52,14 @@ The [ShopFlow Capstone](automation-lab/capstone/) combines six missions, seven f
 
 The [main Learning Paths](learning-paths/) now include four routes: Beginner QA, Intermediate QA, Interview Preparation and QA Test Automation. The automation route connects six existing Playwright modules and the ShopFlow Capstone, tracking each of the seven activities independently.
 
+## Portfolio Workspace (v1.7)
+
+The [Portfolio Workspace](portfolio/) gives learners a browser-local inventory of five existing evidence sources: saved test cases, Checkout Bug Hunt reports, API Bug Hunt reports, SQL Validation reports, and My Progress sessions. It also links to the original lab exports.
+
+The Portfolio Builder lets learners choose **individual practice artifacts** (up to 40 per document), enter a title, author name and brief introduction, preview their selection, and download a self-contained HTML portfolio suitable for printing to PDF. Nothing is selected automatically.
+
+**Data and portfolio limitations:** The workspace reads existing browser storage without changing saved records or uploading data. Saved evidence is specific to each browser profile and website origin. The generated document contains only the items learners choose, and is **not** a complete backup of all original lab data. Users should retain the original JSON and text exports separately and review the HTML file before sharing it. All artifacts are clearly described as guided simulations or practice work, **not independently verified production results**.
+
 ## My Progress and learner data
 
 The platform saves supported assessment sessions in browser-local storage (`practicalQaLab.progress.v1`), with recent history, area averages, best scores, suggestions and versioned JSON export/import. Saved-session history is limited to 250 entries.
@@ -67,7 +75,7 @@ There is no account-based synchronization. Storage is specific to a browser prof
 - GitHub Actions for CI and GitHub Pages for hosting
 - Python 3 local HTTP server for development/test runs
 
-The v1.6 regression suite passes **188 Playwright tests**, up from 165 in v1.5; see [the test README](qa-tests/README.md) for setup and run commands.
+The v1.7 regression suite passes **206 Playwright tests**, up from 188 in v1.6; see [the test README](qa-tests/README.md) for setup and run commands.
 
 ```bash
 cd qa-tests
@@ -81,6 +89,10 @@ Targeted automated accessibility and responsive-layout checks are included; they
 ## Resources
 
 The [`resources/`](resources/) folder provides QA test-case, bug-report and interview-preparation templates.
+
+## v1.7 release highlights
+
+v1.7 adds the Portfolio Workspace, five-source saved-evidence inventory, optional selection of individual QA artifacts, and a downloadable HTML practice portfolio with printable PDF support. It also adds homepage navigation, privacy-oriented handling of learner-authored text, mobile/keyboard coverage, and **18 new Playwright regression tests**. Existing v1.6 export tools remain available.
 
 ## v1.6 release highlights
 

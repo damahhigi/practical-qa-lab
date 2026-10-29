@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Review your browser-local Practical QA Lab evidence and find the existing export controls. Read-only, with no account or upload.">
+  <title>Portfolio Workspace | Practical QA Lab</title>
+  <link rel="stylesheet" href="style.css?v=1.7.0">
+  <link rel="stylesheet" href="builder.css?v=1.7.1">
+  <script src="script.js?v=1.7.0" defer></script>
+  <script src="builder.js?v=1.7.1" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to portfolio workspace</a>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="../">PRACTICAL QA PRESS <span>· LAB</span></a>
+      <a class="back-link" href="../">← Back to main lab</a>
+    </div>
+  </header>
+
+  <main id="main" class="container">
+    <section class="hero" aria-labelledby="page-title">
+      <p class="eyebrow">V1.7 · PORTFOLIO & CAREER READINESS</p>
+      <h1 id="page-title">Your QA work, in one place.</h1>
+      <p class="hero-intro">Find the practice artifacts you have already created, see what is saved in this browser, and open each lab's existing export tools.</p>
+      <div class="hero-bottom">
+        <p class="privacy-note">Read-only overview · Browser-local data · No uploads or account</p>
+        <button class="refresh-button" id="refreshEvidence" type="button">Refresh counts</button>
+      </div>
+    </section>
+
+    <section class="intro" aria-labelledby="inventory-heading">
+      <div>
+        <p class="eyebrow">YOUR EVIDENCE</p>
+        <h2 id="inventory-heading">Saved-work inventory</h2>
+        <p>Counts reflect only this exact website origin and browser. They are not certifications or proof of production testing.</p>
+      </div>
+      <p id="inventoryStatus" class="inventory-status" role="status" aria-live="polite">Checking browser storage…</p>
+    </section>
+
+    <div class="evidence-grid" aria-label="Saved QA evidence sources">
+      <article class="evidence-card" aria-labelledby="caseHeading">
+        <div class="card-heading"><span class="card-index" aria-hidden="true">01</span><span class="card-category">Test design</span></div>
+        <h3 id="caseHeading">Test Case Writing</h3>
+        <p class="count-line"><strong id="caseCount" aria-label="Saved test cases">—</strong> <span>saved test cases</span></p>
+        <p>Structured cases with requirements, steps, test data and expected results.</p>
+        <p class="source-note" id="caseNote">Checking saved drafts…</p>
+        <a class="card-link" href="../test-case-lab/">Open Test Case Lab to export JSON →</a>
+      </article>
+
+      <article class="evidence-card" aria-labelledby="checkoutHeading">
+        <div class="card-heading"><span class="card-index" aria-hidden="true">02</span><span class="card-category">Web defect analysis</span></div>
+        <h3 id="checkoutHeading">Checkout Bug Hunt</h3>
+        <p class="count-line"><strong id="checkoutCount" aria-label="Saved Checkout bug reports">—</strong> <span>saved reports</span></p>
+        <p>Findings from the deliberately faulty Northstar Shop checkout simulation.</p>
+        <p class="source-note" id="checkoutNote">Checking saved reports…</p>
+        <a class="card-link" href="../checkout-bug-hunt/">Open Checkout Bug Hunt to export TXT →</a>
+      </article>
+
+      <article class="evidence-card" aria-labelledby="apiHeading">
+        <div class="card-heading"><span class="card-index" aria-hidden="true">03</span><span class="card-category">API defect analysis</span></div>
+        <h3 id="apiHeading">API Bug Hunt</h3>
+        <p class="count-line"><strong id="apiCount" aria-label="Saved API bug reports">—</strong> <span>saved reports</span></p>
+        <p>Documented findings from the fictional REST create, update and delete scenarios.</p>
+        <p class="source-note" id="apiNote">Checking saved reports…</p>
+        <a class="card-link" href="../api-bug-hunt/">Open API Bug Hunt to export TXT →</a>
+      </article>
+
+      <article class="evidence-card" aria-labelledby="sqlHeading">
+        <div class="card-heading"><span class="card-index" aria-hidden="true">04</span><span class="card-category">Data quality</span></div>
+        <h3 id="sqlHeading">SQL Validation</h3>
+        <p class="count-line"><strong id="sqlCount" aria-label="Saved SQL defect reports">—</strong> <span>saved reports</span></p>
+        <p>SQL queries and observed results from simulated data-quality investigations.</p>
+        <p class="source-note" id="sqlNote">Checking saved reports…</p>
+        <a class="card-link" href="../sql-validation-lab/">Open SQL Validation to export TXT →</a>
+      </article>
+
+      <article class="evidence-card progress-card" aria-labelledby="progressHeading">
+        <div class="card-heading"><span class="card-index" aria-hidden="true">05</span><span class="card-category">Practice history</span></div>
+        <h3 id="progressHeading">My Progress</h3>
+        <p class="count-line"><strong id="progressCount" aria-label="Saved practice sessions">—</strong> <span>saved sessions</span></p>
+        <p>Scores and completed practice sessions. This is not a backup of authored reports or test cases.</p>
+        <p class="source-note" id="progressNote">Checking saved history…</p>
+        <a class="card-link" href="../">Open homepage → My Progress to export JSON →</a>
+      </article>
+    </div>
+
+    <section class="builder" id="portfolioBuilder" aria-labelledby="builderHeading">
+      <div class="builder-top">
+        <div>
+          <p class="eyebrow">BUILD YOUR PRACTICE PORTFOLIO</p>
+          <h2 id="builderHeading">Choose the evidence you want to share</h2>
+        </div>
+        <strong id="selectionCount" class="builder-count" aria-live="polite">0 selected</strong>
+      </div>
+      <p class="builder-intro">Select individual saved items from this browser, preview a professionally formatted document, then download it as HTML. Open the downloaded file and use Print → Save as PDF for a PDF copy. No evidence is selected or shared automatically.</p>
+      <div class="builder-fields">
+        <label>Portfolio title <input id="portfolioTitle" type="text" maxlength="120" value="QA Practice Portfolio" autocomplete="off"></label>
+        <label>Prepared by (optional) <input id="portfolioAuthor" type="text" maxlength="80" placeholder="QA Learner" autocomplete="off"></label>
+        <label class="wide">Short introduction (optional) <textarea id="portfolioSummary" maxlength="600" placeholder="Briefly describe the QA practices demonstrated in your selected work."></textarea></label>
+      </div>
+      <div id="portfolioChoices" class="builder-choices" aria-label="Select saved QA artifacts"></div>
+      <div class="builder-footer">
+        <button type="button" id="previewPortfolio" disabled>Preview selected evidence</button>
+        <p id="builderStatus" class="builder-status" role="status" aria-live="polite">Checking for saved evidence…</p>
+      </div>
+      <div id="portfolioPreview" class="portfolio-preview" hidden>
+        <h3>Document preview</h3>
+        <iframe id="portfolioPreviewFrame" sandbox="" title="Practice portfolio document preview"></iframe>
+        <div class="builder-footer">
+          <button type="button" class="secondary" id="downloadPortfolio" disabled>Download portfolio (.html)</button>
+        </div>
+        <p>Open the HTML file in Chrome, then select Print → Save as PDF if you'd like a printable PDF.</p>
+      </div>
+      <p class="builder-disclaimer">All entries are learner-written guided simulations and practice scores, not verified production incidents or formal certifications. Your selections and portfolio details stay in this tab; browser-saved evidence is never modified or uploaded. Review the file before sharing it.</p>
+    </section>
+
+    <section class="guidance" aria-labelledby="prepare-heading">
+      <p class="eyebrow">BEFORE BUILDING YOUR PORTFOLIO</p>
+      <h2 id="prepare-heading">Keep the evidence credible and portable</h2>
+      <ol>
+        <li>Export your authored test cases and each set of saved bug reports using the links above.</li>
+        <li>Download a separate My Progress backup for your completed-session history.</li>
+        <li>Label fictional scenarios as <strong>guided simulation</strong> or <strong>practice project</strong> when sharing them with employers.</li>
+      </ol>
+      <p class="footnote"><strong>Storage matters:</strong> <code>localhost:8002</code>, <code>127.0.0.1:8001</code> and <code>damahhigi.github.io</code> use separate browser-storage origins. An empty inventory here does not mean your data was deleted elsewhere. This page never writes to localStorage, including when you refresh counts.</p>
+      <p class="footnote"><strong>Portfolio builder:</strong> Select saved evidence above and generate a local HTML document; the original source exports remain available in the labs.</p>
+    </section>
+  </main>
+  <footer class="site-footer">Practical QA Lab · Portfolio practice uses simulated learning evidence.</footer>
+</body>
+</html>

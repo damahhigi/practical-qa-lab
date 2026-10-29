@@ -27,7 +27,17 @@ npm run test:ui
 npm run test:report
 ```
 
-You can also use `npm test` for the default suite. The v1.6 suite passes **188 Playwright tests** (up from 165 in v1.5); the count may increase as coverage grows.
+You can also use `npm test` for the default suite. The v1.7 suite passes **206 Playwright tests** (up from 188 in v1.6 and 165 in v1.5); the count may increase as coverage grows.
+
+### v1.7 Portfolio regression tests
+
+Run the two v1.7 Portfolio test files separately if needed:
+
+```bash
+npx playwright test tests/portfolio-workspace-v17.spec.ts tests/portfolio-builder-v17.spec.ts --reporter=line
+```
+
+These 18 tests cover the Portfolio Workspace inventory, saved-evidence discovery, independent browser-storage sources, selection, downloadable HTML, safe handling of learner-authored text, stale-data protection, keyboard interaction and mobile layout.
 
 ## Local test server
 
