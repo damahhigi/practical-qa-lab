@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Practice bias, fairness and multilingual AI testing through six fictional paired evaluations and evidence-led quality decisions.">
+  <title>Bias, Fairness &amp; Multilingual Testing | AI Testing Lab | Practical QA Lab</title>
+  <link rel="stylesheet" href="./style.css">
+  <script src="./script.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to Module 5</a>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="../../index.html" aria-label="Practical QA Lab home"><span class="brand-mark" aria-hidden="true">✓</span><span><strong>Practical QA Lab</strong><small>Learn by testing</small></span></a>
+      <nav aria-label="AI Testing navigation">
+        <a href="../module-4/">← Module 4</a>
+        <a href="../module-6/">Module 6 →</a>
+        <a href="../module-3/">Module 3</a>
+        <a href="../">Module 1</a>
+        <a href="../../learning-paths/">Learning Paths</a>
+        <a href="../../portfolio/">Portfolio Workspace</a>
+      </nav>
+    </div>
+  </header>
+  <main id="main" class="container">
+    <section class="hero" aria-labelledby="pageTitle">
+      <div>
+        <p class="eyebrow">V1.8 · AI TESTING · MODULE 5</p>
+        <h1 id="pageTitle">Bias, Fairness &amp; <span>Multilingual AI Testing</span></h1>
+        <p class="lede">Do equivalent requests receive <strong>equally accurate, usable and policy-compliant</strong> treatment? Investigate six fictional Assist AI comparisons across languages, customer profiles and accessibility needs.</p>
+        <div class="pills"><span>6 fairness investigations</span><span>100 points</span><span>Evidence over assumptions</span></div>
+      </div>
+      <aside class="brief" aria-labelledby="missionTitle">
+        <span class="tiny">YOUR MISSION</span>
+        <h2 id="missionTitle">Compare like with like</h2>
+        <p>Review the approved rule, what differs between the prompts or user contexts, and the observed AI output. Decide whether the difference is a defect, justified or not yet supported by sufficient evidence.</p>
+        <p class="quiet">All profiles, responses and evaluation numbers are fictional learning fixtures. No live AI calls, private data submissions or localStorage writes occur.</p>
+      </aside>
+    </section>
+
+    <section class="learning" aria-labelledby="methodTitle">
+      <div class="heading">
+        <p class="eyebrow">01 · FAIRNESS TESTING METHOD</p>
+        <h2 id="methodTitle">Measure differences, then examine why</h2>
+        <p>A different answer is not necessarily unfair. Match relevant conditions, inspect observed outcomes, and avoid claiming causation from a single pair or an unbalanced sample.</p>
+      </div>
+      <div class="method-grid">
+        <article><span>01</span><h3>Define the approved result</h3><p>Identify the factual answer, policy, eligibility rule or accessible route that should apply.</p></article>
+        <article><span>02</span><h3>Match meaningful variables</h3><p>Hold intent, entitlement and task difficulty constant when comparing languages or profiles.</p></article>
+        <article><span>03</span><h3>Assess outcomes and uncertainty</h3><p>Record accuracy, sample size, access barriers, context differences and possible confounders.</p></article>
+        <article><span>04</span><h3>Propose a repeatable evaluation</h3><p>Use paired prompts, balanced datasets, stratified metrics and meaningful acceptance criteria.</p></article>
+      </div>
+      <div class="rubric" aria-label="Assessment scoring rubric">
+        <article><strong>Primary finding · roughly 60%</strong><p>Identify parity, language inconsistency, potential disparity, justified context, accessibility barriers or an evaluation-data problem.</p></article>
+        <article><strong>Comparison verdict · roughly 20%</strong><p>Decide whether outcomes are equivalent, different without justification, contextually justified or limited by evidence.</p></article>
+        <article><strong>Severity · roughly 20%</strong><p>Rate the observed user impact. Written evidence and proposed retests are not automatically scored.</p></article>
+      </div>
+      <p class="method-note"><strong>Learning note:</strong> These are deterministic, fictional comparisons—not proof of system-wide bias. Responsible evaluation uses consented, privacy-preserving datasets, language review by qualified speakers, matched test sets, confidence intervals and appropriately designed accessibility checks. <a href="https://www.nist.gov/itl/ai-risk-management-framework" target="_blank" rel="noopener noreferrer">NIST AI Risk Management Framework</a> provides broader risk-management context.</p>
+    </section>
+
+    <section class="practice" aria-labelledby="practiceTitle">
+      <div class="practice-header">
+        <div>
+          <p class="eyebrow">02 · INTERACTIVE FAIRNESS INVESTIGATION</p>
+          <h2 id="practiceTitle">Assist AI — Fairness Review</h2>
+          <p>Select the primary finding, comparison verdict and impact for each case. Then compare your reasoning with reference feedback.</p>
+        </div>
+        <div class="count" role="status" aria-live="polite"><strong id="completedCount" class="form-counter">0/6</strong><span>cases assessed</span></div>
+      </div>
+      <form id="assessmentForm" novalidate>
+        <div id="caseList" class="cases"></div>
+        <div class="toolbar">
+          <button type="submit" id="reviewButton" class="button-primary">Review my assessment</button>
+          <button type="button" id="resetButton" class="button-secondary">Clear selections</button>
+        </div>
+        <p class="status-text" id="formStatus" role="status" aria-live="polite">Compare the approved rule and matched conditions before judging any difference.</p>
+      </form>
+    </section>
+
+    <section id="results" class="results" aria-labelledby="resultsTitle" tabindex="-1" hidden>
+      <p class="eyebrow">03 · REVIEW AND EVALUATE</p>
+      <h2 id="resultsTitle">Reference feedback</h2>
+      <div class="result-summary"><strong id="resultScore">—</strong><div><p id="resultIntro">Results appear after every case is assessed.</p><p class="quiet">These guided scenario scores are not a live-model fairness audit or evidence of population-level outcomes.</p></div></div>
+      <div id="feedbackList" class="feedback-list"></div>
+      <div class="toolbar">
+        <button class="button-primary" type="button" id="downloadButton">Download QA findings (.txt)</button>
+        <button class="button-secondary" type="button" id="reviseButton">Revise answers</button>
+      </div>
+      <p class="status-text" id="downloadStatus" role="status" aria-live="polite"></p>
+    </section>
+
+    <section class="next" aria-labelledby="nextTitle">
+      <p class="eyebrow">CONTINUE YOUR LEARNING</p>
+      <h2 id="nextTitle">From security boundaries to fair treatment</h2>
+      <p>Module 4 explored prompt injection, privacy and unauthorized actions. Module 5 compares equivalent user outcomes and examines sampling limitations. Next we will explore AI regression datasets, rubrics and evaluation metrics.</p>
+      <p><a href="../module-4/">← Return to Module 4</a> · <a href="../module-6/">Start Module 6 →</a></p>
+    </section>
+  </main>
+  <footer><div class="container"><span>Practical QA Lab · Fictional AI Testing simulations</span><a href="../../index.html">Back to main lab</a></div></footer>
+</body>
+</html>

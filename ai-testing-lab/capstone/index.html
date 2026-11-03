@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Complete a fictional AI product release investigation covering instruction following, groundedness, security, language quality, dataset reliability and safe tool use.">
+  <title>AI Testing Capstone | Practical QA Lab</title>
+  <link rel="stylesheet" href="./style.css">
+  <script src="./script.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to AI Testing Capstone</a>
+  <header class="site-header">
+    <div class="container topbar">
+      <a class="brand" href="../../index.html" aria-label="Practical QA Lab home">
+        <span class="brand-icon" aria-hidden="true">✓</span>
+        <span><strong>Practical QA Lab</strong><small>Learn by testing</small></span>
+      </a>
+      <nav aria-label="AI Testing navigation">
+        <a href="../module-6/">← Module 6</a>
+        <a href="../">Module 1</a>
+        <a href="../../portfolio/">Portfolio Workspace</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="container">
+    <section class="hero">
+      <div>
+        <p class="eyebrow">V1.8 · AI TESTING · FINAL CAPSTONE</p>
+        <h1>Assist AI <span>Release Assessment</span></h1>
+        <p class="lede">You are the QA lead for a fictional customer-support AI. Review six evidence packets, calculate risk metrics, and make a justified <strong>Go / No-Go</strong> recommendation.</p>
+        <div class="pills" aria-label="Capstone overview">
+          <span>6 investigations</span><span>100 points</span><span>7 release acceptance criteria</span><span>Downloadable QA report</span>
+        </div>
+      </div>
+      <aside class="brief">
+        <span class="micro">YOUR ASSIGNMENT</span>
+        <h2>Launch candidate RC-2</h2>
+        <p><strong>Product:</strong> Assist AI, a support assistant that answers customer questions and may request approved account actions.</p>
+        <p><strong>Task:</strong> Judge only the supplied fictional evidence. Identify confirmed failures, uncertain measurements, and release blockers.</p>
+        <p class="quiet">No live AI system, paid API, customer data, or browser storage is involved. This is guided practice—not an independent safety certification.</p>
+      </aside>
+    </section>
+
+    <section class="panel context" aria-labelledby="briefTitle">
+      <p class="eyebrow">01 · RELEASE BRIEF</p>
+      <h2 id="briefTitle">What must be true before launch?</h2>
+      <p>These acceptance criteria are specific to this fictional release, not universal standards. A high average pass rate cannot override an explicit zero-tolerance failure.</p>
+      <div class="criteria" role="list">
+        <div role="listitem"><strong>AC-01</strong><span>Instruction-following accuracy at least 95% on matched prompts.</span></div>
+        <div role="listitem"><strong>AC-02</strong><span>Evidence-grounded answers at least 95%; no fabricated policy citations.</span></div>
+        <div role="listitem"><strong>AC-03</strong><span>Zero confirmed cross-account private-data disclosures.</span></div>
+        <div role="listitem"><strong>AC-04</strong><span>English and Kiswahili accuracy each at least 90%; gap no more than 10 percentage points.</span></div>
+        <div role="listitem"><strong>AC-05</strong><span>Reviewer agreement κ at least 0.70 before labels are trusted for release decisions.</span></div>
+        <div role="listitem"><strong>AC-06</strong><span>Zero unauthorized account or payment actions by AI tools.</span></div>
+        <div role="listitem"><strong>AC-07</strong><span>Any failed mandatory gate requires No-Go; investigate uncertain evaluation data before retesting.</span></div>
+      </div>
+      <div class="guidance">
+        <strong>Scoring:</strong> Each of six investigations earns points for the finding, severity, required next action and correct metric. The final release verdict earns 10 additional points. Written notes are required as practice evidence, but their quality is <em>not</em> automatically scored.
+      </div>
+    </section>
+
+    <section class="panel workspace" aria-labelledby="workspaceTitle">
+      <div class="section-head">
+        <div><p class="eyebrow">02 · INVESTIGATION WORKSPACE</p><h2 id="workspaceTitle">Six release evidence packets</h2><p>Read each acceptance criterion and the observed results before making a decision.</p></div>
+        <div class="counter" role="status" aria-live="polite"><strong id="completedCount">0/6</strong><span>missions ready</span></div>
+      </div>
+      <form id="assessmentForm" novalidate>
+        <div id="missionList" class="mission-list"></div>
+        <section class="verdict" aria-labelledby="verdictTitle">
+          <p class="eyebrow">03 · FINAL RELEASE DECISION</p>
+          <h3 id="verdictTitle">Would you ship RC-2?</h3>
+          <p>Assess the complete evidence record—not just the overall pass percentage.</p>
+          <div class="field">
+            <label for="releaseVerdict">Overall release recommendation <span class="required">*</span></label>
+            <select id="releaseVerdict" required>
+              <option value="">Choose a release recommendation…</option>
+              <option value="go">Go — all mandatory gates met</option>
+              <option value="conditional">Conditional Go — launch with open findings</option>
+              <option value="no-go">No-Go — block release and retest</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="releaseRationale">Executive QA rationale <span class="required">*</span></label>
+            <textarea id="releaseRationale" rows="4" maxlength="1800" placeholder="Identify the failed gates and observed user/business impact (minimum 25 characters)." required></textarea>
+            <p class="hint">Your rationale is included in the report but not semantically auto-graded.</p>
+          </div>
+          <div class="field">
+            <label for="retestPlan">Remediation and evaluation retest plan <span class="required">*</span></label>
+            <textarea id="retestPlan" rows="4" maxlength="1800" placeholder="Specify fixes, the evaluation set and sampling strategy, minimum pass criteria, owners, and how to recheck critical failures (minimum 30 characters)." required></textarea>
+            <p class="hint">Include measurable re-entry criteria; this plan is exported as written, not AI-graded.</p>
+          </div>
+        </section>
+        <div class="actions">
+          <button type="submit" class="button primary" id="reviewButton">Review release assessment</button>
+          <button type="button" class="button secondary" id="resetButton">Clear all answers</button>
+        </div>
+        <p id="formStatus" class="status" role="status" aria-live="polite">Complete all six investigation packets and the final release recommendation to unlock reference feedback.</p>
+      </form>
+    </section>
+
+    <section class="panel results" id="results" aria-labelledby="resultsTitle" tabindex="-1" hidden>
+      <p class="eyebrow">04 · EVALUATION FEEDBACK</p>
+      <h2 id="resultsTitle">Your release review</h2>
+      <div class="score-card"><strong id="resultScore">—</strong><div><p id="resultSummary"></p><p class="quiet">This educational score measures alignment with predefined fictional reference answers, not actual AI quality.</p></div></div>
+      <div id="feedbackList" class="feedback-list"></div>
+      <div class="verdict-feedback" id="verdictFeedback"></div>
+      <div class="actions">
+        <button type="button" id="downloadButton" class="button primary">Download QA release report (.txt)</button>
+        <button type="button" id="reviseButton" class="button secondary">Revise assessment</button>
+      </div>
+      <p id="downloadStatus" class="status" role="status" aria-live="polite"></p>
+    </section>
+
+    <section class="panel next" aria-labelledby="nextTitle">
+      <p class="eyebrow">CONTINUE YOUR LEARNING</p>
+      <h2 id="nextTitle">From individual evaluations to release readiness</h2>
+      <p>The capstone combines prompt testing, RAG groundedness, AI security, subgroup quality, reviewer agreement and release gating. Use the downloaded report as <strong>clearly labeled practice evidence</strong> in your Portfolio Workspace.</p>
+      <p><a href="../module-6/">← Return to Module 6</a> · <a href="../../portfolio/">Open Portfolio Workspace</a></p>
+    </section>
+  </main>
+  <footer><div class="container"><span>Practical QA Lab · Simulated AI Testing Capstone</span><a href="../../index.html">Back to main lab</a></div></footer>
+</body>
+</html>

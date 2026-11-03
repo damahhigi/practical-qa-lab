@@ -63,7 +63,7 @@ test.describe('v1.7 Portfolio Workspace — navigation and read-only inventory',
     const portfolioLink = navigation.getByRole('link', { name: 'Portfolio Workspace' });
     await expect(portfolioLink).toBeVisible();
     await expect(portfolioLink).toHaveAttribute('href', 'portfolio/');
-    await expect(navigation.locator('a')).toHaveCount(6);
+    await expect(navigation.locator('a')).toHaveCount(7);
     await portfolioLink.click();
     await expect(page).toHaveURL(/\/portfolio\/$/);
     await expect(page.getByRole('heading', { name: 'Your QA work, in one place.' })).toBeVisible();

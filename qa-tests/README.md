@@ -27,7 +27,17 @@ npm run test:ui
 npm run test:report
 ```
 
-You can also use `npm test` for the default suite. The v1.7 suite passes **206 Playwright tests** (up from 188 in v1.6 and 165 in v1.5); the count may increase as coverage grows.
+You can also use `npm test` for the default suite. The v1.8 suite passes **296 Playwright tests** (up from 206 in v1.7); the count may increase as coverage grows.
+
+### v1.8 AI Testing regression tests
+
+Run the AI Testing test files together from `qa-tests/`:
+
+```bash
+npx playwright test tests/ai-testing-*.spec.ts --reporter=line
+```
+
+Coverage includes the six modules, Capstone, homepage entry point, forward/back navigation, evaluation scoring, evidence downloads, safe output handling and selected keyboard/mobile layouts. The v1.8 local release baseline is **296 passing tests** across the full suite.
 
 ### v1.7 Portfolio regression tests
 

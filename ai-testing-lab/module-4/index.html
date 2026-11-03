@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Practice testing prompt injection, privacy boundaries and AI tool permissions using six safe fictional scenarios.">
+  <title>AI Safety, Prompt Injection &amp; Privacy | AI Testing Lab | Practical QA Lab</title>
+  <link rel="stylesheet" href="./style.css">
+  <script src="./script.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to Module 4</a>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="../../index.html" aria-label="Practical QA Lab home"><span class="brand-mark" aria-hidden="true">✓</span><span><strong>Practical QA Lab</strong><small>Learn by testing</small></span></a>
+      <nav aria-label="AI Testing navigation">
+        <a href="../module-3/">← Module 3</a>
+        <a href="../module-5/">Module 5 →</a>
+        <a href="../module-2/">Module 2</a>
+        <a href="../">Module 1</a>
+        <a href="../../learning-paths/">Learning Paths</a>
+        <a href="../../portfolio/">Portfolio Workspace</a>
+      </nav>
+    </div>
+  </header>
+  <main id="main" class="container">
+    <section class="hero" aria-labelledby="pageTitle">
+      <div>
+        <p class="eyebrow">V1.8 · AI TESTING · MODULE 4</p>
+        <h1 id="pageTitle">AI Safety, <span>Prompt Injection &amp; Privacy</span></h1>
+        <p class="lede">Can an assistant distinguish <strong>trusted instructions</strong> from untrusted content—and protect private data and restricted actions? Examine six fictional Assist AI traces to decide whether a safety boundary held or failed.</p>
+        <div class="pills"><span>6 security investigations</span><span>100 points</span><span>Trust-boundary reasoning</span></div>
+      </div>
+      <aside class="brief" aria-labelledby="missionTitle">
+        <span class="tiny">YOUR MISSION</span>
+        <h2 id="missionTitle">Test the boundary, not just the wording</h2>
+        <p>Compare the expected control, an untrusted input, and the observed assistant or application behavior. Identify the primary finding and assess the impact.</p>
+        <p class="quiet">All names, accounts, tool calls and AI responses are fictional test fixtures. There are no real secrets, API requests, external actions or stored learner submissions.</p>
+      </aside>
+    </section>
+
+    <section class="learning" aria-labelledby="methodTitle">
+      <div class="heading">
+        <p class="eyebrow">01 · SECURITY TESTING METHOD</p>
+        <h2 id="methodTitle">Trace who can instruct, see and act</h2>
+        <p>An attack attempt is not automatically a defect. A defect appears when the assistant or surrounding application actually crosses a defined security boundary.</p>
+      </div>
+      <div class="method-grid">
+        <article><span>01</span><h3>Define the trusted rule</h3><p>Identify account ownership, allowed tasks, tool permissions and output-encoding requirements.</p></article>
+        <article><span>02</span><h3>Identify the lower-trust input</h3><p>Distinguish the user's request from retrieved documents and tool outputs that may contain hostile instructions.</p></article>
+        <article><span>03</span><h3>Inspect the observed trace</h3><p>Use the actual response, action log or rendering behavior; do not infer success from an attack string alone.</p></article>
+        <article><span>04</span><h3>Write a measurable retest</h3><p>Specify the blocked disclosure, approval check or safe rendering behavior that would constitute a pass.</p></article>
+      </div>
+      <div class="rubric" aria-label="Assessment scoring rubric">
+        <article><strong>Primary finding · roughly 60%</strong><p>Identify the most important outcome: safe defense, injection, disclosure, unauthorized action or unsafe output handling.</p></article>
+        <article><strong>Boundary verdict · roughly 20%</strong><p>Determine whether the trusted boundary was respected or crossed.</p></article>
+        <article><strong>Severity · roughly 20%</strong><p>Choose an illustrative impact rating. Written evidence and retest steps are not automatically scored.</p></article>
+      </div>
+      <p class="method-note"><strong>Learning note:</strong> These scenarios draw on common GenAI application risks including prompt injection, sensitive-information disclosure, excessive agency and improper output handling. In real QA, also verify application-level authorization and audit logs: relying on a model's refusal alone is not a security control. <a href="https://genai.owasp.org/initiatives/top-10-for-llm-and-genai/" target="_blank" rel="noopener noreferrer">Explore the OWASP GenAI risk overview</a>.</p>
+    </section>
+
+    <section class="practice" aria-labelledby="practiceTitle">
+      <div class="practice-header">
+        <div>
+          <p class="eyebrow">02 · INTERACTIVE SECURITY INVESTIGATION</p>
+          <h2 id="practiceTitle">Assist AI — Trust Boundary Review</h2>
+          <p>Complete the finding, boundary verdict and severity for each case. Then request reference feedback.</p>
+        </div>
+        <div class="count" role="status" aria-live="polite"><strong id="completedCount" class="form-counter">0/6</strong><span>cases assessed</span></div>
+      </div>
+      <form id="assessmentForm" novalidate>
+        <div id="caseList" class="cases"></div>
+        <div class="toolbar">
+          <button type="submit" id="reviewButton" class="button-primary">Review my assessment</button>
+          <button type="button" id="resetButton" class="button-secondary">Clear selections</button>
+        </div>
+        <p class="status-text" id="formStatus" role="status" aria-live="polite">Read the trusted rule before judging the observed behavior.</p>
+      </form>
+    </section>
+
+    <section id="results" class="results" aria-labelledby="resultsTitle" tabindex="-1" hidden>
+      <p class="eyebrow">03 · REVIEW AND RETEST</p>
+      <h2 id="resultsTitle">Reference feedback</h2>
+      <div class="result-summary"><strong id="resultScore">—</strong><div><p id="resultIntro">Results appear after every case is assessed.</p><p class="quiet">These are guided scenario scores, not a security certification or a live-model assessment.</p></div></div>
+      <div id="feedbackList" class="feedback-list"></div>
+      <div class="toolbar">
+        <button class="button-primary" type="button" id="downloadButton">Download QA findings (.txt)</button>
+        <button class="button-secondary" type="button" id="reviseButton">Revise answers</button>
+      </div>
+      <p class="status-text" id="downloadStatus" role="status" aria-live="polite"></p>
+    </section>
+
+    <section class="next" aria-labelledby="nextTitle">
+      <p class="eyebrow">CONTINUE YOUR LEARNING</p>
+      <h2 id="nextTitle">From grounding to security boundaries</h2>
+      <p>Module 3 tested source-grounded answers. Module 4 tests instruction hierarchy, authorization, privacy, tool permissions and downstream rendering. Next we'll examine bias, fairness and multilingual evaluation.</p>
+      <p><a href="../module-3/">← Return to Module 3</a> · <a href="../module-5/">Start Module 5 →</a></p>
+    </section>
+  </main>
+  <footer><div class="container"><span>Practical QA Lab · Fictional AI Testing simulations</span><a href="../../index.html">Back to main lab</a></div></footer>
+</body>
+</html>

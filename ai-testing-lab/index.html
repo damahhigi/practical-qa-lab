@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Learn to evaluate simulated AI assistant responses for accuracy, privacy, instruction handling, safety and fairness in Practical QA Lab.">
+  <title>AI Testing Lab | Practical QA Lab</title>
+  <link rel="stylesheet" href="./style.css">
+  <script src="./script.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to AI testing exercises</a>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="../index.html" aria-label="Practical QA Lab home"><span class="brand-mark" aria-hidden="true">✓</span><span><strong>Practical QA Lab</strong><small>Learn by testing</small></span></a>
+      <nav aria-label="Lab navigation"><a href="../index.html">← Main lab</a><a href="../learning-paths/">Learning Paths</a><a href="../portfolio/">Portfolio Workspace</a><a href="./module-2/">Module 2 →</a></nav>
+    </div>
+  </header>
+  <main id="main" class="container">
+    <section class="hero" aria-labelledby="pageTitle">
+      <div>
+        <p class="eyebrow">V1.8 PILOT · AI TESTING · MODULE 1</p>
+        <h1 id="pageTitle">Test the answer.<br><span>Trust the evidence.</span></h1>
+        <p class="lede">You are the QA analyst for <strong>Assist AI</strong>, a fictional shopping-support AI. Decide whether each output meets its requirements, identify defects and document evidence—just as you would in an AI product evaluation.</p>
+        <div class="pills"><span>6 scenarios</span><span>100 points</span><span>Evidence-driven review</span></div>
+      </div>
+      <aside class="brief"><span class="tiny">YOUR MISSION</span><h2>Review six AI responses</h2><p>Compare the response with the trusted requirement. Select an outcome and severity for each case. Add concise evidence, then review the reference assessments.</p><p class="quiet">Training only. All outputs are prewritten simulation fixtures—not responses from a live AI model. Your answers stay in this browser tab unless you download them.</p></aside>
+    </section>
+    <section class="learning" aria-labelledby="methodTitle">
+      <div class="heading"><p class="eyebrow">01 · TESTING METHOD</p><h2 id="methodTitle">How to evaluate an AI answer</h2><p>Don't judge an answer only by how confident or polished it sounds. Test it against a clear requirement and reliable evidence.</p></div>
+      <div class="method-grid"><article><span>01</span><h3>Define the oracle</h3><p>Read the approved policy, requirement or expected behavior first.</p></article><article><span>02</span><h3>Inspect the output</h3><p>Compare each claim and action with its trusted reference.</p></article><article><span>03</span><h3>Classify the failure</h3><p>Consider inaccurate claims, privacy, injection, unauthorized actions and fairness.</p></article><article><span>04</span><h3>Record evidence</h3><p>Describe the mismatch and its potential impact; repeat runs for real nondeterministic models.</p></article></div>
+      <p class="method-note"><strong>Scoring:</strong> classification and severity are scored against the scenario's illustrative reference assessment. Written evidence is shown in your downloaded report but is not automatically graded. Severity is contextual, not an absolute universal answer.</p>
+    </section>
+    <section class="practice" aria-labelledby="practiceTitle">
+      <div class="practice-header"><div><p class="eyebrow">02 · INTERACTIVE INVESTIGATION</p><h2 id="practiceTitle">Assist AI Review</h2><p>Work through every case before asking for feedback.</p></div><div class="count" role="status" aria-live="polite"><strong id="completedCount">0/6</strong><span>cases assessed</span></div></div>
+      <form id="assessmentForm" novalidate>
+        <div id="caseList" class="cases"></div>
+        <div class="toolbar"><button class="button-primary" type="submit" id="reviewButton">Review my assessment</button><button class="button-secondary" type="button" id="resetButton">Clear selections</button></div>
+        <p id="formStatus" class="status-text" role="status" aria-live="polite">Choose a finding and severity for each case.</p>
+      </form>
+    </section>
+    <section class="results" id="results" aria-labelledby="resultsTitle" hidden tabindex="-1"><p class="eyebrow">03 · YOUR REVIEW</p><h2 id="resultsTitle">Assessment feedback</h2><div class="result-summary"><strong id="resultScore">—</strong><div><p id="resultIntro">Review results appear here.</p><p class="quiet">Scores are for guided practice and do not certify real-world AI system safety.</p></div></div><div id="feedbackList" class="feedback-list"></div><div class="toolbar"><button type="button" id="downloadButton" class="button-primary">Download practice findings (.txt)</button><button type="button" id="reviseButton" class="button-secondary">Revise my answers</button></div><p id="downloadStatus" role="status" aria-live="polite" class="status-text"></p></section>
+    <section class="next" aria-labelledby="nextTitle">
+      <p class="eyebrow">CONTINUE YOUR LEARNING · MODULE 2</p>
+      <h2 id="nextTitle">Prompt &amp; Response Testing</h2>
+      <p>Module 1 introduced evaluating individual AI responses. In Module 2, compare paired prompts and outputs, identify inconsistent behavior, and design follow-up tests. More AI Testing modules will follow.</p>
+      <p><a href="./module-2/">Start Module 2 →</a></p>
+    </section>
+  </main>
+  <footer><div class="container"><span>Practical QA Lab · Guided simulation</span><a href="../index.html">Back to main lab</a></div></footer>
+</body>
+</html>

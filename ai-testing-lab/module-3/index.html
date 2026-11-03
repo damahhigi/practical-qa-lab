@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Practice evaluating RAG answers against source records, retrieved excerpts and citation evidence in six fictional AI testing cases.">
+  <title>Hallucinations &amp; RAG Evaluation | AI Testing Lab | Practical QA Lab</title>
+  <link rel="stylesheet" href="./style.css">
+  <script src="./script.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to Module 3</a>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="../../index.html" aria-label="Practical QA Lab home"><span class="brand-mark" aria-hidden="true">✓</span><span><strong>Practical QA Lab</strong><small>Learn by testing</small></span></a>
+      <nav aria-label="AI Testing navigation"><a href="../module-2/">← Module 2</a><a href="../module-4/">Module 4 →</a><a href="../">Module 1</a><a href="../../learning-paths/">Learning Paths</a><a href="../../portfolio/">Portfolio Workspace</a></nav>
+    </div>
+  </header>
+  <main id="main" class="container">
+    <section class="hero" aria-labelledby="pageTitle">
+      <div>
+        <p class="eyebrow">V1.8 · AI TESTING · MODULE 3</p>
+        <h1 id="pageTitle">Hallucinations &amp; <span>RAG Evaluation</span></h1>
+        <p class="lede">Where did the answer go wrong: <strong>retrieval, generation, conflicting sources or neither?</strong> Audit six fictional responses from Assist AI against a QA source register and the excerpts actually retrieved for the assistant.</p>
+        <div class="pills"><span>6 evidence-based cases</span><span>100 points</span><span>Source traceability</span></div>
+      </div>
+      <aside class="brief" aria-labelledby="missionTitle">
+        <span class="tiny">YOUR MISSION</span>
+        <h2 id="missionTitle">Trace every claim to evidence</h2>
+        <p>Inspect the approved QA source register, the retrieved passages, and the simulated answer. Identify the most significant failure, evaluate the evidence, and assign severity.</p>
+        <p class="quiet">All policies, source IDs, retrieval logs and AI responses are invented fixtures. No real model, API, or database is contacted. Answers stay in this browser tab unless you download a report.</p>
+      </aside>
+    </section>
+
+    <section class="learning" aria-labelledby="methodTitle">
+      <div class="heading"><p class="eyebrow">01 · RAG EVALUATION METHOD</p><h2 id="methodTitle">Separate the source, retrieval and response</h2><p>RAG means retrieval-augmented generation. A model may produce a plausible answer even when it retrieved the wrong evidence—or may misuse perfectly good evidence.</p></div>
+      <div class="method-grid">
+        <article><span>01</span><h3>Check the source of truth</h3><p>Compare the customer question with the QA-approved source register, including current and archived status.</p></article>
+        <article><span>02</span><h3>Inspect retrieval</h3><p>Identify which snippets were available to the assistant and whether the relevant source was missing.</p></article>
+        <article><span>03</span><h3>Audit each claim</h3><p>Check whether the response is supported, quotes an unrelated document, or ignores a source conflict.</p></article>
+        <article><span>04</span><h3>Design a retest</h3><p>Specify what to retrieve next, how to validate citations, and what answer would pass.</p></article>
+      </div>
+      <div class="rubric" aria-label="Assessment scoring rubric">
+        <article><strong>Primary issue · roughly 60%</strong><p>Distinguish retrieval gaps from unsupported generation, combined failures, conflicting sources and passing cases.</p></article>
+        <article><strong>Evidence verdict · roughly 20%</strong><p>Identify whether the answer is supported, missing a source, contradictory or incorrectly cited.</p></article>
+        <article><strong>Severity · roughly 20%</strong><p>Choose the illustrative impact level. Your written source IDs and retest proposals are not automatically scored.</p></article>
+      </div>
+      <p class="method-note"><strong>Important:</strong> The QA source register below is a test oracle, <em>not</em> something the simulated assistant necessarily retrieved. In a real system, diagnosing the root cause requires checking retrieval traces, index versions and prompts—not guessing from the final answer alone. This exercise includes those invented traces so you can practise the distinction.</p>
+    </section>
+
+    <section class="practice" aria-labelledby="practiceTitle">
+      <div class="practice-header">
+        <div><p class="eyebrow">02 · SOURCE-GROUNDED INVESTIGATION</p><h2 id="practiceTitle">Assist AI — RAG Evidence Review</h2><p>Complete all three selections per case, then compare with the reference assessment.</p></div>
+        <div class="count" role="status" aria-live="polite"><strong id="completedCount" class="form-counter">0/6</strong><span>cases assessed</span></div>
+      </div>
+      <form id="assessmentForm" novalidate>
+        <div id="caseList" class="cases"></div>
+        <div class="toolbar"><button type="submit" id="reviewButton" class="button-primary">Review my assessment</button><button type="button" id="resetButton" class="button-secondary">Clear selections</button></div>
+        <p class="status-text" id="formStatus" role="status" aria-live="polite">Start with the source register, then compare it with the retrieved excerpts and answer.</p>
+      </form>
+    </section>
+
+    <section id="results" class="results" aria-labelledby="resultsTitle" tabindex="-1" hidden>
+      <p class="eyebrow">03 · COMPARE YOUR REASONING</p><h2 id="resultsTitle">Reference feedback</h2>
+      <div class="result-summary"><strong id="resultScore">—</strong><div><p id="resultIntro">Results appear after reviewing every case.</p><p class="quiet">Scores are for guided practice, not measurements of a production model or certification.</p></div></div>
+      <div id="feedbackList" class="feedback-list"></div>
+      <div class="toolbar"><button class="button-primary" type="button" id="downloadButton">Download QA findings (.txt)</button><button class="button-secondary" type="button" id="reviseButton">Revise answers</button></div>
+      <p class="status-text" id="downloadStatus" role="status" aria-live="polite"></p>
+    </section>
+
+    <section class="next" aria-labelledby="nextTitle">
+      <p class="eyebrow">CONTINUE YOUR LEARNING</p><h2 id="nextTitle">From answer correctness to traceable evidence</h2>
+      <p>Module 1 introduced single-response evaluation. Module 2 compared equivalent prompts. Module 3 shows how the source register, retrieval quality and answer generation can fail independently or together. Next we'll explore AI safety, prompt injection and information boundaries.</p>
+      <p><a href="../module-2/">← Return to Module 2</a> · <a href="../module-4/">Start Module 4 →</a></p>
+    </section>
+  </main>
+  <footer><div class="container"><span>Practical QA Lab · Fictional AI Testing simulations</span><a href="../../index.html">Back to main lab</a></div></footer>
+</body>
+</html>

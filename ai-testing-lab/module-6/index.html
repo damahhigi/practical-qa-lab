@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Practice AI regression testing, evaluation dataset coverage, confusion-matrix metrics, reviewer agreement and measurable release gates.">
+  <title>Evaluation Datasets &amp; Quality Metrics | AI Testing Lab | Practical QA Lab</title>
+  <link rel="stylesheet" href="./style.css">
+  <script src="./script.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to Module 6</a>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="../../index.html" aria-label="Practical QA Lab home"><span class="brand-mark" aria-hidden="true">✓</span><span><strong>Practical QA Lab</strong><small>Learn by testing</small></span></a>
+      <nav aria-label="AI Testing navigation">
+        <a href="../module-5/">← Module 5</a>
+        <a href="../capstone/">AI Testing Capstone →</a>
+        <a href="../module-4/">Module 4</a>
+        <a href="../">Module 1</a>
+        <a href="../../learning-paths/">Learning Paths</a>
+        <a href="../../portfolio/">Portfolio Workspace</a>
+      </nav>
+    </div>
+  </header>
+  <main id="main" class="container">
+    <section class="hero" aria-labelledby="pageTitle">
+      <div>
+        <p class="eyebrow">V1.8 · AI TESTING · MODULE 6</p>
+        <h1 id="pageTitle">Evaluation Datasets &amp; <span>Quality Metrics</span></h1>
+        <p class="lede">An AI release is only as trustworthy as its <strong>evaluation data, failure analysis and release criteria</strong>. Investigate six fictional assessment snapshots and make defensible release decisions.</p>
+        <div class="pills"><span>6 evaluation challenges</span><span>100 points</span><span>Compute real metrics</span></div>
+      </div>
+      <aside class="brief" aria-labelledby="missionTitle">
+        <span class="tiny">YOUR MISSION</span>
+        <h2 id="missionTitle">Evaluate before you ship</h2>
+        <p>Read the required launch gate and QA evidence. Classify the finding, choose a release action, set severity and calculate the requested metric. Then compare your evaluation with the reference answer.</p>
+        <p class="quiet">All datasets, outcomes, labels and quality gates are fictional learning fixtures. No live model, external API, accounts or browser storage are used.</p>
+      </aside>
+    </section>
+
+    <section class="learning" aria-labelledby="methodTitle">
+      <div class="heading">
+        <p class="eyebrow">01 · AI EVALUATION METHOD</p>
+        <h2 id="methodTitle">Make quality measurable</h2>
+        <p>Decide what “good enough” means before evaluating a model. Inspect dataset provenance, compute the appropriate metric and apply explicit release blockers rather than relying on one overall score.</p>
+      </div>
+      <div class="method-grid">
+        <article><span>01</span><h3>Build a trustworthy set</h3><p>Include normal, boundary and adversarial cases; use independent holdout data and control for duplicate leakage.</p></article>
+        <article><span>02</span><h3>Compute task-aware metrics</h3><p>Use groundedness, accuracy, recall, false negatives and reviewer agreement where they fit the risk.</p></article>
+        <article><span>03</span><h3>Compare slices and baselines</h3><p>Check language groups, failure categories, uncertainty, label quality and changes since the last accepted version.</p></article>
+        <article><span>04</span><h3>Apply release gates</h3><p>Specify minimum quality, allowed regression and zero-tolerance security blockers before the decision.</p></article>
+      </div>
+      <div class="rubric" aria-label="Assessment scoring rubric">
+        <article><strong>Primary finding · ~45%</strong><p>Identify the right evaluation defect or a justified pass.</p></article>
+        <article><strong>Release decision · ~20%</strong><p>Approve, block or investigate as required by the stated gate.</p></article>
+        <article><strong>Severity · ~15%</strong><p>Assess observed impact, not speculative downstream harm.</p></article>
+        <article><strong>Calculated metric · ~20%</strong><p>Enter the requested percentage. Written evidence is encouraged but not automatically scored.</p></article>
+      </div>
+      <p class="method-note"><strong>Metrics reminder:</strong> Accuracy = correct / total; recall = TP / (TP + FN); observed agreement = matching ratings / all double ratings. Cohen’s κ adjusts agreement for chance. A passing aggregate score does not excuse a critical security failure.</p>
+      <p class="note-callout"><strong>Scope note:</strong> The module uses deterministic, invented datasets to teach evaluation reasoning, not a live-model audit or proof of real-world fairness or safety. Thresholds are case-specific training requirements, not universal AI standards.</p>
+    </section>
+
+    <section class="practice" aria-labelledby="practiceTitle">
+      <div class="practice-header">
+        <div>
+          <p class="eyebrow">02 · INTERACTIVE EVALUATION REVIEW</p>
+          <h2 id="practiceTitle">Assist AI — Release Quality Review</h2>
+          <p>Classify the evaluation result, make the release call and calculate a metric for each case.</p>
+        </div>
+        <div class="count" role="status" aria-live="polite"><strong id="completedCount" class="form-counter">0/6</strong><span>cases assessed</span></div>
+      </div>
+      <form id="assessmentForm" novalidate>
+        <div id="caseList" class="cases"></div>
+        <div class="toolbar">
+          <button type="submit" id="reviewButton" class="button-primary">Review my assessment</button>
+          <button type="button" id="resetButton" class="button-secondary">Clear selections</button>
+        </div>
+        <p class="status-text" id="formStatus" role="status" aria-live="polite">Review the approved evaluation gate before assessing each snapshot.</p>
+      </form>
+    </section>
+
+    <section id="results" class="results" aria-labelledby="resultsTitle" tabindex="-1" hidden>
+      <p class="eyebrow">03 · REVIEW AND EVALUATE</p>
+      <h2 id="resultsTitle">Reference feedback</h2>
+      <div class="result-summary"><strong id="resultScore">—</strong><div><p id="resultIntro">Results appear after every case has been assessed.</p><p class="quiet">The assessment grade measures choices against predefined fictional fixtures; it is not a live-model quality score.</p></div></div>
+      <div id="feedbackList" class="feedback-list"></div>
+      <div class="toolbar">
+        <button type="button" class="button-primary" id="downloadButton">Download QA findings (.txt)</button>
+        <button type="button" class="button-secondary" id="reviseButton">Revise answers</button>
+      </div>
+      <p class="status-text" id="downloadStatus" role="status" aria-live="polite"></p>
+    </section>
+
+    <section class="next" aria-labelledby="nextTitle">
+      <p class="eyebrow">CONTINUE YOUR LEARNING</p>
+      <h2 id="nextTitle">Turn evaluation evidence into a release decision</h2>
+      <p>Module 5 compared outcomes across languages and user needs. Module 6 brings those observations into versioned regression datasets, acceptance gates, classification metrics, annotation reliability and risk-based release decisions.</p>
+      <p><a href="../module-5/">← Return to Module 5</a> · <a href="../capstone/">Start AI Testing Capstone →</a></p>
+    </section>
+  </main>
+  <footer><div class="container"><span>Practical QA Lab · Fictional AI Testing simulations</span><a href="../../index.html">Back to main lab</a></div></footer>
+</body>
+</html>

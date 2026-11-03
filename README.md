@@ -4,7 +4,7 @@
 
 **Live website:** https://damahhigi.github.io/practical-qa-lab/
 
-**Release:** v1.7 — Portfolio & Career Readiness (October 2026)
+**Release:** v1.8 — AI Testing & Model Evaluation (November 2026)
 
 Practical QA Lab is a free, browser-based QA practice environment featuring interactive scenarios, guided simulations, feedback, and interview preparation. The website is static: no account or backend is required.
 
@@ -52,6 +52,20 @@ The [ShopFlow Capstone](automation-lab/capstone/) combines six missions, seven f
 
 The [main Learning Paths](learning-paths/) now include four routes: Beginner QA, Intermediate QA, Interview Preparation and QA Test Automation. The automation route connects six existing Playwright modules and the ShopFlow Capstone, tracking each of the seven activities independently.
 
+## AI Testing & Model Evaluation (v1.8)
+
+The [AI Testing Lab](ai-testing-lab/) teaches evaluation of a **fictional AI support assistant** through six guided modules and a final release-assessment capstone:
+
+1. **AI Testing Fundamentals:** response quality, hallucinations, privacy, instruction following and unsafe action claims.
+2. **Prompt & Response Testing:** paired prompts, consistency and requirements compliance.
+3. **Hallucinations & RAG:** source grounding, retrieval failures, outdated policies and citation errors.
+4. **AI Safety & Privacy:** prompt injection, protected information, authorization boundaries and tool actions.
+5. **Fairness & Multilingual Evaluation:** English/Kiswahili comparisons, accessibility, unequal treatment and sampling limits.
+6. **Evaluation Datasets & Quality Metrics:** regression datasets, precision/recall, subgroup quality, reviewer agreement and release thresholds.
+7. **AI Testing Capstone:** an end-to-end simulated AI release review with six investigations, seven acceptance criteria, QA rationale, a Go/No-Go recommendation and retest plan.
+
+Each activity provides guided scoring, reference feedback and a downloadable text findings report. **These are fixed, browser-based simulations, not a live AI model, connected production system or independent certification of an AI product.** The AI exercises do not require API keys, upload private data, or automatically write results into My Progress. Learners should review findings before sharing practice evidence.
+
 ## Portfolio Workspace (v1.7)
 
 The [Portfolio Workspace](portfolio/) gives learners a browser-local inventory of five existing evidence sources: saved test cases, Checkout Bug Hunt reports, API Bug Hunt reports, SQL Validation reports, and My Progress sessions. It also links to the original lab exports.
@@ -75,7 +89,7 @@ There is no account-based synchronization. Storage is specific to a browser prof
 - GitHub Actions for CI and GitHub Pages for hosting
 - Python 3 local HTTP server for development/test runs
 
-The v1.7 regression suite passes **206 Playwright tests**, up from 188 in v1.6; see [the test README](qa-tests/README.md) for setup and run commands.
+The v1.8 regression suite passes **296 Playwright tests**, up from 206 in v1.7; see [the test README](qa-tests/README.md) for setup and run commands.
 
 ```bash
 cd qa-tests
@@ -89,6 +103,10 @@ Targeted automated accessibility and responsive-layout checks are included; they
 ## Resources
 
 The [`resources/`](resources/) folder provides QA test-case, bug-report and interview-preparation templates.
+
+## v1.8 release highlights
+
+v1.8 introduces the six-module AI Testing Lab and its integrated release Capstone, with homepage access, sequential module navigation, downloadable practice evidence and **90 additional Playwright tests** compared with v1.7. All 296 tests passed in local release verification. The existing manual, API, SQL, automation and portfolio activities remain available.
 
 ## v1.7 release highlights
 

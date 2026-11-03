@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Practise prompt variation, instruction-following, consistency and grounding checks in a fictional AI assistant. Module 2 of Practical QA Lab AI Testing.">
+  <title>Prompt &amp; Response Testing | AI Testing Lab | Practical QA Lab</title>
+  <link rel="stylesheet" href="./style.css">
+  <script src="./script.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to Module 2</a>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="../../index.html" aria-label="Practical QA Lab home"><span class="brand-mark" aria-hidden="true">✓</span><span><strong>Practical QA Lab</strong><small>Learn by testing</small></span></a>
+      <nav aria-label="AI Testing navigation"><a href="../">← Module 1</a><a href="../module-3/">Module 3 →</a><a href="../../learning-paths/">Learning Paths</a><a href="../../portfolio/">Portfolio Workspace</a></nav>
+    </div>
+  </header>
+  <main id="main" class="container">
+    <section class="hero" aria-labelledby="pageTitle">
+      <div>
+        <p class="eyebrow">V1.8 · AI TESTING · MODULE 2</p>
+        <h1 id="pageTitle">Prompt &amp; Response <span>Testing</span></h1>
+        <p class="lede">Same requirement, different prompts: should an AI assistant give the same answer? Compare paired prompt-and-output fixtures from <strong>Assist AI</strong>. Identify failures, judge impact, and design a stronger follow-up test.</p>
+        <div class="pills"><span>6 paired evaluations</span><span>100 points</span><span>Test design practice</span></div>
+      </div>
+      <aside class="brief" aria-labelledby="missionTitle">
+        <span class="tiny">YOUR MISSION</span>
+        <h2 id="missionTitle">Compare two outputs, not just one</h2>
+        <p>Review the approved requirement and both prompt variations. Classify the main issue, assign a contextual severity and record evidence. You can propose a follow-up prompt to test the behavior again.</p>
+        <p class="quiet">All prompts, outputs and policies are fictional, prewritten fixtures. This is a guided simulation—not a live AI evaluation. The page does not save or upload your answers. You can download your report.</p>
+      </aside>
+    </section>
+
+    <section class="learning" aria-labelledby="methodTitle">
+      <div class="heading"><p class="eyebrow">01 · EVALUATION METHOD</p><h2 id="methodTitle">Test behavior under prompt variation</h2><p>Evaluate the underlying requirement, not a preferred wording. A different writing style can be fine; a changed decision or fabricated source may not be.</p></div>
+      <div class="method-grid">
+        <article><span>01</span><h3>Set the oracle</h3><p>Start with the policy and expected outcome; avoid deciding solely from fluent wording.</p></article>
+        <article><span>02</span><h3>Vary one factor</h3><p>Rephrase, change format, remove context or repeat a prompt while holding requirements steady.</p></article>
+        <article><span>03</span><h3>Compare meaning</h3><p>Check correctness, format constraints, traceable sources and whether equivalent inputs give equivalent decisions.</p></article>
+        <article><span>04</span><h3>Design a retest</h3><p>Record a follow-up prompt and what result would pass; real models need repeated, sampled runs.</p></article>
+      </div>
+      <div class="rubric" aria-label="Evaluation rubric">
+        <article><strong>Classification · about 70%</strong><p>Identify the main observed issue, or correctly select Pass when both responses satisfy the requirement.</p></article>
+        <article><strong>Severity · about 30%</strong><p>Select the closest reference impact level; actual severity depends on the product context.</p></article>
+        <article><strong>Evidence and retest · not auto-scored</strong><p>Practise writing a convincing comparison and an improved follow-up prompt. Both appear in the report.</p></article>
+      </div>
+      <p class="method-note"><strong>Why paired testing?</strong> A single correct answer does not establish reliability. Evaluate paraphrases, constraints, repeat runs and ambiguity against a stable oracle. This small fixture set demonstrates testing techniques; it does not estimate real-world failure rates.</p>
+    </section>
+
+    <section class="practice" aria-labelledby="practiceTitle">
+      <div class="practice-header">
+        <div><p class="eyebrow">02 · PAIRED-RESPONSE INVESTIGATION</p><h2 id="practiceTitle">Assist AI — Prompt Review</h2><p>Choose a primary finding and severity for all six pairs before reviewing.</p></div>
+        <div class="count" role="status" aria-live="polite"><strong id="completedCount" class="form-counter">0/6</strong><span>pairs assessed</span></div>
+      </div>
+      <form id="assessmentForm" novalidate>
+        <div id="caseList" class="cases"></div>
+        <div class="toolbar"><button type="submit" id="reviewButton" class="button-primary">Review my assessment</button><button type="button" id="resetButton" class="button-secondary">Clear selections</button></div>
+        <p class="status-text" id="formStatus" role="status" aria-live="polite">Compare each pair against the trusted requirement.</p>
+      </form>
+    </section>
+
+    <section class="results" id="results" aria-labelledby="resultsTitle" tabindex="-1" hidden>
+      <p class="eyebrow">03 · LEARN FROM THE REFERENCE</p><h2 id="resultsTitle">Assessment feedback</h2>
+      <div class="result-summary"><strong id="resultScore">—</strong><div><p id="resultIntro">Results appear after your review.</p><p class="quiet">Reference judgments are illustrative, not certified AI testing results.</p></div></div>
+      <div id="feedbackList" class="feedback-list"></div>
+      <div class="toolbar"><button class="button-primary" type="button" id="downloadButton">Download practice findings (.txt)</button><button class="button-secondary" type="button" id="reviseButton">Revise my answers</button></div>
+      <p class="status-text" id="downloadStatus" role="status" aria-live="polite"></p>
+    </section>
+
+    <section class="next" aria-labelledby="nextTitle"><p class="eyebrow">CONTINUE YOUR LEARNING · MODULE 3</p><h2 id="nextTitle">Hallucinations &amp; RAG Evaluation</h2><p>Module 1 introduced single-output checks. Module 2 compared prompt variations. In Module 3, trace AI claims to approved documents and retrieved sources, then identify retrieval failures, unsupported answers and citation mismatches.</p><p><a href="../">← Return to Module 1</a> <span aria-hidden="true"> · </span> <a href="../module-3/">Start Module 3 →</a></p></section>
+  </main>
+  <footer><div class="container"><span>Practical QA Lab · Simulated AI Testing practice</span><a href="../../index.html">Back to main lab</a></div></footer>
+</body>
+</html>
